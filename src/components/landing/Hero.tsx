@@ -62,7 +62,7 @@ export function Hero() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              PORTFOLIO
+              PORTFOLIO 22
             </span>
           </h1>
 
