@@ -1,0 +1,149 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { Lightbox, type LightboxImage } from "./Lightbox";
+import { Carousel } from "./Carousel";
+import { SingleImageBlock } from "./SingleImageBlock";
+import type { ProjectCaseStudy, ProjectImageGroup } from "@/lib/projects";
+
+function Prose({ paragraphs }: { paragraphs: string[] }) {
+  if (!paragraphs?.length) return null;
+  return (
+    <div
+      className="serif"
+      style={{ maxWidth: 720, display: "flex", flexDirection: "column", gap: 16, fontSize: 18, lineHeight: 1.6 }}
+    >
+      {paragraphs.map((p, i) => (
+        <p key={i} dangerouslySetInnerHTML={{ __html: p }} />
+      ))}
+    </div>
+  );
+}
+
+function GroupRenderer({
+  groups,
+  onOpen,
+}: {
+  groups: ProjectImageGroup[];
+  onOpen: (id: string) => void;
+}) {
+  if (!groups?.length) return null;
+  return (
+    <>
+      {groups.map((group, i) => {
+        if (group.kind === "carousel") {
+          return <Carousel key={i} group={group} onOpen={onOpen} />;
+        }
+        return (
+          <SingleImageBlock
+            key={i}
+            item={group.items[0]}
+            layout={group.layout}
+            onOpen={onOpen}
+          />
+        );
+      })}
+    </>
+  );
+}
+
+export function ProjectClient({ data }: { data: ProjectCaseStudy }) {
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+
+  const allImages: LightboxImage[] = useMemo(
+    () =>
+      data.sections.flatMap((s) =>
+        s.groups.flatMap((g) =>
+          g.items.map((item) => ({
+            id: item.id,
+            src: item.src,
+            alt: item.alt,
+            caption: item.caption,
+            section: s.title,
+          })),
+        ),
+      ),
+    [data],
+  );
+
+  const indexById = useMemo(() => {
+    const map = new Map<string, number>();
+    allImages.forEach((img, i) => map.set(img.id, i));
+    return map;
+  }, [allImages]);
+
+  const openById = (id: string) => {
+    const idx = indexById.get(id);
+    if (idx != null) setLightboxIdx(idx);
+  };
+  const close = () => setLightboxIdx(null);
+  const nav = (delta: number) =>
+    setLightboxIdx((prev) => {
+      if (prev == null) return prev;
+      const next = prev + delta;
+      if (next < 0) return allImages.length - 1;
+      if (next >= allImages.length) return 0;
+      return next;
+    });
+  const jump = (idx: number) => setLightboxIdx(idx);
+
+  return (
+    <>
+      {data.sections.map((section, i) => (
+        <section
+          key={i}
+          style={{ padding: "80px 48px", maxWidth: 1440, margin: "0 auto", position: "relative" }}
+        >
+          <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 32, alignItems: "start" }}>
+            <div style={{ position: "sticky", top: 120 }}>
+              <div className="display-wide" style={{ fontSize: 64, color: "var(--accent)" }}>
+                {section.n}
+              </div>
+              <div
+                className="mono"
+                style={{ fontSize: 11, letterSpacing: "0.2em", marginTop: 8, opacity: 0.5 }}
+              >
+                ━━━━━━
+              </div>
+            </div>
+            <div>
+              <div
+                className="hand"
+                style={{
+                  fontSize: 28,
+                  color: "var(--accent)",
+                  transform: "rotate(-2deg)",
+                  display: "inline-block",
+                  marginBottom: 8,
+                }}
+              >
+                {section.eyebrow}
+              </div>
+              <h2
+                className="display-wide"
+                data-anim="section-title"
+                style={{ fontSize: "clamp(36px, 5vw, 72px)", marginBottom: 24 }}
+              >
+                {section.title}
+                <span style={{ color: "var(--accent)" }}>.</span>
+              </h2>
+              <Prose paragraphs={section.intro} />
+              <GroupRenderer groups={section.groups} onOpen={openById} />
+              <Prose paragraphs={section.body} />
+            </div>
+          </div>
+        </section>
+      ))}
+
+      {lightboxIdx !== null && (
+        <Lightbox
+          images={allImages}
+          currentIdx={lightboxIdx}
+          onClose={close}
+          onNav={nav}
+          onJump={jump}
+        />
+      )}
+    </>
+  );
+}
