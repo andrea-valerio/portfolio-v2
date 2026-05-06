@@ -109,20 +109,26 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
         style={{
           flex: "1 1 0%",
           minHeight: 0,
-          display: "grid",
-          placeItems: "center",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           padding: 24,
           position: "relative",
+          width: "100%",
         }}
       >
         <div
           className="lightbox-stage-inner"
           style={{
             position: "relative",
-            maxWidth: "min(80vw, 1200px)",
-            maxHeight: "78vh",
-            display: "grid",
-            placeItems: "center",
+            width: "min(100%, min(80vw, 1200px))",
+            height: "100%",
+            maxHeight: "100%",
+            minHeight: 0,
+            minWidth: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <Image
@@ -130,8 +136,8 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
             alt={img.alt}
             sizes="80vw"
             style={{
-              maxWidth: "min(80vw, 1200px)",
-              maxHeight: "78vh",
+              maxWidth: "100%",
+              maxHeight: "100%",
               width: "auto",
               height: "auto",
               objectFit: "contain",

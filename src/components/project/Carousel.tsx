@@ -124,43 +124,74 @@ export function Carousel({ group, onOpen }: CarouselProps) {
                 flexDirection: "column",
               }}
             >
-              <div
-                ref={idx === 0 ? firstImageRef : undefined}
-                data-card-hover
-                data-carousel-image
-                data-carousel-layout={isPortrait ? "portrait" : "landscape"}
-                style={{
-                  position: "relative",
-                  ...(isPortrait
-                    ? {
-                        width: portraitFrameWidth,
-                        height: "auto",
-                      }
-                    : {
-                        height: landscapeFrameHeight,
-                      }),
-                  aspectRatio: `${item.src.width} / ${item.src.height}`,
-                  border: "2px solid var(--ink)",
-                  boxShadow: "5px 5px 0 var(--ink)",
-                  background: "var(--paper-2)",
-                  overflow: "hidden",
-                  transition: "box-shadow 0.3s",
-                  boxSizing: "border-box",
-                  ...(isPortrait ? { padding: 10 } : {}),
-                }}
-              >
-                <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    sizes={
-                      isPortrait ? "(max-width: 900px) 280px, 280px" : "(max-width: 900px) 80vw, 800px"
-                    }
-                    style={{ objectFit: "cover" }}
-                  />
+              {isPortrait ? (
+                <div
+                  ref={idx === 0 ? firstImageRef : undefined}
+                  data-card-hover
+                  data-carousel-image
+                  data-carousel-layout="portrait"
+                  style={{
+                    position: "relative",
+                    width: portraitFrameWidth,
+                    height: "auto",
+                    padding: 10,
+                    border: "2px solid var(--ink)",
+                    boxShadow: "5px 5px 0 var(--ink)",
+                    background: "var(--paper-2)",
+                    transition: "box-shadow 0.3s",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  {/*
+                    Padding + aspect-ratio on the same box skews the content area vs the image.
+                    Keep ratio on an inner wrapper so object-fit tracks true dimensions.
+                  */}
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      aspectRatio: `${item.src.width} / ${item.src.height}`,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes="(max-width: 900px) 280px, 280px"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div
+                  ref={idx === 0 ? firstImageRef : undefined}
+                  data-card-hover
+                  data-carousel-image
+                  data-carousel-layout="landscape"
+                  style={{
+                    position: "relative",
+                    height: landscapeFrameHeight,
+                    aspectRatio: `${item.src.width} / ${item.src.height}`,
+                    border: "2px solid var(--ink)",
+                    boxShadow: "5px 5px 0 var(--ink)",
+                    background: "var(--paper-2)",
+                    overflow: "hidden",
+                    transition: "box-shadow 0.3s",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes="(max-width: 900px) 80vw, 800px"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
+                </div>
+              )}
               <div
                 className="mono"
                 style={{
