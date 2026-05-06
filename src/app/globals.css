@@ -56,6 +56,54 @@ html {
   min-height: 100%;
 }
 
+/* ============================================================
+   iOS 26 Safari ("Liquid Glass") toolbar tint anchors.
+
+   Background:
+   - In iOS 26, Safari dropped support for <meta name="theme-color"> and instead
+     samples the background-color of the topmost position:fixed element near
+     each viewport edge (within ~4px top / ~3px bottom, ≥80% wide, ≥6px tall).
+     If no such element exists, it falls back to the <body> background.
+   - In iOS 26.0.x, position:fixed elements were also clipped to the inner
+     viewport (i.e. excluding safe areas) — so a full-screen modal/overlay
+     could not actually reach behind the status bar or URL bar. iOS 26.1
+     mostly fixed the clipping but introduced a new quirk: when sampling a
+     fixed element for the chrome tint, opacity is *ignored* (the color is
+     read as fully opaque).
+
+   What we do:
+   - .ios-toolbar-tint-bottom is an invisible (off-edge) fixed strip that gives
+     Safari a deliberate cream color to use for the bottom URL bar tint,
+     instead of letting iOS render its default darker fade-out.
+   - It only renders on iOS Safari (the @supports query is the canonical
+     -webkit-touch-callout sniff) and only on phone-width viewports, so it
+     can't affect macOS / iPadOS Safari.
+   - z-index is low so any open modal/lightbox (z-index 90/100) takes
+     precedence and tints the bottom bar with the modal color instead.
+   ============================================================ */
+.ios-toolbar-tint-bottom {
+  display: none;
+  position: fixed;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  z-index: 5;
+  pointer-events: none;
+}
+
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .ios-toolbar-tint-bottom {
+      display: block;
+    }
+  }
+}
+
 #projects,
 #publications {
   scroll-margin-top: 88px;
@@ -457,7 +505,12 @@ button {
   justify-content: space-between;
   gap: 12px;
   min-width: 0;
-  background: color-mix(in oklab, var(--paper) 60%, transparent);
+  /* iOS 26 samples this background for the status-bar tint and ignores
+     opacity, so we use a near-solid value (88% paper) to ensure the
+     status-bar zone and the visible navbar read as the same cream. The
+     remaining translucency + backdrop-filter still gives the visible
+     portion a subtle "frosted" feel where content scrolls behind it. */
+  background: color-mix(in oklab, var(--paper) 88%, transparent);
   backdrop-filter: blur(4px) saturate(140%);
   -webkit-backdrop-filter: blur(4px) saturate(140%);
   border-bottom: 1px solid var(--line);
@@ -628,9 +681,15 @@ button {
 .nav-mobile-overlay {
   position: fixed;
   inset: 0;
+  /* Use the dynamic viewport so the overlay grows when iOS Safari hides
+     its bottom bar instead of leaving a strip of un-dimmed page below. */
+  height: 100dvh;
   /* Above ScrollProgress (60), below ContactModal / Lightbox (100) */
   z-index: 90;
-  background: rgba(10, 10, 10, 0.45);
+  /* iOS 26 ignores opacity when sampling fixed elements for the chrome
+     tint; bumping to 0.85 lets the modal both visually dim the page and
+     produce a strong dark tint on the status bar / URL bar. */
+  background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px))

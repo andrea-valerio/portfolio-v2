@@ -104,6 +104,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Nav />
           {children}
           <Footer />
+          {/* iOS 26 Safari "Liquid Glass" toolbar tint anchor — see
+              .ios-toolbar-tint-bottom in globals.css. Hidden by CSS on
+              every browser other than mobile iOS Safari. */}
+          <div className="ios-toolbar-tint-bottom" aria-hidden />
           <Animations />
           <Script
             src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"
