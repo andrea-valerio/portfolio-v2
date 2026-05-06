@@ -5,7 +5,14 @@ import { PROFILE_PHOTO } from "@/lib/project-images";
 
 export function Hero() {
   return (
-    <section style={{ position: "relative", minHeight: "100vh", overflow: "hidden", paddingTop: 88 }}>
+    <section
+      style={{
+        position: "relative",
+        zIndex: 1,
+        minHeight: "100vh",
+        paddingTop: 88,
+      }}
+    >
       <div
         className="caution-strip"
         style={{ height: 8, position: "absolute", top: 88, left: 0, right: 0 }}
@@ -164,38 +171,42 @@ export function Hero() {
             <Sticker variant="solid">PRODUCT DESIGNER</Sticker>
           </div>
           <div
-            data-anim="sticker-spin"
             style={{
               position: "absolute",
-              bottom: -32,
-              right: -20,
-              width: 110,
-              height: 110,
+              bottom: -55,
+              right: -43,
+              width: 156,
+              height: 156,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               zIndex: 6,
             }}
           >
-            <svg width="110" height="110" viewBox="0 0 110 110">
-              <defs>
-                <path
-                  id="circle-text"
-                  d="M55,55 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"
-                />
-              </defs>
-              <circle cx="55" cy="55" r="50" fill="var(--ink)" />
-              <text
-                fill="var(--paper)"
-                style={{
-                  fontSize: 10,
-                  letterSpacing: "0.12em",
-                  fontFamily: "var(--font-mono), monospace",
-                  fontWeight: 700,
-                }}
-              >
-                <textPath href="#circle-text">
-                  UX/UI • Product • Data • HCI • &nbsp;
-                </textPath>
-              </text>
-            </svg>
+            <div data-anim="sticker-spin" style={{ width: 110, height: 110 }}>
+              <svg width="110" height="110" viewBox="0 0 110 110" overflow="visible">
+                <defs>
+                  <path
+                    id="circle-text"
+                    d="M55,55 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"
+                  />
+                </defs>
+                <circle cx="55" cy="55" r="50" fill="var(--ink)" />
+                <text
+                  fill="var(--paper)"
+                  style={{
+                    fontSize: 10,
+                    letterSpacing: "0.12em",
+                    fontFamily: "var(--font-mono), monospace",
+                    fontWeight: 700,
+                  }}
+                >
+                  <textPath href="#circle-text">
+                    UX/UI • Product • Data • HCI • &nbsp;
+                  </textPath>
+                </text>
+              </svg>
+            </div>
           </div>
         </div>
       </div>

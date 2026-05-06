@@ -78,15 +78,6 @@ export function ProjectClient({ data }: { data: ProjectCaseStudy }) {
     if (idx != null) setLightboxIdx(idx);
   };
   const close = () => setLightboxIdx(null);
-  const nav = (delta: number) =>
-    setLightboxIdx((prev) => {
-      if (prev == null) return prev;
-      const next = prev + delta;
-      if (next < 0) return allImages.length - 1;
-      if (next >= allImages.length) return 0;
-      return next;
-    });
-  const jump = (idx: number) => setLightboxIdx(idx);
 
   return (
     <>
@@ -138,8 +129,6 @@ export function ProjectClient({ data }: { data: ProjectCaseStudy }) {
           images={allImages}
           currentIdx={lightboxIdx}
           onClose={close}
-          onNav={nav}
-          onJump={jump}
         />
       )}
     </>

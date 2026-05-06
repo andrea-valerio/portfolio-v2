@@ -637,8 +637,8 @@ button {
 .nav-mobile-panel {
   width: min(100vw - 24px, 400px);
   align-self: stretch;
-  min-height: min(100%, 92vh);
-  max-height: min(92vh, 100%);
+  min-height: min(100%, 92vh, 650px);
+  max-height: min(650px, 92vh, 100%);
   display: flex;
   flex-direction: column;
   gap: 24px;
