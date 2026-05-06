@@ -1,10 +1,11 @@
 "use client";
 
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
-import { ContactModal } from "./ContactModal";
+import { ContactModal, type ContactModalMode } from "./ContactModal";
 
 type ContactModalContextValue = {
   openContact: () => void;
+  openCvPreview: () => void;
 };
 
 const ContactModalContext = createContext<ContactModalContextValue | null>(null);
@@ -19,13 +20,24 @@ export function useContactModal(): ContactModalContextValue {
 
 export function ContactModalProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const openContact = useCallback(() => setOpen(true), []);
-  const value = useMemo(() => ({ openContact }), [openContact]);
+  const [mode, setMode] = useState<ContactModalMode>("contact");
+  const openContact = useCallback(() => {
+    setMode("contact");
+    setOpen(true);
+  }, []);
+  const openCvPreview = useCallback(() => {
+    setMode("cv");
+    setOpen(true);
+  }, []);
+  const value = useMemo(
+    () => ({ openContact, openCvPreview }),
+    [openContact, openCvPreview],
+  );
 
   return (
     <ContactModalContext.Provider value={value}>
       {children}
-      <ContactModal open={open} onClose={() => setOpen(false)} />
+      <ContactModal open={open} mode={mode} onClose={() => setOpen(false)} />
     </ContactModalContext.Provider>
   );
 }

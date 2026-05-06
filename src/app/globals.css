@@ -424,9 +424,9 @@ button {
   justify-content: space-between;
   gap: 12px;
   min-width: 0;
-  background: color-mix(in oklab, var(--paper) 75%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: color-mix(in oklab, var(--paper) 60%, transparent);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
   border-bottom: 1px solid var(--line);
 }
 .nav-brand-group {
@@ -563,6 +563,30 @@ section {
   grid-template-columns: 1.4fr 1fr;
   gap: 64px;
   align-items: end;
+}
+
+footer button.sticker {
+  cursor: pointer;
+  margin: 0;
+  appearance: none;
+}
+
+/* Outlined: same metrics & hover lift as .sticker; only difference is hollow fill + no shadow */
+footer .footer-contact-sticker-outline {
+  background: transparent;
+  color: var(--paper);
+  border: 2px solid var(--paper);
+  box-shadow: none;
+}
+
+footer .footer-contact-sticker-outline:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: none;
+}
+
+footer .footer-contact-sticker-outline:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .footer-quick-link {

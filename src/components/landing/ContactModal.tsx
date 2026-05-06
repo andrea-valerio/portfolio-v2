@@ -7,12 +7,15 @@ const LINKEDIN_URL = "https://www.linkedin.com/in/andreavalerio1";
 const LINKEDIN_HANDLE = "/in/andreavalerio1";
 const CV_PATH = "/CV_Summer2026.pdf";
 
+export type ContactModalMode = "contact" | "cv";
+
 type ContactModalProps = {
   open: boolean;
+  mode: ContactModalMode;
   onClose: () => void;
 };
 
-export function ContactModal({ open, onClose }: ContactModalProps) {
+export function ContactModal({ open, mode, onClose }: ContactModalProps) {
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -32,6 +35,9 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
   }, [open, onClose]);
 
   if (!open) return null;
+
+  const isCv = mode === "cv";
+  const titleId = isCv ? "cv-modal-title" : "contact-modal-title";
 
   return (
     <div
@@ -53,11 +59,15 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
       <div
         role="dialog"
         aria-modal="true"
-        aria-labelledby="contact-modal-title"
+        aria-labelledby={titleId}
         style={{
           position: "relative",
           width: "100%",
-          maxWidth: 480,
+          maxWidth: isCv ? 900 : 480,
+          maxHeight: isCv ? "min(92vh, 880px)" : undefined,
+          display: isCv ? "flex" : undefined,
+          flexDirection: isCv ? "column" : undefined,
+          minHeight: 0,
           background: "var(--paper)",
           border: "2px solid var(--ink)",
           boxShadow: "8px 8px 0 var(--accent)",
@@ -90,82 +100,150 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
           </svg>
         </button>
 
-        <div
-          className="mono"
-          style={{
-            fontSize: 11,
-            letterSpacing: "0.2em",
-            color: "var(--muted)",
-            marginBottom: 8,
-          }}
-        >
-          LET&apos;S TALK
-        </div>
-        <h2
-          id="contact-modal-title"
-          className="display-wide"
-          style={{
-            fontSize: 36,
-            lineHeight: 0.95,
-            margin: 0,
-            marginBottom: 12,
-          }}
-        >
-          GET IN <span style={{ color: "var(--accent)" }}>TOUCH</span>
-        </h2>
-        <p
-          className="serif"
-          style={{
-            fontSize: 15,
-            lineHeight: 1.5,
-            color: "var(--ink-soft)",
-            margin: 0,
-            marginBottom: 24,
-          }}
-        >
-          Pick whichever channel works best for you — I usually reply within a day or two.
-        </p>
+        {isCv ? (
+          <>
+            <div
+              className="mono"
+              style={{
+                fontSize: 11,
+                letterSpacing: "0.2em",
+                color: "var(--muted)",
+                marginBottom: 8,
+              }}
+            >
+              PREVIEW
+            </div>
+            <h2
+              id="cv-modal-title"
+              className="display-wide"
+              style={{
+                fontSize: 36,
+                lineHeight: 0.95,
+                margin: 0,
+                marginBottom: 16,
+              }}
+            >
+              <span style={{ color: "var(--accent)" }}>CV</span>
+            </h2>
+            <div
+              style={{
+                flex: 1,
+                minHeight: 0,
+                border: "2px solid var(--ink)",
+                boxShadow: "4px 4px 0 var(--ink)",
+                background: "color-mix(in srgb, var(--ink) 4%, transparent)",
+              }}
+            >
+              <iframe
+                src={CV_PATH}
+                title="CV PDF preview"
+                style={{
+                  display: "block",
+                  width: "100%",
+                  height: "min(70vh, 640px)",
+                  border: 0,
+                }}
+              />
+            </div>
+            <p
+              className="mono"
+              style={{
+                fontSize: 11,
+                letterSpacing: "0.12em",
+                margin: "14px 0 0",
+                color: "var(--muted)",
+              }}
+            >
+              <a
+                href={CV_PATH}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "var(--ink)", textUnderlineOffset: 3 }}
+              >
+                OPEN PDF IN NEW TAB ↗
+              </a>
+            </p>
+          </>
+        ) : (
+          <>
+            <div
+              className="mono"
+              style={{
+                fontSize: 11,
+                letterSpacing: "0.2em",
+                color: "var(--muted)",
+                marginBottom: 8,
+              }}
+            >
+              LET&apos;S TALK
+            </div>
+            <h2
+              id="contact-modal-title"
+              className="display-wide"
+              style={{
+                fontSize: 36,
+                lineHeight: 0.95,
+                margin: 0,
+                marginBottom: 12,
+              }}
+            >
+              GET IN <span style={{ color: "var(--accent)" }}>TOUCH</span>
+            </h2>
+            <p
+              className="serif"
+              style={{
+                fontSize: 15,
+                lineHeight: 1.5,
+                color: "var(--ink-soft)",
+                margin: 0,
+                marginBottom: 24,
+              }}
+            >
+              Pick whichever channel works best for you — I usually reply within a day or two.
+            </p>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <ContactRow
-            href={`mailto:${EMAIL}`}
-            label="Email"
-            ariaLabel={`Email ${EMAIL}`}
-            icon={
-              <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="var(--paper)" strokeWidth="2">
-                <rect x="2" y="4" width="14" height="10" />
-                <path d="M2 5L9 10L16 5" />
-              </svg>
-            }
-          />
-          <ContactRow
-            href={LINKEDIN_URL}
-            label="LinkedIn"
-            ariaLabel={`LinkedIn profile ${LINKEDIN_HANDLE}`}
-            external
-            icon={
-              <svg width="16" height="16" viewBox="0 0 18 18" fill="var(--paper)">
-                <rect x="2" y="6.5" width="3" height="9" />
-                <circle cx="3.5" cy="3.5" r="1.6" />
-                <path d="M7.5 6.5h3v1.3c.5-.85 1.6-1.5 3-1.5 2.4 0 3 1.5 3 3.4v5.8h-3v-5c0-1.1-.4-1.85-1.5-1.85S10.5 9.4 10.5 10.5v5h-3z" />
-              </svg>
-            }
-          />
-          <ContactRow
-            href={CV_PATH}
-            label="CV (PDF)"
-            ariaLabel="Open CV as PDF"
-            external
-            icon={
-              <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="var(--paper)" strokeWidth="1.8">
-                <path d="M4 3h8l3 3v9H4z" />
-                <path d="M12 3v4h4" />
-                <circle cx="8.5" cy="11" r="2.2" />
-                <path d="M10.2 12.7 13 15.5" strokeLinecap="round" />
-              </svg>
-            }
-          />
-        </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <ContactRow
+                href={`mailto:${EMAIL}`}
+                label="Email"
+                ariaLabel={`Email ${EMAIL}`}
+                icon={
+                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="var(--paper)" strokeWidth="2">
+                    <rect x="2" y="4" width="14" height="10" />
+                    <path d="M2 5L9 10L16 5" />
+                  </svg>
+                }
+              />
+              <ContactRow
+                href={LINKEDIN_URL}
+                label="LinkedIn"
+                ariaLabel={`LinkedIn profile ${LINKEDIN_HANDLE}`}
+                external
+                icon={
+                  <svg width="16" height="16" viewBox="0 0 18 18" fill="var(--paper)">
+                    <rect x="2" y="6.5" width="3" height="9" />
+                    <circle cx="3.5" cy="3.5" r="1.6" />
+                    <path d="M7.5 6.5h3v1.3c.5-.85 1.6-1.5 3-1.5 2.4 0 3 1.5 3 3.4v5.8h-3v-5c0-1.1-.4-1.85-1.5-1.85S10.5 9.4 10.5 10.5v5h-3z" />
+                  </svg>
+                }
+              />
+              <ContactRow
+                href={CV_PATH}
+                label="CV (PDF)"
+                ariaLabel="Open CV as PDF"
+                external
+                icon={
+                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="var(--paper)" strokeWidth="1.8">
+                    <path d="M4 3h8l3 3v9H4z" />
+                    <path d="M12 3v4h4" />
+                    <circle cx="8.5" cy="11" r="2.2" />
+                    <path d="M10.2 12.7 13 15.5" strokeLinecap="round" />
+                  </svg>
+                }
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
