@@ -505,15 +505,36 @@ button {
   justify-content: space-between;
   gap: 12px;
   min-width: 0;
-  /* iOS 26 samples this background for the status-bar tint and ignores
-     opacity, so we use a near-solid value (88% paper) to ensure the
-     status-bar zone and the visible navbar read as the same cream. The
-     remaining translucency + backdrop-filter still gives the visible
-     portion a subtle "frosted" feel where content scrolls behind it. */
-  background: color-mix(in oklab, var(--paper) 88%, transparent);
-  backdrop-filter: blur(4px) saturate(140%);
-  -webkit-backdrop-filter: blur(4px) saturate(140%);
+  /* Translucent frosted background. The matching body::before below
+     extends the same blur into the iOS safe-area-inset-top zone so the
+     entire top strip — status-bar + visible nav — reads as one
+     continuous frosted band on iOS Safari with viewport-fit=cover. */
+  background: color-mix(in oklab, var(--paper) 60%, transparent);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border-bottom: 1px solid var(--line);
+}
+
+/* iOS Safari (and any browser exposing safe-area-inset-top): paint a
+   matching frosted layer behind the system status bar so the navbar's
+   blur visually extends to the very top of the screen instead of cutting
+   off at the bottom of the status bar. Sized to exactly the safe-area
+   inset, sits below the navbar (z=50), so the navbar still wins for
+   chrome-tint sampling. Pointer-events disabled so the status bar
+   tap-to-scroll and notch interactions stay native. The element has no
+   visual effect on browsers where safe-area-inset-top is 0 (height
+   collapses to 0). */
+.ios-statusbar-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 49;
+  background: color-mix(in oklab, var(--paper) 60%, transparent);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  pointer-events: none;
 }
 .nav-brand-group {
   display: flex;

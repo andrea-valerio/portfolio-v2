@@ -104,6 +104,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Nav />
           {children}
           <Footer />
+          {/* Frosted layer behind the iOS system status bar so the nav's
+              blur visually extends to the top of the screen. Collapses
+              to 0 height on browsers where safe-area-inset-top is 0. */}
+          <div className="ios-statusbar-blur" aria-hidden />
           {/* iOS 26 Safari "Liquid Glass" toolbar tint anchor — see
               .ios-toolbar-tint-bottom in globals.css. Hidden by CSS on
               every browser other than mobile iOS Safari. */}
