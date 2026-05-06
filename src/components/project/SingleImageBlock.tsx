@@ -10,8 +10,11 @@ type SingleImageBlockProps = {
 };
 
 export function SingleImageBlock({ item, layout, onOpen }: SingleImageBlockProps) {
-  const imageHeight =
-    layout === "portrait" ? "clamp(440px, 56vw, 640px)" : "clamp(240px, 36vw, 540px)";
+  const { width: intrinsicW, height: intrinsicH } = item.src;
+  /** Portrait singles stay narrower; landscape uses full column width. Height follows intrinsic ratio. */
+  const frameWidth =
+    layout === "portrait" ? ("min(100%, min(420px, 90vw))" as const) : ("100%" as const);
+
   return (
     <button
       type="button"
@@ -28,41 +31,57 @@ export function SingleImageBlock({ item, layout, onOpen }: SingleImageBlockProps
       }}
     >
       <div
-        data-card-hover
-        data-single-image
         style={{
-          position: "relative",
-          height: imageHeight,
-          aspectRatio: `${item.src.width} / ${item.src.height}`,
-          maxWidth: "100%",
-          margin: "0 auto",
-          border: "2px solid var(--ink)",
-          boxShadow: "5px 5px 0 var(--ink)",
-          background: "var(--paper-2)",
-          overflow: "hidden",
-          transition: "box-shadow 0.3s",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
         }}
       >
-        <Image
-          src={item.src}
-          alt={item.alt}
-          fill
-          sizes={layout === "portrait" ? "320px" : "(max-width: 900px) 90vw, 920px"}
-          style={{ objectFit: "cover" }}
-        />
-      </div>
-      <div
-        className="mono"
-        style={{
-          fontSize: 11,
-          letterSpacing: "0.16em",
-          opacity: 0.7,
-          marginTop: 10,
-          textTransform: "uppercase",
-          textAlign: "center",
-        }}
-      >
-        {item.caption}
+        <div
+          data-card-hover
+          data-single-image
+          style={{
+            width: frameWidth,
+            maxWidth: "100%",
+            border: "2px solid var(--ink)",
+            boxShadow: "5px 5px 0 var(--ink)",
+            background: "var(--paper-2)",
+            overflow: "hidden",
+            transition: "box-shadow 0.3s",
+          }}
+        >
+          <Image
+            src={item.src}
+            alt={item.alt}
+            width={intrinsicW}
+            height={intrinsicH}
+            sizes={
+              layout === "portrait"
+                ? "(max-width: 480px) 90vw, 420px"
+                : "(max-width: 900px) 90vw, min(920px, 100vw)"
+            }
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+            }}
+          />
+        </div>
+        <div
+          className="mono"
+          style={{
+            fontSize: 11,
+            letterSpacing: "0.16em",
+            opacity: 0.7,
+            marginTop: 10,
+            textTransform: "uppercase",
+            textAlign: "center",
+            width: "100%",
+          }}
+        >
+          {item.caption}
+        </div>
       </div>
     </button>
   );

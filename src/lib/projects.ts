@@ -358,20 +358,6 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
             layout: "landscape",
             kind: "single",
             items: [
-              { id: "groove-d-1", src: GROOVE.stakeholder, alt: "Stakeholder interview wrap-up", caption: "Stakeholder interview wrap-up" },
-            ],
-          },
-          {
-            layout: "landscape",
-            kind: "single",
-            items: [
-              { id: "groove-d-2", src: GROOVE.personas, alt: "User personas", caption: "User personas" },
-            ],
-          },
-          {
-            layout: "landscape",
-            kind: "single",
-            items: [
               { id: "groove-d-3", src: GROOVE.journeys, alt: "Experience journeys", caption: "Experience journeys" },
             ],
           },

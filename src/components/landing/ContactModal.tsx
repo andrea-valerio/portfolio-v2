@@ -153,8 +153,8 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
           />
           <ContactRow
             href={CV_PATH}
-            label="Preview CV"
-            ariaLabel="Preview CV as PDF"
+            label="CV (PDF)"
+            ariaLabel="Open CV as PDF"
             external
             icon={
               <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="var(--paper)" strokeWidth="1.8">

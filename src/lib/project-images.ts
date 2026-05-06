@@ -8,8 +8,6 @@ import meetupHero from "@/assets/projects/meetup.png";
 import ovenconfHero from "@/assets/projects/ovenconf.png";
 import thesisHero from "@/assets/projects/thesis.png";
 
-import grooveStakeholder from "@/assets/projects/groove/stakeholder-interview.png";
-import groovePersonas from "@/assets/projects/groove/personas.png";
 import grooveJourneys from "@/assets/projects/groove/journeys.png";
 import grooveCrazy8 from "@/assets/projects/groove/crazy8.png";
 import grooveSignUp from "@/assets/projects/groove/results/Sign-up.png";
@@ -89,8 +87,6 @@ export const MEETUP = {
 } as const;
 
 export const GROOVE = {
-  stakeholder: grooveStakeholder,
-  personas: groovePersonas,
   journeys: grooveJourneys,
   crazy8: grooveCrazy8,
   signUp: grooveSignUp,
