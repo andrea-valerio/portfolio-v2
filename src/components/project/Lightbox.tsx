@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Image, { type StaticImageData } from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 
 /** Fixed cream / ink so the overlay stays readable in site dark mode (theme tokens flip). */
 const LB = {
@@ -28,12 +29,15 @@ type LightboxProps = {
 };
 
 export function Lightbox({ images, currentIdx, onClose }: LightboxProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    dragFree: false,
-    containScroll: false,
-    startIndex: currentIdx,
-  });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      dragFree: false,
+      containScroll: false,
+      startIndex: currentIdx,
+    },
+    [WheelGesturesPlugin()],
+  );
   const [selectedIdx, setSelectedIdx] = useState(currentIdx);
 
   useEffect(() => {

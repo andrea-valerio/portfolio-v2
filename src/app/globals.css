@@ -49,6 +49,13 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* iOS Safari: keep the page background painted behind the status bar and home
+   indicator so viewport-fit=cover doesn't expose a different color underneath. */
+html {
+  background: var(--paper);
+  min-height: 100%;
+}
+
 #projects,
 #publications {
   scroll-margin-top: 88px;
