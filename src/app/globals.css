@@ -750,7 +750,7 @@ footer .footer-contact-sticker-outline:focus-visible {
     display: none !important;
   }
 
-  /* Full-bleed image area: landscape touches L/R; portrait uses full stage height (contain). */
+  /* Full-bleed image area: landscape edge-to-edge; portrait gets vertical inset (see portrait rule below). */
   .lightbox-stage {
     padding: 0 !important;
     min-height: 0;
@@ -758,19 +758,33 @@ footer .footer-contact-sticker-outline:focus-visible {
     align-self: stretch;
   }
 
+  /* Inline height:100% on the inner would otherwise win over bottom inset (height looks “pushed down”, no gap under the image). */
   .lightbox-stage-inner {
     position: absolute !important;
     inset: 0 !important;
+    width: 100% !important;
     max-width: none !important;
     max-height: none !important;
+    height: auto !important;
     min-height: 0;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
 
+  /* Portrait: symmetric vertical inset (matches desktop stage padding). */
+  .lightbox-stage-inner[data-lightbox-orientation="portrait"] {
+    inset: 24px 0 !important;
+  }
+
+  /* Fill stage; letterboxing + centered bitmap (matches desktop Lightbox.tsx). */
   .lightbox-stage-inner img {
-    max-width: 100% !important;
-    max-height: 100% !important;
-    width: auto !important;
-    height: auto !important;
+    flex: 1 1 0% !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
   }
 
   /* Landscape carousel: one near-full-bleed slide per viewport. Portrait keeps authored fixed width (see Carousel.tsx). */

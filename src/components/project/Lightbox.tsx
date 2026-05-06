@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Image, { type StaticImageData } from "next/image";
 
 /** Fixed cream / ink so the overlay stays readable in site dark mode (theme tokens flip). */
@@ -30,6 +30,7 @@ type LightboxProps = {
 
 export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: LightboxProps) {
   const img = images[currentIdx];
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -46,6 +47,7 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
   }, [onNav, onClose]);
 
   if (!img) return null;
+  const isPortrait = img.src.height > img.src.width;
   return (
     <div
       style={{
@@ -106,19 +108,42 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
 
       <div
         className="lightbox-stage"
+        onTouchStart={(e) => {
+          if (e.touches.length !== 1) {
+            touchStart.current = null;
+            return;
+          }
+          const t = e.touches[0];
+          touchStart.current = { x: t.clientX, y: t.clientY };
+        }}
+        onTouchMove={(e) => {
+          if (e.touches.length > 1) touchStart.current = null;
+        }}
+        onTouchEnd={(e) => {
+          const start = touchStart.current;
+          touchStart.current = null;
+          if (!start) return;
+          const t = e.changedTouches[0];
+          const dx = t.clientX - start.x;
+          const dy = t.clientY - start.y;
+          if (Math.abs(dx) < 50 || Math.abs(dx) <= Math.abs(dy)) return;
+          onNav(dx < 0 ? 1 : -1);
+        }}
         style={{
           flex: "1 1 0%",
           minHeight: 0,
           display: "flex",
-          alignItems: "center",
+          alignItems: "stretch",
           justifyContent: "center",
           padding: 24,
           position: "relative",
           width: "100%",
+          touchAction: "pan-y pinch-zoom",
         }}
       >
         <div
           className="lightbox-stage-inner"
+          data-lightbox-orientation={isPortrait ? "portrait" : "landscape"}
           style={{
             position: "relative",
             width: "min(100%, min(80vw, 1200px))",
@@ -127,8 +152,8 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
             minHeight: 0,
             minWidth: 0,
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "stretch",
           }}
         >
           <Image
@@ -136,11 +161,12 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
             alt={img.alt}
             sizes="80vw"
             style={{
-              maxWidth: "100%",
-              maxHeight: "100%",
-              width: "auto",
-              height: "auto",
+              flex: "1 1 0%",
+              minHeight: 0,
+              width: "100%",
+              height: "100%",
               objectFit: "contain",
+              objectPosition: "center",
               background: "transparent",
             }}
           />
