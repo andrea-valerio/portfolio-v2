@@ -1,9 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image, { type StaticImageData } from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
+
+import { LightboxSlide } from "./LightboxSlide";
 
 /** Fixed cream / ink so the overlay stays readable in site dark mode (theme tokens flip). */
 const LB = {
@@ -29,16 +31,24 @@ type LightboxProps = {
 };
 
 export function Lightbox({ images, currentIdx, onClose }: LightboxProps) {
+  // Tracks whether the active slide is currently zoomed > 1×. Read by Embla's
+  // watchDrag callback on every pointer-down to decide whether to allow swipe.
+  const zoomedRef = useRef(false);
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
       dragFree: false,
       containScroll: false,
       startIndex: currentIdx,
+      watchDrag: () => !zoomedRef.current,
     },
     [WheelGesturesPlugin()],
   );
   const [selectedIdx, setSelectedIdx] = useState(currentIdx);
+
+  const handleSlideZoomChange = useCallback((zoomed: boolean) => {
+    zoomedRef.current = zoomed;
+  }, []);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -170,34 +180,13 @@ export function Lightbox({ images, currentIdx, onClose }: LightboxProps) {
               gap: 16,
             }}
           >
-            {images.map((im) => (
-              <div
+            {images.map((im, i) => (
+              <LightboxSlide
                 key={im.id}
-                style={{
-                  flex: "0 0 100%",
-                  minWidth: 0,
-                  position: "relative",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "stretch",
-                }}
-              >
-                <Image
-                  src={im.src}
-                  alt={im.alt}
-                  sizes="80vw"
-                  style={{
-                    flex: "1 1 0%",
-                    minHeight: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                    objectPosition: "center",
-                    background: "transparent",
-                  }}
-                />
-              </div>
+                image={im}
+                isActive={i === selectedIdx}
+                onZoomChange={handleSlideZoomChange}
+              />
             ))}
           </div>
         </div>
