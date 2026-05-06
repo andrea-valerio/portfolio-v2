@@ -141,8 +141,7 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
               width: "auto",
               height: "auto",
               objectFit: "contain",
-              border: `2px solid ${LB.paper}`,
-              background: LB.paper,
+              background: "transparent",
             }}
           />
         </div>
@@ -208,7 +207,15 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
           boxSizing: "border-box",
         }}
       >
-        {images.map((im, i) => (
+        {images.map((im, i) => {
+          const nw = im.src.width;
+          const nh = im.src.height;
+          const thumbH = 64;
+          const isPortrait = nh > nw;
+          const thumbW = isPortrait
+            ? Math.min(90, Math.max(28, Math.round(thumbH * (nw / nh))))
+            : 90;
+          return (
           <button
             key={im.id}
             type="button"
@@ -216,8 +223,8 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
             aria-label={`View ${im.caption}`}
             style={{
               flex: "0 0 auto",
-              width: 90,
-              height: 64,
+              width: thumbW,
+              height: thumbH,
               position: "relative",
               background: LB.paper2,
               border: i === currentIdx ? "2px solid #ff5722" : `2px solid ${LB.lineStrong}`,
@@ -228,9 +235,10 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
               overflow: "hidden",
             }}
           >
-            <Image src={im.src} alt={im.alt} fill sizes="90px" style={{ objectFit: "cover" }} />
+            <Image src={im.src} alt={im.alt} fill sizes={`${thumbW}px`} style={{ objectFit: "cover" }} />
           </button>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
