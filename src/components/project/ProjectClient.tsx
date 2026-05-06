@@ -52,8 +52,9 @@ export function ProjectClient({ data }: { data: ProjectCaseStudy }) {
 
   const allImages: LightboxImage[] = useMemo(
     () =>
-      data.sections.flatMap((s) =>
-        s.groups.flatMap((g) =>
+      data.sections.flatMap((s) => {
+        const groups = [...s.groups, ...(s.groupsAfterBody ?? [])];
+        return groups.flatMap((g) =>
           g.items.map((item) => ({
             id: item.id,
             src: item.src,
@@ -61,8 +62,8 @@ export function ProjectClient({ data }: { data: ProjectCaseStudy }) {
             caption: item.caption,
             section: s.title,
           })),
-        ),
-      ),
+        );
+      }),
     [data],
   );
 
@@ -94,29 +95,22 @@ export function ProjectClient({ data }: { data: ProjectCaseStudy }) {
           key={i}
           style={{ padding: "80px 48px", maxWidth: 1440, margin: "0 auto", position: "relative" }}
         >
-          <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 32, alignItems: "start" }}>
-            <div style={{ position: "sticky", top: 120 }}>
-              <div className="display-wide" style={{ fontSize: 64, color: "var(--accent)" }}>
-                {section.n}
-              </div>
-              <div
-                className="mono"
-                style={{ fontSize: 11, letterSpacing: "0.2em", marginTop: 8, opacity: 0.5 }}
-              >
-                ━━━━━━
+          <div className="project-section-shell">
+            <div className="project-section-num-wrap">
+              <div className="project-section-num-inner">
+                <div className="display-wide" style={{ fontSize: 64, color: "var(--accent)" }}>
+                  {section.n}
+                </div>
+                <div
+                  className="mono"
+                  style={{ fontSize: 11, letterSpacing: "0.2em", marginTop: 8, opacity: 0.5 }}
+                >
+                  ━━━━━━
+                </div>
               </div>
             </div>
-            <div>
-              <div
-                className="hand"
-                style={{
-                  fontSize: 28,
-                  color: "var(--accent)",
-                  transform: "rotate(-2deg)",
-                  display: "inline-block",
-                  marginBottom: 8,
-                }}
-              >
+            <div className="project-section-heading-block">
+              <div className="hand project-section-eyebrow" style={{ fontSize: 28, color: "var(--accent)" }}>
                 {section.eyebrow}
               </div>
               <h2
@@ -127,9 +121,13 @@ export function ProjectClient({ data }: { data: ProjectCaseStudy }) {
                 {section.title}
                 <span style={{ color: "var(--accent)" }}>.</span>
               </h2>
+            </div>
+            <div className="project-section-gutter" aria-hidden />
+            <div className="project-section-body">
               <Prose paragraphs={section.intro} />
               <GroupRenderer groups={section.groups} onOpen={openById} />
               <Prose paragraphs={section.body} />
+              <GroupRenderer groups={section.groupsAfterBody ?? []} onOpen={openById} />
             </div>
           </div>
         </section>

@@ -10,7 +10,8 @@ type SingleImageBlockProps = {
 };
 
 export function SingleImageBlock({ item, layout, onOpen }: SingleImageBlockProps) {
-  const aspectRatio = layout === "portrait" ? "9 / 19.5" : "16 / 10";
+  const imageHeight =
+    layout === "portrait" ? "clamp(440px, 56vw, 640px)" : "clamp(240px, 36vw, 540px)";
   return (
     <button
       type="button"
@@ -23,15 +24,18 @@ export function SingleImageBlock({ item, layout, onOpen }: SingleImageBlockProps
         background: "transparent",
         border: "none",
         cursor: "pointer",
-        textAlign: "left",
         margin: "32px 0",
       }}
     >
       <div
         data-card-hover
+        data-single-image
         style={{
           position: "relative",
-          aspectRatio,
+          height: imageHeight,
+          aspectRatio: `${item.src.width} / ${item.src.height}`,
+          maxWidth: "100%",
+          margin: "0 auto",
           border: "2px solid var(--ink)",
           boxShadow: "5px 5px 0 var(--ink)",
           background: "var(--paper-2)",
@@ -55,6 +59,7 @@ export function SingleImageBlock({ item, layout, onOpen }: SingleImageBlockProps
           opacity: 0.7,
           marginTop: 10,
           textTransform: "uppercase",
+          textAlign: "center",
         }}
       >
         {item.caption}

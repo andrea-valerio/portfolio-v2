@@ -88,9 +88,9 @@ export function Hero() {
                 </a>
                 . I treat design as a problem-solving discipline rooted in{" "}
                 <span className="hero-intro-mark">human behavior</span> — bridging UX/UI, product thinking, and HCI research
-                to build interfaces that fit how people actually think. I lean on{" "}
-                <span className="hero-intro-mark">AI in my workflow</span> not as a shortcut, but as a way to think faster
-                and more rigorously.
+                to build interfaces that fit how people actually think.{" "}
+                <span className="hero-intro-mark">AI is a core part of my workflow</span> — it widens what I can own,
+                sharpens efficiency, and grounds decisions in better evidence.
               </p>
             </div>
           </div>

@@ -63,11 +63,23 @@ body {
   color: var(--paper);
 }
 
+/* Handwritten highlighter: stretched SVG band (clone per line when mark wraps) */
 .serif mark {
-  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  background: transparent;
   color: inherit;
-  padding: 0 0.08em;
-  border-radius: 2px;
+  padding: 0 0.06em;
+  margin: 0 -0.02em;
+  border-radius: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 22' preserveAspectRatio='none'%3E%3Cpath d='M0 5.5 Q22 2.5 44 6.2 T72 3.8 T100 6.8 L100 15.2 Q78 18.5 52 15 T24 17.5 L0 14.8 Z' fill='%23ff5722' fill-opacity='0.28'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 0.78em;
+  background-position: left 62%;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+[data-mode="dark"] .serif mark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 22' preserveAspectRatio='none'%3E%3Cpath d='M0 5.5 Q22 2.5 44 6.2 T72 3.8 T100 6.8 L100 15.2 Q78 18.5 52 15 T24 17.5 L0 14.8 Z' fill='%23ff5722' fill-opacity='0.36'/%3E%3C/svg%3E");
 }
 
 a {
@@ -121,6 +133,15 @@ button {
   letter-spacing: -0.04em;
   line-height: 0.88;
   text-transform: uppercase;
+}
+
+.hero-line {
+  color: var(--ink);
+}
+
+/* Same display weight as `.display` but preserves authored capitalization (e.g. project meta). */
+.display--sentence {
+  text-transform: none;
 }
 .serif {
   font-family: var(--font-serif), "Source Serif 4", "Source Serif Pro", Georgia, serif;
@@ -565,6 +586,81 @@ section {
   opacity: 1;
 }
 
+.project-hero-meta {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+}
+
+.project-hero-meta .display--sentence {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Two-by-two on medium; four across on large. Grid is class-based so the max-width:900px
+   `section [style*="grid-template-columns"]` rule does not collapse this to one column on tablets. */
+@media (min-width: 640px) {
+  .project-hero-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1040px) {
+  .project-hero-meta {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.project-section-shell {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  grid-template-rows: auto auto;
+  gap: 32px;
+  align-items: start;
+}
+
+.project-section-num-wrap {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: center;
+  position: sticky;
+  top: 120px;
+}
+
+.project-section-num-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-section-heading-block {
+  grid-row: 1;
+  grid-column: 2;
+  min-width: 0;
+  position: relative;
+}
+
+.project-section-gutter {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.project-section-body {
+  grid-row: 2;
+  grid-column: 2;
+  min-width: 0;
+}
+
+@media (min-width: 901px) {
+  .project-section-eyebrow {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 10px);
+    display: inline-block;
+    transform: rotate(-2deg);
+    transform-origin: left bottom;
+  }
+}
+
 @media (max-width: 720px) {
   .footer-contact-grid {
     grid-template-columns: 1fr;
@@ -618,8 +714,46 @@ section {
   }
 
   .lightbox-arrow {
-    width: 44px !important;
-    height: 44px !important;
+    display: none !important;
+  }
+
+  .carousel-arrow {
+    display: none !important;
+  }
+
+  /* Full-bleed image area: landscape touches L/R; portrait uses full stage height (contain). */
+  .lightbox-stage {
+    padding: 0 !important;
+    min-height: 0;
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .lightbox-stage-inner {
+    position: absolute !important;
+    inset: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
+    min-height: 0;
+  }
+
+  .lightbox-stage-inner img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  /* Landscape carousel: one near-full-bleed slide per viewport. Portrait keeps authored fixed width (see Carousel.tsx). */
+  [data-carousel-image]:not([data-carousel-layout="portrait"]) {
+    height: auto !important;
+    width: calc(100vw - 80px) !important;
+    max-width: 100% !important;
+  }
+  [data-single-image] {
+    height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .hero-scroll-hint {
@@ -628,6 +762,37 @@ section {
   }
   .hero-scroll-hint .hero-scroll-hint-label {
     text-align: center !important;
+  }
+
+  .project-section-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+
+  .project-section-num-wrap,
+  .project-section-heading-block,
+  .project-section-gutter,
+  .project-section-body {
+    grid-column: 1;
+    grid-row: auto;
+    align-self: start;
+  }
+
+  .project-section-gutter {
+    display: none;
+  }
+
+  .project-section-eyebrow {
+    position: static;
+    display: inline-block;
+    transform: rotate(-2deg);
+    transform-origin: center;
+    margin-bottom: 8px;
+  }
+
+  .project-section-num-wrap {
+    position: static;
+    top: auto;
   }
 }
 

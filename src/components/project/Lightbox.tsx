@@ -3,6 +3,15 @@
 import { useEffect } from "react";
 import Image, { type StaticImageData } from "next/image";
 
+/** Fixed cream / ink so the overlay stays readable in site dark mode (theme tokens flip). */
+const LB = {
+  paper: "#f4ede0",
+  paper2: "#ebe2d0",
+  ink: "#161310",
+  line: "rgba(244, 237, 224, 0.15)",
+  lineStrong: "rgba(244, 237, 224, 0.3)",
+} as const;
+
 export type LightboxImage = {
   id: string;
   src: StaticImageData;
@@ -48,20 +57,31 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
         display: "flex",
         flexDirection: "column",
         animation: "lightboxIn 0.3s ease-out",
+        color: LB.paper,
       }}
     >
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
+          display: "grid",
+          gridTemplateColumns: "44px 1fr 44px",
           alignItems: "center",
+          gap: 16,
           padding: "20px 32px",
-          color: "var(--paper)",
-          borderBottom: "1px solid rgba(244,237,224,0.15)",
+          color: LB.paper,
+          borderBottom: `1px solid ${LB.line}`,
         }}
       >
-        <div className="mono" style={{ fontSize: 11, letterSpacing: "0.2em" }}>
-          {img.section} · {img.caption} · {currentIdx + 1} / {images.length}
+        <div />
+        <div
+          className="mono"
+          style={{
+            fontSize: 11,
+            letterSpacing: "0.2em",
+            color: LB.paper,
+            textAlign: "center",
+          }}
+        >
+          {img.caption}
         </div>
         <button
           type="button"
@@ -73,18 +93,30 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
             display: "grid",
             placeItems: "center",
             background: "transparent",
-            border: "2px solid var(--paper)",
+            border: `2px solid ${LB.paper}`,
             cursor: "pointer",
+            justifySelf: "end",
           }}
         >
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--paper)" strokeWidth="2.5">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke={LB.paper} strokeWidth="2.5">
             <path d="M3 3L15 15M15 3L3 15" />
           </svg>
         </button>
       </div>
 
-      <div style={{ flex: 1, display: "grid", placeItems: "center", padding: 24, position: "relative" }}>
+      <div
+        className="lightbox-stage"
+        style={{
+          flex: "1 1 0%",
+          minHeight: 0,
+          display: "grid",
+          placeItems: "center",
+          padding: 24,
+          position: "relative",
+        }}
+      >
         <div
+          className="lightbox-stage-inner"
           style={{
             position: "relative",
             maxWidth: "min(80vw, 1200px)",
@@ -103,8 +135,8 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
               width: "auto",
               height: "auto",
               objectFit: "contain",
-              border: "2px solid var(--paper)",
-              background: "var(--paper)",
+              border: `2px solid ${LB.paper}`,
+              background: LB.paper,
             }}
           />
         </div>
@@ -122,13 +154,13 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
             height: 56,
             display: "grid",
             placeItems: "center",
-            background: "var(--paper)",
-            border: "2px solid var(--paper)",
-            boxShadow: "4px 4px 0 var(--accent)",
+            background: LB.paper,
+            border: `2px solid ${LB.paper}`,
+            boxShadow: "4px 4px 0 #ff5722",
             cursor: "pointer",
           }}
         >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--ink)" strokeWidth="2.5">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke={LB.ink} strokeWidth="2.5">
             <path d="M14 4L7 11L14 18" />
           </svg>
         </button>
@@ -146,13 +178,13 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
             height: 56,
             display: "grid",
             placeItems: "center",
-            background: "var(--paper)",
-            border: "2px solid var(--paper)",
-            boxShadow: "4px 4px 0 var(--accent)",
+            background: LB.paper,
+            border: `2px solid ${LB.paper}`,
+            boxShadow: "4px 4px 0 #ff5722",
             cursor: "pointer",
           }}
         >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--ink)" strokeWidth="2.5">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke={LB.ink} strokeWidth="2.5">
             <path d="M8 4L15 11L8 18" />
           </svg>
         </button>
@@ -161,10 +193,13 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
       <div
         style={{
           padding: "16px 32px",
-          borderTop: "1px solid rgba(244,237,224,0.15)",
+          borderTop: `1px solid ${LB.line}`,
           display: "flex",
           gap: 10,
           overflowX: "auto",
+          justifyContent: "safe center",
+          width: "100%",
+          boxSizing: "border-box",
         }}
       >
         {images.map((im, i) => (
@@ -178,8 +213,8 @@ export function Lightbox({ images, currentIdx, onClose, onNav, onJump }: Lightbo
               width: 90,
               height: 64,
               position: "relative",
-              background: "var(--paper-2)",
-              border: i === currentIdx ? "2px solid var(--accent)" : "2px solid rgba(244,237,224,0.3)",
+              background: LB.paper2,
+              border: i === currentIdx ? "2px solid #ff5722" : `2px solid ${LB.lineStrong}`,
               cursor: "pointer",
               padding: 0,
               opacity: i === currentIdx ? 1 : 0.6,

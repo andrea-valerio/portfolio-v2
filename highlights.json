@@ -1,0 +1,613 @@
+{
+    "generated_from": "andrea-valerio/portfolio",
+    "highlight_selectors_used": [
+      "span.font-medium",
+      "strong",
+      "b"
+    ],
+    "projects": {
+      "meetup": [
+        {
+          "phrase": "one of the largest event and community platforms",
+          "context": "It's one of the largest event and community platforms globally, with millions of monthly active users worldwide."
+        },
+        {
+          "phrase": "millions of monthly active users",
+          "context": "It's one of the largest event and community platforms globally, with millions of monthly active users worldwide."
+        },
+        {
+          "phrase": "large redesign",
+          "context": "At the time I joined the product team, Meetup had been undergoing a large redesign aimed at modernizing the platform and repositioning it among com..."
+        },
+        {
+          "phrase": "modernizing",
+          "context": "At the time I joined the product team, Meetup had been undergoing a large redesign aimed at modernizing the platform and repositioning it among com..."
+        },
+        {
+          "phrase": "UI",
+          "context": "At the time I joined the product team, Meetup had been undergoing a large redesign aimed at modernizing the platform and repositioning it among com..."
+        },
+        {
+          "phrase": "product experience",
+          "context": "At the time I joined the product team, Meetup had been undergoing a large redesign aimed at modernizing the platform and repositioning it among com..."
+        },
+        {
+          "phrase": "product monetization",
+          "context": "In the meantime, I also contributed to growth tasks with the aim of enhancing product monetization and business prosperity."
+        },
+        {
+          "phrase": "business prosperity",
+          "context": "In the meantime, I also contributed to growth tasks with the aim of enhancing product monetization and business prosperity."
+        },
+        {
+          "phrase": "web",
+          "context": "By the time I joined the team the work on the web was almost done; I personally took care of the low-visibility pages as part of my team onboarding..."
+        },
+        {
+          "phrase": "secondary features for organizers",
+          "context": "By the time I joined the team the work on the web was almost done; I personally took care of the low-visibility pages as part of my team onboarding..."
+        },
+        {
+          "phrase": "mobile redesign",
+          "context": "We then continued with the mobile redesign, supporting the team in defining the visual direction in core pages and reusable components in high-traf..."
+        },
+        {
+          "phrase": "group creation flow",
+          "context": "On my side, I personally owned the redesign of the group creation flow, attendance flow, main paywalls, and the app settings."
+        },
+        {
+          "phrase": "attendance flow",
+          "context": "On my side, I personally owned the redesign of the group creation flow, attendance flow, main paywalls, and the app settings."
+        },
+        {
+          "phrase": "paywalls",
+          "context": "On my side, I personally owned the redesign of the group creation flow, attendance flow, main paywalls, and the app settings."
+        },
+        {
+          "phrase": "app settings",
+          "context": "On my side, I personally owned the redesign of the group creation flow, attendance flow, main paywalls, and the app settings."
+        },
+        {
+          "phrase": "cost-effective and impactful UX changes",
+          "context": "The goal was to deliver a more modern, consistent product experience while applying cost-effective and impactful UX changes."
+        },
+        {
+          "phrase": "a/b tested",
+          "context": "The rollout was carefully a/b tested on high-visibility pages to ensure that the core experience was welcome by users and well-performing according..."
+        },
+        {
+          "phrase": "a/b test experiments",
+          "context": "Alongside the redesign, several a/b test experiments explored ways to improve product engagement and monetization."
+        },
+        {
+          "phrase": "SMS reminders",
+          "context": "One initiative focused on SMS reminders for event participants."
+        },
+        {
+          "phrase": "subscription paywalls",
+          "context": "Another set of experiments focused on subscription paywalls during onboarding."
+        },
+        {
+          "phrase": "onboarding flow",
+          "context": "One experiment introduced a full-screen paywall integrated into the onboarding flow, preceded by a short “personalization” loading screen."
+        },
+        {
+          "phrase": "significantly outperformed",
+          "context": "This variant significantly outperformed the previous modal paywall on iOS and Android, and became the new default experience, while testing started..."
+        },
+        {
+          "phrase": "year-over-year growth",
+          "context": "In conclusion, during my active period as a Meetup Product Designer, gross subscription bookings showed strong year-over-year growth, with onboardi..."
+        },
+        {
+          "phrase": "best friendship app",
+          "context": "Moreover, the redesigned mobile app launched successfully and received external visibility, including coverage from Engadget and an award as best f..."
+        },
+        {
+          "phrase": "reposition Meetup",
+          "context": "Together, these changes helped reposition Meetup as a more contemporary product and laid the foundation for future product development."
+        }
+      ],
+      "groove": [
+        {
+          "phrase": "start-up",
+          "context": "This project was developed for a start-up based in Trento, focusing on creating a MVP for their investor pitch."
+        },
+        {
+          "phrase": "search and purchase of club event tickets",
+          "context": "The app is designed to streamline the search and purchase of club event tickets using geolocation and personalized suggestions."
+        },
+        {
+          "phrase": "one-month",
+          "context": "The project had a tight one-month timeline, executed as a side project while balancing my full-time research intern position."
+        },
+        {
+          "phrase": "Double Diamond",
+          "context": "A Double Diamond methodology was applied."
+        },
+        {
+          "phrase": "online ethnography",
+          "context": "In the discovery phase, stakeholder interviews, benchmark analysis, and online ethnography were conducted, alongside the creation of personas and e..."
+        },
+        {
+          "phrase": "personas",
+          "context": "In the discovery phase, stakeholder interviews, benchmark analysis, and online ethnography were conducted, alongside the creation of personas and e..."
+        },
+        {
+          "phrase": "experience journeys",
+          "context": "In the discovery phase, stakeholder interviews, benchmark analysis, and online ethnography were conducted, alongside the creation of personas and e..."
+        },
+        {
+          "phrase": "Crazy 8 brainstorming",
+          "context": "During the development phase, Crazy 8 brainstorming with stakeholders, sketches, low- and high-fidelity mock-ups were created."
+        },
+        {
+          "phrase": "high-fidelity mock-ups",
+          "context": "During the development phase, Crazy 8 brainstorming with stakeholders, sketches, low- and high-fidelity mock-ups were created."
+        },
+        {
+          "phrase": "quick video animation",
+          "context": "A quick video animation was also set-up for a funding contest."
+        },
+        {
+          "phrase": "Home:",
+          "context": "Home: Includes a search bar, a carousel of personalized suggestion cards, and a map-based exploration tool with filters for event preferences."
+        },
+        {
+          "phrase": "Tickets:",
+          "context": "Tickets: Displays chronologically listed purchased tickets with essential event details and easy-to-use QR codes for smooth check-in."
+        },
+        {
+          "phrase": "Profile:",
+          "context": "Profile: Shows the favourite events and venues, besides providing access to the friends list, fostering a small social dimension within the app."
+        }
+      ],
+      "loomly-ai": [
+        {
+          "phrase": "social media management tool",
+          "context": "Loomly is a social media management tool that helps brands, agencies, and freelancers plan, create, schedule, and analyze their content."
+        },
+        {
+          "phrase": "AI-native product",
+          "context": "The opportunity was to consolidate the entire content workflow inside a single AI-native product, layering AI across the content lifecycle: idea ge..."
+        },
+        {
+          "phrase": "only product designer",
+          "context": "I joined as the only product designer and, given the exploratory nature of the project, also took on partial project management responsibilities."
+        },
+        {
+          "phrase": "project management responsibilities",
+          "context": "I joined as the only product designer and, given the exploratory nature of the project, also took on partial project management responsibilities."
+        },
+        {
+          "phrase": "agile approach",
+          "context": "The project ran on a agile approach and compressed timeline: the first version shipped in ~1 month from kickoff."
+        },
+        {
+          "phrase": "compressed timeline",
+          "context": "The project ran on a agile approach and compressed timeline: the first version shipped in ~1 month from kickoff."
+        },
+        {
+          "phrase": "usability sessions and interviews",
+          "context": "Within the first iteration, user research found its place, and I ran 6 usability sessions and interviews with target users."
+        },
+        {
+          "phrase": "in-product survey",
+          "context": "In addition, I shipped a lightweight in-product survey to capture early sentiment after launch and gather ongoing feedback."
+        },
+        {
+          "phrase": "owned the end-to-end design",
+          "context": "I owned the end-to-end design of the new experience, including the navigation, dashboard, and the AI Assistant behavior across side panel and full..."
+        },
+        {
+          "phrase": "AI Assistant behavior",
+          "context": "I owned the end-to-end design of the new experience, including the navigation, dashboard, and the AI Assistant behavior across side panel and full..."
+        },
+        {
+          "phrase": "monetization system",
+          "context": "Also, I worked on the new credit-based monetization system with a full-set of paywalls across plans and usage thresholds."
+        },
+        {
+          "phrase": "soft rebrand",
+          "context": "In general the product received a soft rebrand, which peaked in the redesign of the homepage and pricing page of the marketing website."
+        },
+        {
+          "phrase": "marketing campaign",
+          "context": "The pivot also extended beyond the app: I contributed to the communication and graphic strategy for the marketing campaign on the London and Glasgo..."
+        },
+        {
+          "phrase": "new logo",
+          "context": "The pivot also extended beyond the app: I contributed to the communication and graphic strategy for the marketing campaign on the London and Glasgo..."
+        },
+        {
+          "phrase": "pragmatism",
+          "context": "Other minor early-phase initiatives included the mobile app revamp and a new link-in-bio feature, where Lovable prototypes replaced Figma specs for..."
+        },
+        {
+          "phrase": "frontend tasks",
+          "context": "To keep the impact and efficiency high, I adopted an AI workflow that let me work beyond the Figma files, carrying out frontend tasks to refine UI..."
+        },
+        {
+          "phrase": "AI automation",
+          "context": "As of April 2026, I'm exploring an AI automation that bilaterally manages, matches, and refreshes the design system on both Figma and frontend at t..."
+        },
+        {
+          "phrase": "token and component levels.",
+          "context": "As of April 2026, I'm exploring an AI automation that bilaterally manages, matches, and refreshes the design system on both Figma and frontend at t..."
+        },
+        {
+          "phrase": "MVP",
+          "context": "The MVP launched in February 2026, first on new users through A/B testing, then progressively extended to repackaged users and by March on the whol..."
+        },
+        {
+          "phrase": "A/B testing,",
+          "context": "The MVP launched in February 2026, first on new users through A/B testing, then progressively extended to repackaged users and by March on the whol..."
+        },
+        {
+          "phrase": "whole user base.",
+          "context": "The MVP launched in February 2026, first on new users through A/B testing, then progressively extended to repackaged users and by March on the whol..."
+        },
+        {
+          "phrase": "redefined Loomly",
+          "context": "Evaluation is still in progress, but the pivot has already redefined Loomly from a scheduling tool to an AI-native content platform."
+        }
+      ],
+      "thesis": [
+        {
+          "phrase": "mental workload",
+          "context": "This project investigates how mental workload affects remote operators managing autonomous vehicle fleets."
+        },
+        {
+          "phrase": "remote operators",
+          "context": "This project investigates how mental workload affects remote operators managing autonomous vehicle fleets."
+        },
+        {
+          "phrase": "eye-tracking data",
+          "context": "The goal was to explore whether eye-tracking data can be used to assess and predict workload in real time, enabling more adaptive and intelligent i..."
+        },
+        {
+          "phrase": "controlled user study",
+          "context": "The analysis is based on data from a controlled user study adopting a 2×2 within-subject design, where workload was manipulated through task diffic..."
+        },
+        {
+          "phrase": "2×2 within-subject design",
+          "context": "The analysis is based on data from a controlled user study adopting a 2×2 within-subject design, where workload was manipulated through task diffic..."
+        },
+        {
+          "phrase": "difficulty",
+          "context": "The analysis is based on data from a controlled user study adopting a 2×2 within-subject design, where workload was manipulated through task diffic..."
+        },
+        {
+          "phrase": "frequency",
+          "context": "hard ) and task presentation frequency ( slow vs."
+        },
+        {
+          "phrase": "NASA-TLX",
+          "context": "For each condition, subjective workload was measured using NASA-TLX, while performance metrics and eye-tracking data were continuously recorded."
+        },
+        {
+          "phrase": "performance metrics",
+          "context": "For each condition, subjective workload was measured using NASA-TLX, while performance metrics and eye-tracking data were continuously recorded."
+        },
+        {
+          "phrase": "eye-tracking data",
+          "context": "For each condition, subjective workload was measured using NASA-TLX, while performance metrics and eye-tracking data were continuously recorded."
+        },
+        {
+          "phrase": "Areas of Interest",
+          "context": "The interaction took place within a single interface structured into five functional regions—Ticket, Description, Map, Diagnostics, and Actions—whi..."
+        },
+        {
+          "phrase": "data cleaning and synchronization",
+          "context": "After data cleaning and synchronization, a data extraction of AoI-based features followed to capture different aspects of visual behavior, includin..."
+        },
+        {
+          "phrase": "data extraction",
+          "context": "After data cleaning and synchronization, a data extraction of AoI-based features followed to capture different aspects of visual behavior, includin..."
+        },
+        {
+          "phrase": "validation phase",
+          "context": "A validation phase was conducted to ensure the robustness of the experimental setup."
+        },
+        {
+          "phrase": "Inferential analysis",
+          "context": "Inferential analysis was then performed to address the research questions."
+        },
+        {
+          "phrase": "machine learning pipeline",
+          "context": "For the predictive analysis, a machine learning pipeline was developed to evaluate the extent to which workload states can be inferred from AoI met..."
+        },
+        {
+          "phrase": "feature selection",
+          "context": "A feature selection was performed using correlation filtering and the Boruta algorithm, followed by model evaluation through nested cross-validatio..."
+        },
+        {
+          "phrase": "model evaluation",
+          "context": "A feature selection was performed using correlation filtering and the Boruta algorithm, followed by model evaluation through nested cross-validatio..."
+        },
+        {
+          "phrase": "mental workload significantly affects ocular behavior",
+          "context": "The results show that mental workload significantly affects ocular behavior."
+        },
+        {
+          "phrase": "increasing task complexity",
+          "context": "Visual attention patterns change systematically under higher workload conditions, with operators allocating less attention to non-critical interfac..."
+        },
+        {
+          "phrase": "AoI-based metrics proved effective in estimating workload states",
+          "context": "From a predictive perspective, AoI-based metrics proved effective in estimating workload states."
+        },
+        {
+          "phrase": "intelligent interfaces capable of adapting to users’ mental states in real time.",
+          "context": "Overall, the findings support the use of AoI-based analysis for both explaining and predicting workload, contributing to the development of intelli..."
+        }
+      ],
+      "ovenconf": [
+        {
+          "phrase": "redesign",
+          "context": "The goal was to redesign the oven configurator, especially from the perspective of the company marketers."
+        },
+        {
+          "phrase": "company marketers",
+          "context": "The goal was to redesign the oven configurator, especially from the perspective of the company marketers."
+        },
+        {
+          "phrase": "heuristic assessment",
+          "context": "The process began with a heuristic assessment of the current product layout, which is a section of the company website."
+        },
+        {
+          "phrase": "benchmark analysis",
+          "context": "A benchmark analysis, especially in the car industry, was also helpful to have fresh insights."
+        },
+        {
+          "phrase": "Interviews",
+          "context": "Interviews as well as think-aloud sessions allowed the team to learn the needs and the work process of UNOX marketers, but also about final customers."
+        },
+        {
+          "phrase": "think-aloud",
+          "context": "Interviews as well as think-aloud sessions allowed the team to learn the needs and the work process of UNOX marketers, but also about final customers."
+        },
+        {
+          "phrase": "consultation",
+          "context": "As learned, consultation involves these phases:"
+        },
+        {
+          "phrase": "usability issues",
+          "context": "Moreover, usability issues have been detected such as accessibility, process consistency, and language clarity; besides some configuration building..."
+        },
+        {
+          "phrase": "conceptualization",
+          "context": "The process then continued with the conceptualization of the new design of the configuration process, followed by wireframes and prototype."
+        },
+        {
+          "phrase": "wireframes",
+          "context": "The process then continued with the conceptualization of the new design of the configuration process, followed by wireframes and prototype."
+        },
+        {
+          "phrase": "prototype",
+          "context": "The process then continued with the conceptualization of the new design of the configuration process, followed by wireframes and prototype."
+        },
+        {
+          "phrase": "usability testing",
+          "context": "To conclude, a final session of usability testing has been vital to ensure practical functionality."
+        },
+        {
+          "phrase": "serial constraint logic",
+          "context": "Indeed, now it’s possible to select ovens and accessories one by one, with serial constraint logic and complete process awareness."
+        },
+        {
+          "phrase": "process awareness",
+          "context": "Indeed, now it’s possible to select ovens and accessories one by one, with serial constraint logic and complete process awareness."
+        },
+        {
+          "phrase": "new options",
+          "context": "Moreover, usability is improved and new options are available."
+        },
+        {
+          "phrase": "product-recommending survey",
+          "context": "In addition, a product-recommending survey feature tailored to final customers’ needs has been designed."
+        }
+      ],
+      "citinst": [
+        {
+          "phrase": "public website template",
+          "context": "TThe project aimed to design the Help and Support services and the Appointment Booking section for a public website template, soon being available..."
+        },
+        {
+          "phrase": "benchmarking",
+          "context": "Following a preliminary benchmarking phase on both the public and private sectors, the main research part has been conducted through interviews."
+        },
+        {
+          "phrase": "interviews",
+          "context": "Following a preliminary benchmarking phase on both the public and private sectors, the main research part has been conducted through interviews."
+        },
+        {
+          "phrase": "traditional communication",
+          "context": "Citizens prefer traditional communication channels over online assistance."
+        },
+        {
+          "phrase": "Big companies",
+          "context": "Big companies like Amazon and Apple are perceived differently due to their swift feedback and solutions."
+        },
+        {
+          "phrase": "FAQs",
+          "context": "FAQs are appreciated, even though the term itself is not widely recognized."
+        },
+        {
+          "phrase": "in person",
+          "context": "Most appointments are booked in person due to the lack of an online service."
+        },
+        {
+          "phrase": "online booking",
+          "context": "There is interest in an online booking tool, influenced by increased comfort with online systems post-pandemic."
+        },
+        {
+          "phrase": "user personas",
+          "context": "As following steps, user personas, experience maps, conceptual maps and taxonomy have been used to develop more on the insights."
+        },
+        {
+          "phrase": "experience maps",
+          "context": "As following steps, user personas, experience maps, conceptual maps and taxonomy have been used to develop more on the insights."
+        },
+        {
+          "phrase": "conceptual maps",
+          "context": "As following steps, user personas, experience maps, conceptual maps and taxonomy have been used to develop more on the insights."
+        },
+        {
+          "phrase": "taxonomy",
+          "context": "As following steps, user personas, experience maps, conceptual maps and taxonomy have been used to develop more on the insights."
+        },
+        {
+          "phrase": "Actors:",
+          "context": "Actors: key stakeholders involved in citizen communication."
+        },
+        {
+          "phrase": "Feedback:",
+          "context": "Feedback: methods and channels through which citizens provide input"
+        },
+        {
+          "phrase": "Support:",
+          "context": "Support: assistance provided to citizens, like help channels, FAQs, and resources."
+        },
+        {
+          "phrase": "dynamic contact hub",
+          "context": "The final version is a dynamic contact hub, segmented into two main functionalities, Supporting and Reporting."
+        },
+        {
+          "phrase": "familiar covid-related booking systems",
+          "context": "The latter has been designed following the already familiar covid-related booking systems."
+        }
+      ],
+      "ecomuseo": [
+        {
+          "phrase": "real-world case study",
+          "context": "The project was a real-world case study aiming to consolidate multiple museum websites while ensuring that each museum’s unique brand identity is p..."
+        },
+        {
+          "phrase": "brand identity",
+          "context": "The project was a real-world case study aiming to consolidate multiple museum websites while ensuring that each museum’s unique brand identity is p..."
+        },
+        {
+          "phrase": "visual design",
+          "context": "The prototype was limited to two museums, mainly focusing on the visual design."
+        },
+        {
+          "phrase": "Double Diamond",
+          "context": "A quick Double Diamond approach was followed."
+        },
+        {
+          "phrase": "sketches",
+          "context": "These results led to the the first definition of the UX of the website, represented by sketches and a taxonomy graph."
+        },
+        {
+          "phrase": "taxonomy graph",
+          "context": "These results led to the the first definition of the UX of the website, represented by sketches and a taxonomy graph."
+        },
+        {
+          "phrase": "design system",
+          "context": "Moreover, a comprehensive multi-brand design system is created to fit the requirement."
+        },
+        {
+          "phrase": "interactive prototype",
+          "context": "Finally, mock-ups and an interactive prototype were built and tested with users to refine the solution."
+        },
+        {
+          "phrase": "User personas",
+          "context": "User personas were instrumental in shaping the design, summarizing insights related to internationality, family and school discounts, resources, an..."
+        },
+        {
+          "phrase": "three sections",
+          "context": "The final design consisted of three sections on the website: a shared homepage for general information and one dedicated sub-page for each museum."
+        },
+        {
+          "phrase": "museum-specific pages",
+          "context": "The museum-specific pages provided detailed descriptions, including practical information like timings, accessibility, group sizes, and ticket types."
+        },
+        {
+          "phrase": "general section",
+          "context": "The general section offered an overview of the area, redirecting users to the museums’ sub-pages and highlighting news and events."
+        },
+        {
+          "phrase": "Consistency",
+          "context": "Consistency was achieved across the platform through cohesive design elements such as shared navigation, identical top bars, and a unified footer."
+        },
+        {
+          "phrase": "museum’s identity",
+          "context": "While colour schemes reflected each museum’s identity, the layout remained uniform, ensuring a seamless experience for users."
+        }
+      ],
+      "reelsfyp": [
+        {
+          "phrase": "Quantitative research methods",
+          "context": "Quantitative research methods have been used for this study."
+        },
+        {
+          "phrase": "within-subject questionnaire",
+          "context": "The research design implied a within-subject questionnaire using a revisited UEQ+ standard."
+        },
+        {
+          "phrase": "order",
+          "context": "Furthermore, the order effect has been counterbalanced by mixing the order in which the sections were given."
+        },
+        {
+          "phrase": "pilot test",
+          "context": "Before the data collection, a pilot test allowed us to check and take minor fixes."
+        },
+        {
+          "phrase": "descriptive-inferential analysis",
+          "context": "After the data collection, responses were cleaned, elaborated on the given UEQ+ analysis tool and then used to perform a descriptive-inferential an..."
+        },
+        {
+          "phrase": "not substantiated",
+          "context": "As a final result, our primary research hypothesis was not substantiated."
+        }
+      ],
+      "sustsmok": [
+        {
+          "phrase": "qualitative methods",
+          "context": "We studied it applying serially qualitative methods stemming from the grounded theory."
+        },
+        {
+          "phrase": "observation",
+          "context": "First up, 25 observation sessions have been carried out to better explore the research scenes."
+        },
+        {
+          "phrase": "in-depth interviews",
+          "context": "Then, we dove into it with 10 in-depth interviews to learn more about smokers' habits, littering behavior and factors."
+        },
+        {
+          "phrase": "focus group",
+          "context": "A recurrent thematic analysis through the steps allowed the team to identify 12 main themes, which will be then used in a focus group."
+        },
+        {
+          "phrase": "Cards",
+          "context": "Cards representing the themes are drawn during the session to suggest discussion among the participants:"
+        },
+        {
+          "phrase": "participatory workshop",
+          "context": "As the final step, we also wanted to focus a bit more on the possible solutions, this was possible thanks to a participatory workshop."
+        },
+        {
+          "phrase": "thematic analysis",
+          "context": "Results, raised after a thorough thematic analysis, suggested two types of factors influencing smokers’ littering behaviour: circumstantial and per..."
+        },
+        {
+          "phrase": "circumstantial",
+          "context": "Results, raised after a thorough thematic analysis, suggested two types of factors influencing smokers’ littering behaviour: circumstantial and per..."
+        },
+        {
+          "phrase": "personal-social factors",
+          "context": "Results, raised after a thorough thematic analysis, suggested two types of factors influencing smokers’ littering behaviour: circumstantial and per..."
+        },
+        {
+          "phrase": "pocket ashtrays",
+          "context": "Among the discussed solutions, the most appreciated ones regarded clean-up services, incentivising the usage of pocket ashtrays, awareness-raising..."
+        },
+        {
+          "phrase": "interactive/gamified equipment",
+          "context": "Among the discussed solutions, the most appreciated ones regarded clean-up services, incentivising the usage of pocket ashtrays, awareness-raising..."
+        }
+      ]
+    }
+  }
+  
