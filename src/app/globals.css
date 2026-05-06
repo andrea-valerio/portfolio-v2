@@ -56,52 +56,28 @@ html {
   min-height: 100%;
 }
 
-/* ============================================================
-   iOS 26 Safari ("Liquid Glass") toolbar tint anchors.
+/* Solid cream block painted into the iOS safe-area-inset-bottom zone
+   (the strip behind the home indicator / under the floating Safari URL
+   bar). Two purposes:
 
-   Background:
-   - In iOS 26, Safari dropped support for <meta name="theme-color"> and instead
-     samples the background-color of the topmost position:fixed element near
-     each viewport edge (within ~4px top / ~3px bottom, ≥80% wide, ≥6px tall).
-     If no such element exists, it falls back to the <body> background.
-   - In iOS 26.0.x, position:fixed elements were also clipped to the inner
-     viewport (i.e. excluding safe areas) — so a full-screen modal/overlay
-     could not actually reach behind the status bar or URL bar. iOS 26.1
-     mostly fixed the clipping but introduced a new quirk: when sampling a
-     fixed element for the chrome tint, opacity is *ignored* (the color is
-     read as fully opaque).
+   1. Gives iOS Safari 26's Liquid Glass URL bar a deliberate, fully
+      opaque cream sample for its tint (it samples fixed elements near
+      the bottom edge), so the bar reads as clean cream-tinted glass
+      instead of falling back to its default darker fade-out.
+   2. Sits ABOVE the grain texture (z=101 > z=100), so the multiply-blend
+      grain noise can't darken this strip — which removes the visible
+      darker band you saw just above the URL bar.
 
-   What we do:
-   - .ios-toolbar-tint-bottom is an invisible (off-edge) fixed strip that gives
-     Safari a deliberate cream color to use for the bottom URL bar tint,
-     instead of letting iOS render its default darker fade-out.
-   - It only renders on iOS Safari (the @supports query is the canonical
-     -webkit-touch-callout sniff) and only on phone-width viewports, so it
-     can't affect macOS / iPadOS Safari.
-   - z-index is low so any open modal/lightbox (z-index 90/100) takes
-     precedence and tints the bottom bar with the modal color instead.
-   ============================================================ */
-.ios-toolbar-tint-bottom {
-  display: none;
+   Collapses to 0 height when safe-area-inset-bottom is 0. */
+.ios-toolbar-fill-bottom {
   position: fixed;
-  bottom: -8px;
+  bottom: 0;
   left: 0;
   right: 0;
-  height: 12px;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  height: env(safe-area-inset-bottom, 0px);
+  z-index: 101;
   background: var(--paper);
-  z-index: 5;
   pointer-events: none;
-}
-
-@supports (-webkit-touch-callout: none) {
-  @media (max-width: 767px) {
-    .ios-toolbar-tint-bottom {
-      display: block;
-    }
-  }
 }
 
 #projects,
@@ -515,25 +491,25 @@ button {
   border-bottom: 1px solid var(--line);
 }
 
-/* iOS Safari (and any browser exposing safe-area-inset-top): paint a
-   matching frosted layer behind the system status bar so the navbar's
-   blur visually extends to the very top of the screen instead of cutting
-   off at the bottom of the status bar. Sized to exactly the safe-area
-   inset, sits below the navbar (z=50), so the navbar still wins for
-   chrome-tint sampling. Pointer-events disabled so the status bar
-   tap-to-scroll and notch interactions stay native. The element has no
-   visual effect on browsers where safe-area-inset-top is 0 (height
-   collapses to 0). */
-.ios-statusbar-blur {
+/* Solid cream block painted into the iOS safe-area-inset-top zone (the
+   strip behind the system status bar / dynamic island). This makes the
+   area above the navbar a clean flat cream — no page content, no
+   gradient — so the eye reads it as part of the chrome rather than as
+   "page content peeking through under the status bar".
+
+   Sits at z-index 101 so it covers the grain texture (z=100) too, which
+   prevents the grain's multiply-blend from darkening the strip and
+   creating a visible boundary against the iOS Liquid Glass status bar.
+   Collapses to 0 height where safe-area-inset-top is 0 (desktop, etc.).
+   pointer-events:none keeps the iOS tap-to-scroll on the status bar. */
+.ios-statusbar-fill {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: env(safe-area-inset-top, 0px);
-  z-index: 49;
-  background: color-mix(in oklab, var(--paper) 60%, transparent);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  z-index: 101;
+  background: var(--paper);
   pointer-events: none;
 }
 .nav-brand-group {

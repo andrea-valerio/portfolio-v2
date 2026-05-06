@@ -104,14 +104,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Nav />
           {children}
           <Footer />
-          {/* Frosted layer behind the iOS system status bar so the nav's
-              blur visually extends to the top of the screen. Collapses
-              to 0 height on browsers where safe-area-inset-top is 0. */}
-          <div className="ios-statusbar-blur" aria-hidden />
-          {/* iOS 26 Safari "Liquid Glass" toolbar tint anchor — see
-              .ios-toolbar-tint-bottom in globals.css. Hidden by CSS on
-              every browser other than mobile iOS Safari. */}
-          <div className="ios-toolbar-tint-bottom" aria-hidden />
+          {/* Solid cream blocks painted into the iOS safe-area zones so
+              the strips behind the system status bar and the floating
+              Safari URL bar read as flat chrome instead of leaking page
+              content / grain texture. Both collapse to 0 height where
+              safe-area insets are 0 (desktop, browsers without notch),
+              so they're invisible everywhere except iOS. */}
+          <div className="ios-statusbar-fill" aria-hidden />
+          <div className="ios-toolbar-fill-bottom" aria-hidden />
           <Animations />
           <Script
             src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"
