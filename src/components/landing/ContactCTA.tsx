@@ -10,7 +10,7 @@ export function ContactCTA() {
     <div
       data-anim="fade-up"
       data-delay="1.4"
-      style={{ marginTop: 40, display: "flex", gap: 14, flexWrap: "wrap", alignItems: "center" }}
+      style={{ display: "flex", gap: 14, flexWrap: "wrap", alignItems: "center" }}
     >
       <button type="button" className="btn" onClick={openContact}>
         <span>Get in touch</span>

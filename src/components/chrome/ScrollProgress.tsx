@@ -18,6 +18,7 @@ export function ScrollProgress() {
 
   return (
     <div
+      className="hidden lg:block"
       style={{
         position: "fixed",
         top: 0,

@@ -17,7 +17,6 @@ export function Hero() {
           display: "grid",
           gridTemplateColumns: "1.4fr 1fr",
           gap: 48,
-          padding: "64px 48px 80px",
           maxWidth: 1440,
           margin: "0 auto",
           alignItems: "stretch",
@@ -66,36 +65,41 @@ export function Hero() {
             </span>
           </h1>
 
-          <div
-            data-anim="fade-up"
-            data-delay="1.2"
-            style={{ marginTop: 32, maxWidth: 540, display: "flex", gap: 20, alignItems: "flex-start" }}
-          >
+          <div className="hero-intro-cta-stack">
             <div
-              style={{ flex: "0 0 auto", width: 4, alignSelf: "stretch", background: "var(--accent)" }}
-            />
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <p className="serif hero-intro" style={{ fontSize: 18, lineHeight: 1.65, color: "var(--ink)" }}>
-                Hi! I&apos;m a <strong className="hero-intro-strong">Product Designer</strong> with a background in{" "}
-                <a
-                  href="https://corsi.unitn.it/en/human-computer-interaction"
-                  className="hero-intro-hci-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={"Master's degree in Human–Computer Interaction — University of Trento"}
-                >
-                  Human–Computer Interaction
-                </a>
-                . I treat design as a problem-solving discipline rooted in{" "}
-                <span className="hero-intro-mark">human behavior</span> — bridging UX/UI, product thinking, and HCI research
-                to build interfaces that fit how people actually think.{" "}
-                <span className="hero-intro-mark">AI is a core part of my workflow</span> — it widens what I can own,
-                sharpens efficiency, and grounds decisions in better evidence.
-              </p>
+              className="hero-intro-block"
+              data-anim="fade-up"
+              data-delay="1.2"
+              style={{ maxWidth: 540, display: "flex", gap: 20, alignItems: "flex-start" }}
+            >
+              <div
+                style={{ flex: "0 0 auto", width: 4, alignSelf: "stretch", background: "var(--accent)" }}
+              />
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <p className="serif hero-intro" style={{ fontSize: 18, lineHeight: 1.65, color: "var(--ink)" }}>
+                  Hi! I&apos;m a <strong className="hero-intro-strong">Product Designer</strong> with a background in{" "}
+                  <a
+                    href="https://corsi.unitn.it/en/human-computer-interaction"
+                    className="hero-intro-hci-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={"Master's degree in Human–Computer Interaction — University of Trento"}
+                  >
+                    Human–Computer Interaction
+                  </a>
+                  . I treat design as a problem-solving discipline rooted in{" "}
+                  <span className="hero-intro-mark">human behavior</span> — bridging UX/UI, product thinking, and HCI research
+                  to build interfaces that fit how people actually think.{" "}
+                  <span className="hero-intro-mark">AI is a core part of my workflow</span> — it widens what I can own,
+                  sharpens efficiency, and grounds decisions in better evidence.
+                </p>
+              </div>
+            </div>
+
+            <div className="hero-cta-slot">
+              <ContactCTA />
             </div>
           </div>
-
-          <ContactCTA />
 
           <div
             className="hero-scroll-hint"

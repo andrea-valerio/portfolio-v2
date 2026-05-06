@@ -8,9 +8,10 @@ type SmoothHashLinkProps = {
   href: string;
   className?: string;
   children: React.ReactNode;
+  onClick?: () => void;
 };
 
-export function SmoothHashLink({ sectionId, href, className, children }: SmoothHashLinkProps) {
+export function SmoothHashLink({ sectionId, href, className, children, onClick }: SmoothHashLinkProps) {
   const pathname = usePathname();
 
   return (
@@ -19,6 +20,7 @@ export function SmoothHashLink({ sectionId, href, className, children }: SmoothH
       className={className}
       scroll={false}
       onClick={(e) => {
+        onClick?.();
         if (pathname !== "/") return;
         e.preventDefault();
         document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" });
