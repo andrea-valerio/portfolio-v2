@@ -458,8 +458,8 @@ button {
   gap: 12px;
   min-width: 0;
   background: color-mix(in oklab, var(--paper) 60%, transparent);
-  backdrop-filter: blur(10px) saturate(140%);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(4px) saturate(140%);
+  -webkit-backdrop-filter: blur(4px) saturate(140%);
   border-bottom: 1px solid var(--line);
 }
 .nav-brand-group {
@@ -998,7 +998,7 @@ footer .footer-contact-sticker-outline:focus-visible {
     display: none !important;
   }
 
-  /* Full-bleed image area: landscape edge-to-edge; portrait gets vertical inset (see portrait rule below). */
+  /* Symmetric vertical inset applied to both orientations so swapping between landscape and portrait doesn't shift the frame. */
   .lightbox-stage {
     padding: 0 !important;
     min-height: 0;
@@ -1006,10 +1006,9 @@ footer .footer-contact-sticker-outline:focus-visible {
     align-self: stretch;
   }
 
-  /* Inline height:100% on the inner would otherwise win over bottom inset (height looks “pushed down”, no gap under the image). */
   .lightbox-stage-inner {
     position: absolute !important;
-    inset: 0 !important;
+    inset: 24px 0 !important;
     width: 100% !important;
     max-width: none !important;
     max-height: none !important;
@@ -1018,11 +1017,6 @@ footer .footer-contact-sticker-outline:focus-visible {
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
-  }
-
-  /* Portrait: symmetric vertical inset (matches desktop stage padding). */
-  .lightbox-stage-inner[data-lightbox-orientation="portrait"] {
-    inset: 24px 0 !important;
   }
 
   /* Fill stage; letterboxing + centered bitmap (matches desktop Lightbox.tsx). */

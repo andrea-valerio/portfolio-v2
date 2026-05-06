@@ -167,7 +167,7 @@ export function Lightbox({ images, currentIdx, onClose }: LightboxProps) {
               minHeight: 0,
               height: "100%",
               touchAction: "pan-y pinch-zoom",
-              marginLeft: -16,
+              gap: 16,
             }}
           >
             {images.map((im) => (
@@ -181,7 +181,6 @@ export function Lightbox({ images, currentIdx, onClose }: LightboxProps) {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "stretch",
-                  paddingLeft: 16,
                 }}
               >
                 <Image
