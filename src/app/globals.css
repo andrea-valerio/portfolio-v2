@@ -250,6 +250,51 @@ button {
   opacity: 1;
 }
 
+/* Mobile-only read-more toggle: hidden on tablets+; the paragraph renders
+   in full and the button collapses out of the layout. */
+.hero-intro-readmore {
+  display: none;
+  align-self: flex-start;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-hand), "Caveat", "Permanent Marker", cursive;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition:
+    text-decoration-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.hero-intro-readmore:hover {
+  text-decoration-color: var(--accent);
+}
+
+.hero-intro-readmore:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 639px) {
+  .hero-intro-truncatable:not(.is-expanded) {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hero-intro-readmore {
+    display: inline-block;
+  }
+}
+
 .mono {
   font-family: var(--font-mono), "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
   letter-spacing: 0.04em;

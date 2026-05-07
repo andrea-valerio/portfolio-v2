@@ -347,7 +347,7 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
       },
       {
         n: "02",
-        eyebrow: "method",
+        eyebrow: "methodology",
         title: "DESIGN PROCESS",
         intro: [
           "A <mark>Double Diamond</mark> methodology was applied.",

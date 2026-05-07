@@ -107,7 +107,14 @@ export function ProjectClient({ data }: { data: ProjectCaseStudy }) {
               <h2
                 className="display-wide"
                 data-anim="section-title"
-                style={{ fontSize: "clamp(36px, 5vw, 72px)", marginBottom: 24 }}
+                data-title-words
+                style={{
+                  fontSize: "clamp(36px, 5vw, 72px)",
+                  marginBottom: 24,
+                  overflowWrap: "normal",
+                  wordBreak: "normal",
+                  hyphens: "none",
+                }}
               >
                 {section.title}
                 <span style={{ color: "var(--accent)" }}>.</span>

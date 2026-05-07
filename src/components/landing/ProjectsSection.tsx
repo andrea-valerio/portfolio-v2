@@ -143,13 +143,19 @@ export function ProjectsSection() {
                 <h3
                   className="display"
                   style={{
-                    fontSize: isBig ? "clamp(28px, 4vw, 44px)" : "clamp(18px, 2.8vw, 28px)",
+                    fontSize: isBig ? "clamp(18px, 4vw, 44px)" : "clamp(18px, 2.8vw, 28px)",
                     lineHeight: 0.95,
-                    overflowWrap: "break-word",
+                    overflowWrap: "normal",
+                    wordBreak: "normal",
                     hyphens: "none",
                   }}
                 >
-                  {p.title}
+                  {p.title.split(/\s+/).map((word, wi, arr) => (
+                    <span key={wi} style={{ whiteSpace: "nowrap" }}>
+                      {word}
+                      {wi < arr.length - 1 ? " " : ""}
+                    </span>
+                  ))}
                 </h3>
                 {SHOW_PROJECT_CARD_DESCRIPTION && p.span !== "small" && (
                   <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85, maxWidth: 520 }}>{p.desc}</p>

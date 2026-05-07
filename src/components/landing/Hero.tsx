@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Sticker } from "@/components/primitives/Sticker";
 import { ContactCTA } from "./ContactCTA";
+import { HeroIntroExpandable } from "./HeroIntroExpandable";
 import { PROFILE_PHOTO } from "@/lib/project-images";
 
 export function Hero() {
@@ -83,7 +84,7 @@ export function Hero() {
                 style={{ flex: "0 0 auto", width: 4, alignSelf: "stretch", background: "var(--accent)" }}
               />
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                <p className="serif hero-intro" style={{ fontSize: 18, lineHeight: 1.65, color: "var(--ink)" }}>
+                <HeroIntroExpandable>
                   Hi! I&apos;m a <strong className="hero-intro-strong">Product Designer</strong> with a background in{" "}
                   <a
                     href="https://corsi.unitn.it/en/human-computer-interaction"
@@ -99,7 +100,7 @@ export function Hero() {
                   to build interfaces that fit how people actually think.{" "}
                   <span className="hero-intro-mark">AI is a core part of my workflow</span> — it widens what I can own,
                   sharpens efficiency, and grounds decisions in better evidence.
-                </p>
+                </HeroIntroExpandable>
               </div>
             </div>
 

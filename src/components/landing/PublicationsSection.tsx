@@ -51,7 +51,13 @@ export function PublicationsSection() {
           <h2
             className="display-wide"
             data-anim="section-title"
-            style={{ fontSize: "clamp(44px, 7vw, 96px)" }}
+            data-title-words
+            style={{
+              fontSize: "clamp(32px, 7vw, 96px)",
+              overflowWrap: "normal",
+              wordBreak: "normal",
+              hyphens: "none",
+            }}
           >
             PUBLICATIONS
           </h2>

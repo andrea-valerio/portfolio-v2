@@ -88,8 +88,17 @@ export function NextProject({ data }: { data: ProjectCaseStudy }) {
           />
         </div>
         <div ref={titleWrapRef} style={{ flex: "1 1 auto", minWidth: 0 }}>
-          <div className="mono" style={{ fontSize: 12, letterSpacing: "0.2em", opacity: 0.6, marginBottom: 12 }}>
-            ━━ KEEP READING
+          <div
+            className="mono"
+            style={{
+              fontSize: 12,
+              letterSpacing: "0.2em",
+              opacity: 0.6,
+              marginBottom: 12,
+              whiteSpace: "nowrap",
+            }}
+          >
+            ━━ READ ALSO
           </div>
           <h3
             ref={titleRef}
