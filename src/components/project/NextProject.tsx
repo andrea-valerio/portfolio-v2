@@ -52,7 +52,7 @@ export function NextProject({ data }: { data: ProjectCaseStudy }) {
   if (!next) return null;
 
   return (
-    <section style={{ padding: "80px 48px 120px", maxWidth: 1440, margin: "0 auto" }}>
+    <section data-section="next-project" style={{ padding: "80px 48px 120px", maxWidth: 1440, margin: "0 auto" }}>
       <div className="rule" style={{ marginBottom: 48 }} />
       <Link
         href={`/projects/${data.nextSlug}/`}

@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer style={{ background: "var(--ink)", color: "var(--paper)", position: "relative" }}>
       {/* Top contact band */}
-      <div style={{ padding: "88px 48px 48px", maxWidth: 1440, margin: "0 auto" }}>
+      <div data-section="footer-top" style={{ padding: "88px 48px 48px", maxWidth: 1440, margin: "0 auto" }}>
         <div className="footer-contact-grid">
           <div>
             <div

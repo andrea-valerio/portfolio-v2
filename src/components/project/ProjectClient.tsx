@@ -84,6 +84,7 @@ export function ProjectClient({ data }: { data: ProjectCaseStudy }) {
       {data.sections.map((section, i) => (
         <section
           key={i}
+          data-section="project-body"
           style={{ padding: "80px 48px", maxWidth: 1440, margin: "0 auto", position: "relative" }}
         >
           <div className="project-section-shell">

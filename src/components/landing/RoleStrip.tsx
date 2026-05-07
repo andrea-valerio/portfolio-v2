@@ -2,7 +2,7 @@ import { PAST_ROLES } from "@/lib/nav-roles";
 
 export function RoleStrip() {
   return (
-    <section style={{ padding: "48px 48px 24px", maxWidth: 1440, margin: "0 auto" }}>
+    <section data-section="role-strip" style={{ padding: "48px 48px 24px", maxWidth: 1440, margin: "0 auto" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1.6fr", gap: 48, alignItems: "start" }}>
         {/* CURRENTLY */}
         <div

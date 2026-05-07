@@ -40,16 +40,6 @@ export function Hero() {
             minHeight: "100%",
           }}
         >
-          <div
-            className="chip-row-static"
-            data-anim="chip-row"
-            style={{ display: "flex", gap: 10, marginBottom: 28, flexWrap: "wrap" }}
-          >
-            <Sticker variant="solid" data-anim-item>
-              ★ PORTFOLIO &apos;26
-            </Sticker>
-          </div>
-
           <h1
             className="display-wide"
             style={{
