@@ -75,16 +75,16 @@ function registerPluginOnce(gsap: GsapLike, ScrollTrigger: unknown) {
 
 /** All GSAP setup for whatever is currently in the document (home, project, etc.). */
 function bindPageAnimations(gsap: GsapLike) {
-  // HERO TITLE — chars cascade up + slight rotate
+  // HERO TITLE — per-word (not per-char) so long lines like "PORTFOLIO" never break mid-word
   document.querySelectorAll<HTMLElement>('[data-anim="hero-title"]').forEach((el) => {
     const lines = el.querySelectorAll(".hero-line");
     lines.forEach((line, lineIdx) => {
-      const chars = splitChars(line);
-      gsap.from(chars, {
+      const words = splitWords(line);
+      gsap.from(words, {
         yPercent: 110,
         rotateZ: 8,
         duration: 0.9,
-        stagger: 0.025,
+        stagger: 0.04,
         delay: 0.2 + lineIdx * 0.15,
         ease: "expo.out",
       });

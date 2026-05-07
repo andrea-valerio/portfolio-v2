@@ -52,7 +52,14 @@ export function Hero() {
 
           <h1
             className="display-wide"
-            style={{ fontSize: "clamp(48px, 6.5vw, 104px)", margin: 0, lineHeight: 0.92 }}
+            style={{
+              fontSize: "clamp(40px, 7.5vw, 108px)",
+              margin: 0,
+              lineHeight: 0.92,
+              overflowWrap: "normal",
+              wordBreak: "normal",
+              hyphens: "none",
+            }}
             data-anim="hero-title"
           >
             <span className="hero-line" style={{ display: "block" }}>

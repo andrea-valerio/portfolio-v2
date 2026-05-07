@@ -48,7 +48,14 @@ export function ProjectHero({ data }: { data: ProjectCaseStudy }) {
       <h1
         className="display-wide"
         data-anim="hero-title"
-        style={{ fontSize: "clamp(48px, 7.5vw, 112px)", marginBottom: 24, lineHeight: 0.92 }}
+        style={{
+          fontSize: "clamp(40px, 8.5vw, 116px)",
+          marginBottom: 24,
+          lineHeight: 0.92,
+          overflowWrap: "normal",
+          wordBreak: "normal",
+          hyphens: "none",
+        }}
       >
         {data.titleLines.map((line, i) => (
           <span
