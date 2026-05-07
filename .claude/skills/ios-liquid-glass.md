@@ -22,16 +22,44 @@ The same logic applies, mirrored, to Safari's bottom floating URL bar.
 
 | Element | File | Role |
 |---|---|---|
-| `.nav` | `src/app/globals.css` (≈ L583) | Fixed `top:0 z=50`. Solid `var(--paper)` by default. Frosted look only on non-iOS via `@supports not (-webkit-touch-callout: none)`. Padding-top extends bg through `env(safe-area-inset-top)`. |
+| `.nav` | `src/app/globals.css` (≈ L601) | Fixed `top:0 z=50`. Background built via a **four-layer cascade** (see "Browser appearance matrix" below) so iOS = solid, Android Chrome + mobile = solid, desktop Chrome/Firefox = transparent, desktop Safari macOS = transparent + blur. Padding-top extends bg through `env(safe-area-inset-top)`. |
 | `.ios-status-shield` | `globals.css` (≈ L84) + `src/app/layout.tsx` body | Fixed `top:0 z=102` solid `var(--paper)`. **Above** `.grain::before` (z=100). `height: max(4px, env(safe-area-inset-top, 0px) + 6px)`. `pointer-events: none`. |
 | `.ios-toolbar-fill-bottom` | `globals.css` (≈ L72) + `layout.tsx` body | Bottom mirror of the shield (z=101) for Safari's floating URL bar. |
 | `.grain::before` | `globals.css` (≈ L347) | Body texture at z=100, `mix-blend-mode: multiply`. Mask fades out at **both** safe-area zones via a 5-stop `linear-gradient`. |
 | `viewport` export | `src/app/layout.tsx` (≈ L82) | `viewportFit: "cover"` (required for `env(safe-area-inset-*)`); `themeColor` light/dark (kept for older iOS, Android Chrome, PWAs — Safari 26 ignores). |
 | Color tokens | `globals.css` (≈ L11–29) | `--paper` = sampled chrome color. `--ink` = the dark high-contrast color used by `.btn` etc. — anything with `--ink` background near the top of the scroll zone will bleed through Liquid Glass. |
 
+## Browser appearance matrix and cascade
+
+The `.nav` background has to differ across surfaces — solid on mobile (Liquid Glass safety) and on desktop Chrome/Firefox the user wants transparent-without-blur, but desktop Safari macOS keeps the frosted glass. The current implementation uses **four cascade layers** in this exact order, with `@supports`/`@media` conditions chosen so layers compose correctly:
+
+| Layer | Selector | Effect |
+|---|---|---|
+| 1 — default | `.nav` | `background: var(--paper)` (solid) |
+| 2 — desktop class | `@media (hover: hover) and (pointer: fine) { .nav }` | `background: color-mix(... 60%, transparent)` |
+| 3 — iOS WebKit safety net | `@supports (-webkit-touch-callout: none) { .nav }` | re-asserts solid `var(--paper)` |
+| 4 — Safari blur | `@supports (hanging-punctuation: first) and (font: -apple-system-body) { @media (hover: hover) and (pointer: fine) { .nav } }` | adds `backdrop-filter: blur(12px) saturate(140%)` |
+
+**Order matters.** Layer 3 must appear AFTER Layer 2 because they have the same specificity — cascade order wins. If you re-order them, iPad-with-Magic-Keyboard goes transparent and Liquid Glass regresses.
+
+**Surface trace:**
+
+| Surface | L1 | L2 (hover/fine) | L3 (iOS) | L4 (Safari + hover/fine) | Result |
+|---|---|---|---|---|---|
+| iPhone Safari | solid | — | re-solid | — | solid |
+| iPhone Chrome | solid | — | re-solid | — | solid |
+| iPad Safari touch | solid | — | re-solid | — | solid |
+| iPad Safari + Magic Keyboard | solid | transparent | **re-solid** | blur added (no-op on opaque) | solid |
+| Android Chrome | solid | — | — | — | solid |
+| Desktop Chrome | solid | transparent | — | — | transparent, no blur |
+| Desktop Firefox | solid | transparent | — | — | transparent, no blur |
+| Desktop Safari macOS | solid | transparent | — | blur added | **transparent + blur** |
+
+**Why the Safari detector works**: `hanging-punctuation` is implemented only in WebKit/Safari as of 2026, and `-apple-system-body` is an Apple-only system-font shorthand. Combining them resists future Chrome/Firefox implementing one or the other. If both ever get adopted by Chrome, the worst case is desktop Chrome getting the blur back — a graceful regression, not a broken state.
+
 ## Do's
 
-- ✅ Keep `.nav` solid `var(--paper)` by default. Frosted via `@supports not (-webkit-touch-callout: none)` only.
+- ✅ Keep `.nav` Layer 1 as solid `var(--paper)`. Per-surface visual differences come from Layers 2–4 — never inline a different default.
 - ✅ Keep both shields. `.ios-status-shield` (z=102) MUST be above `.grain::before` (z=100). `.ios-toolbar-fill-bottom` (z=101) is symmetric.
 - ✅ Keep `viewportFit: "cover"` in the viewport export.
 - ✅ When adding any new full-viewport overlay (`position: fixed; inset: 0`), mask it away from both safe-area zones — copy the 5-stop pattern from `.grain::before`.
@@ -41,7 +69,8 @@ The same logic applies, mirrored, to Safari's bottom floating URL bar.
 ## Don'ts
 
 - ❌ Don't make `.nav` semi-transparent by default (e.g., `color-mix(... 60%, transparent)` at the top level). Page content will bleed through during scroll.
-- ❌ Don't rely on the **positive** form `@supports (-webkit-touch-callout: none)` for iOS detection — fragile on iOS 26.1+. Always invert: `@supports not (...)` so iOS Safari falls through to the safe default.
+- ❌ Don't use `@supports not (-webkit-touch-callout: none)` as a coarse "is it not iOS" filter for visual styling that should distinguish desktop browsers from each other. It lumps Android Chrome, desktop Chrome, desktop Firefox, and desktop Safari into one bucket. Use `@media (hover: hover) and (pointer: fine)` for desktop-class detection, and the Safari detector `(hanging-punctuation: first) and (font: -apple-system-body)` for browser-specific enhancements.
+- ❌ Don't reorder the four cascade layers. Layer 3 (iOS safety net, positive `@supports`) MUST come after Layer 2 (desktop @media) so it overrides the transparent bg on iPad-with-keyboard. They have the same specificity; cascade order is the only thing keeping iOS solid in that case.
 - ❌ Don't add a `backdrop-filter` to `.nav` on iOS — Liquid Glass then samples a blurred composite of content behind the nav.
 - ❌ Don't put a dark high-contrast element (e.g., `.btn` with `var(--ink)` background) directly below the navbar with no scroll buffer. When the user scrolls and that element reaches the top zone, Liquid Glass picks it up and tints the status bar with it. Either use `.btn.ghost` (transparent + dark border) for in-page CTAs near the top, or push them below ~100px of cream content. **This was the round-2 symptom that motivated `.ios-status-shield`.**
 - ❌ Don't add a second fixed element at `top: 0` with a different color — competing sampling targets create unpredictable tint.
@@ -70,7 +99,8 @@ The same logic applies, mirrored, to Safari's bottom floating URL bar.
 
 - **Commit `bc68877`** — `.ios-statusbar-fill` solid block at z=101; `.nav` semi-transparent default with **positive** `@supports (-webkit-touch-callout: none)` override making it solid on iOS. Worked at scroll = 0. **Failed during scroll** because the positive `@supports` form is fragile on iOS 26.1+ (some iOS WebKit features regressed in 26.1).
 - **Commit `c4d4fa0`** — inverted to solid-by-default `.nav`; removed `.ios-statusbar-fill` reasoning the nav already covered the safe area. Worked at scroll = 0. **Failed during scroll** because (a) the grain at z=100 with `mix-blend-mode: multiply` was darkening the navbar's cream in the sampling zone, and (b) when scrolled, the in-page dark `.btn` `Get in touch` reached the top zone and Liquid Glass sampled it directly.
-- **Commit `d8e39fa`** (current) — re-added shield at z=102 (above grain) AND masked grain at the top safe area. **Working state.**
+- **Commit `d8e39fa`** — re-added shield at z=102 (above grain) AND masked grain at the top safe area. **Working state for iOS Liquid Glass.**
+- **Subsequent commit (this one, `70b1d5f`-ish)** — `.nav` background now uses the four-layer cascade described above so Android Chrome and desktop Chrome/Firefox stop sharing the frosted treatment with desktop Safari macOS. Doesn't regress the Liquid Glass fix: Layer 1 default is solid for iOS, Layer 3 (`@supports (-webkit-touch-callout: none)`) re-asserts solid for iOS WebKit, so iOS Safari and iPadOS Safari (any input mode) always end up at solid `var(--paper)`.
 
 **Three conditions must all hold on iOS 26.x:**
 
@@ -86,3 +116,5 @@ The same logic applies, mirrored, to Safari's bottom floating URL bar.
 - [Ben Frain — iOS 26 theme-color + fixed elements quirks](https://benfrain.com/ios26-safari-theme-color-tab-tinting-with-fixed-position-elements/)
 - [MacRumors — iOS 26.4 Bug Fixes thread](https://forums.macrumors.com/threads/ios-26-4-bug-fixes-changes-and-improvements.2479846/)
 - [Apple Developer Forums — `-webkit-touch-callout: none` regression on iOS 26.1](https://developer.apple.com/forums/thread/808606)
+- [Wojtek Kutyła — Targeting Safari with a CSS @supports media query](https://wojtek.im/journal/targeting-safari-with-css-media-query) — the `hanging-punctuation` + `-apple-system-body` Safari-only detector used in Layer 4
+- [Smashing Magazine — Guide To Hover And Pointer Media Queries](https://www.smashingmagazine.com/2022/03/guide-hover-pointer-media-queries/) — Layer 2's `@media (hover: hover) and (pointer: fine)` semantics

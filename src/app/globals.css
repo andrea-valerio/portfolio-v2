@@ -598,14 +598,17 @@ button {
   box-shadow: 8px 8px 0 var(--ink);
 }
 
-/* NAV */
-/* Default: solid var(--paper). iOS 26 Safari's Liquid Glass samples
-   fixed elements near the viewport top (~4px deep, ≥80% wide, ≥3px
-   tall) to tint the system status bar; a semi-transparent default
-   would let page content bleed through that tint. The inverted
-   @supports rule below adds the frosted look only on non-iOS browsers
-   so iOS falls through to solid regardless of feature-detection
-   reliability. */
+/* NAV — four-layer cascade producing per-surface appearance:
+     • iOS/iPadOS Safari + Chrome (any input mode): solid var(--paper)
+     • Android Chrome (mobile): solid var(--paper)
+     • Desktop Chrome / Firefox: transparent, no blur
+     • Desktop Safari macOS: transparent + backdrop-filter (frosted)
+   The non-negotiable is iOS Safari = solid, so Liquid Glass keeps
+   sampling cream and the in-page CTA can't bleed through the status
+   bar. See .claude/skills/ios-liquid-glass.md for the full matrix and
+   the cascade trace. */
+
+/* Layer 1 — default solid for everyone (mobile-safe; iOS-safe). */
 .nav {
   position: fixed;
   top: 0;
@@ -625,16 +628,39 @@ button {
   border-bottom: 1px solid var(--line);
 }
 
-/* Frosted nav for browsers that are NOT iOS Safari. -webkit-touch-callout
-   is iOS-Safari-only, so @supports not (...) excludes iOS WebKit and
-   gives desktop / Android the translucent look. iOS Safari falls
-   through to the solid default above, which is what Liquid Glass needs
-   to sample for a clean tint. */
-@supports not (-webkit-touch-callout: none) {
+/* Layer 2 — desktop class (hover-capable + precise pointer): transparent
+   without blur. Catches desktop Chrome/Firefox/Safari, touchscreen
+   laptops with mouse, and iPad-with-Magic-Keyboard (which Layer 3 will
+   then revert). */
+@media (hover: hover) and (pointer: fine) {
   .nav {
     background: color-mix(in oklab, var(--paper) 60%, transparent);
-    backdrop-filter: blur(12px) saturate(140%);
-    -webkit-backdrop-filter: blur(12px) saturate(140%);
+  }
+}
+
+/* Layer 3 — iOS/iPadOS WebKit safety net: re-assert solid even if Layer
+   2 misclassified the device. -webkit-touch-callout is supported only
+   by iOS/iPadOS WebKit; macOS Safari doesn't have it. MUST appear after
+   Layer 2 — same specificity, cascade order wins. */
+@supports (-webkit-touch-callout: none) {
+  .nav {
+    background: var(--paper);
+  }
+}
+
+/* Layer 4 — Safari (any Apple platform) only: add the frosted blur on
+   top. (hanging-punctuation: first) is Safari/WebKit-only as of 2026,
+   and (-apple-system-body) is an Apple-only system font shorthand;
+   together they future-proof the detector. Combined with the desktop
+   @media check, this only fires for precise-pointer Safari — i.e.,
+   macOS Safari (or iPad+Magic-Keyboard, where Layer 3's opaque bg
+   makes the blur visually a no-op). */
+@supports (hanging-punctuation: first) and (font: -apple-system-body) {
+  @media (hover: hover) and (pointer: fine) {
+    .nav {
+      backdrop-filter: blur(12px) saturate(140%);
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
+    }
   }
 }
 .nav-brand-group {
