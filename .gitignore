@@ -38,5 +38,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# claude code project state
-.claude/
+# claude code project state — track shared resources (skills, agents, commands), ignore user-local
+.claude/settings.local.json
