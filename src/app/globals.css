@@ -80,6 +80,28 @@ html {
   pointer-events: none;
 }
 
+/* Top-edge shield for iOS 26 Liquid Glass status bar.
+   Mirrors .ios-toolbar-fill-bottom for the top safe-area zone, but
+   stronger:
+   - z-index 102 sits ABOVE .grain::before (z=100), so the multiply-blend
+     grain can't darken this strip and feed a darker composite to iOS
+     Liquid Glass's status bar sampler.
+   - Floor of 4px keeps the element sample-eligible (≥3px tall, full
+     width) even where safe-area-inset-top is 0 (landscape, non-notch
+     devices), so iOS still has a clean cream surface to sample.
+   - pointer-events: none preserves the iOS "tap status bar to scroll
+     to top" gesture — taps fall through to whatever's beneath. */
+.ios-status-shield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: max(4px, calc(env(safe-area-inset-top, 0px) + 6px));
+  z-index: 102;
+  background: var(--paper);
+  pointer-events: none;
+}
+
 #projects,
 #publications {
   scroll-margin-top: 88px;
@@ -354,23 +376,27 @@ button {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-repeat: repeat;
   mix-blend-mode: multiply;
-  /* Soft-fade the grain so it doesn't paint into the iOS
-     safe-area-inset-bottom strip, which is covered by the opaque
-     .ios-toolbar-fill-bottom (z=101) and shows no grain. Without this
-     fade, the boundary between grain-darkened page and grain-free fill
-     reads as a 1px horizontal line above Safari's floating URL bar.
-     On non-iOS browsers safe-area-inset-bottom is 0, so the mask
-     reduces to a 16px fade-out at the very bottom of the viewport —
-     visually negligible. */
+  /* Soft-fade the grain at BOTH safe-area zones so the multiply-blend
+     noise doesn't darken the cream the iOS 26 Liquid Glass status bar
+     and bottom URL bar are sampling. Top: fully transparent through
+     env(safe-area-inset-top) + 8px, then ramp to opaque by +24px so the
+     transition is invisible. Bottom: same idea, mirrored — 16px fade-out
+     above the bottom safe area. On browsers without safe-area support
+     (env returns 0), the top stop reduces to ~8px and the bottom to a
+     16px fade — visually negligible. */
   -webkit-mask-image: linear-gradient(
     to bottom,
-    black 0,
+    transparent 0,
+    transparent calc(env(safe-area-inset-top, 0px) + 8px),
+    black calc(env(safe-area-inset-top, 0px) + 24px),
     black calc(100% - env(safe-area-inset-bottom, 0px) - 16px),
     transparent calc(100% - env(safe-area-inset-bottom, 0px))
   );
   mask-image: linear-gradient(
     to bottom,
-    black 0,
+    transparent 0,
+    transparent calc(env(safe-area-inset-top, 0px) + 8px),
+    black calc(env(safe-area-inset-top, 0px) + 24px),
     black calc(100% - env(safe-area-inset-bottom, 0px) - 16px),
     transparent calc(100% - env(safe-area-inset-bottom, 0px))
   );

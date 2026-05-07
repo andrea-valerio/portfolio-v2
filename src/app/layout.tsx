@@ -104,14 +104,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Nav />
           {children}
           <Footer />
-          {/* Solid cream block painted into the iOS safe-area-inset-bottom
-              zone (the strip behind Safari's floating URL bar) so it
-              reads as flat chrome instead of leaking page content /
-              grain texture. There's no equivalent for the top strip —
-              the fixed .nav already covers env(safe-area-inset-top)
-              with its solid var(--paper) background, which is what iOS
-              26 Liquid Glass samples to tint the system status bar.
-              Collapses to 0 height on desktop / non-notch browsers. */}
+          {/* Top + bottom shields for the iOS 26 Liquid Glass status bar
+              and floating URL bar. Both are solid var(--paper), z=102/101
+              (above the grain texture at z=100), and pointer-events:none.
+              They give iOS Liquid Glass a clean cream surface to sample
+              when scrolling — the navbar alone isn't enough because iOS
+              26 samples a composite that includes the document's top
+              edge during scroll. Collapse to a few px on desktop /
+              non-notch browsers where safe-area insets are 0. */}
+          <div className="ios-status-shield" aria-hidden />
           <div className="ios-toolbar-fill-bottom" aria-hidden />
           <Animations />
           <Script
