@@ -32,7 +32,6 @@ export function PublicationsSection() {
           alignItems: "flex-end",
           flexWrap: "wrap",
           gap: 24,
-          marginBottom: 48,
         }}
       >
         <div>

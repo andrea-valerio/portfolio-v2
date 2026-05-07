@@ -202,7 +202,9 @@ button {
   }
   #publications {
     padding-top: 67px !important;        /* 100 * 2/3 */
-    padding-bottom: 80px !important;     /* 120 * 2/3 */
+    /* Bottom matches desktop (120px): only publications keeps full inset
+       so the gap above the footer does not feel cramped on phones. */
+    padding-bottom: 120px !important;
   }
   /* Project detail pages */
   [data-section="project-hero"] {
