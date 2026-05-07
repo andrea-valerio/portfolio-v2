@@ -573,6 +573,13 @@ button {
 }
 
 /* NAV */
+/* Default: solid var(--paper). iOS 26 Safari's Liquid Glass samples
+   fixed elements near the viewport top (~4px deep, ≥80% wide, ≥3px
+   tall) to tint the system status bar; a semi-transparent default
+   would let page content bleed through that tint. The inverted
+   @supports rule below adds the frosted look only on non-iOS browsers
+   so iOS falls through to solid regardless of feature-detection
+   reliability. */
 .nav {
   position: fixed;
   top: 0;
@@ -588,63 +595,21 @@ button {
   justify-content: space-between;
   gap: 12px;
   min-width: 0;
-  /* Translucent frosted background. The matching body::before below
-     extends the same blur into the iOS safe-area-inset-top zone so the
-     entire top strip — status-bar + visible nav — reads as one
-     continuous frosted band on iOS Safari with viewport-fit=cover. */
-  background: color-mix(in oklab, var(--paper) 60%, transparent);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  background: var(--paper);
   border-bottom: 1px solid var(--line);
 }
 
-/* iOS Safari only: drop the navbar's translucency + backdrop-filter
-   and paint a fully opaque var(--paper) background. Reason: iOS 26's
-   Liquid Glass status bar samples a region that extends BELOW
-   env(safe-area-inset-top), reaching into the visible navbar zone.
-   With the default frosted nav, that sample picks up page content
-   (e.g., the giant orange hero text) through the 60% transparent
-   paper + blur, which iOS then refracts across the status bar — so
-   the user sees scrolled page content "behind" the system status bar
-   even though .ios-statusbar-fill paints solid cream in the strict
-   safe-area zone.
-
-   By making the entire visible navbar opaque cream on iOS, the full
-   strip from viewport top through navbar bottom is a single solid
-   var(--paper) sample, so the Liquid Glass tint reads as clean cream
-   (or clean dark in dark mode).
-
-   Chrome desktop and other browsers keep the frosted look — the
-   selector is gated behind @supports (-webkit-touch-callout: none),
-   which matches Mobile Safari + iOS WebKit only. */
-@supports (-webkit-touch-callout: none) {
+/* Frosted nav for browsers that are NOT iOS Safari. -webkit-touch-callout
+   is iOS-Safari-only, so @supports not (...) excludes iOS WebKit and
+   gives desktop / Android the translucent look. iOS Safari falls
+   through to the solid default above, which is what Liquid Glass needs
+   to sample for a clean tint. */
+@supports not (-webkit-touch-callout: none) {
   .nav {
-    background: var(--paper);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    background: color-mix(in oklab, var(--paper) 60%, transparent);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
   }
-}
-
-/* Solid cream block painted into the iOS safe-area-inset-top zone (the
-   strip behind the system status bar / dynamic island). This makes the
-   area above the navbar a clean flat cream — no page content, no
-   gradient — so the eye reads it as part of the chrome rather than as
-   "page content peeking through under the status bar".
-
-   Sits at z-index 101 so it covers the grain texture (z=100) too, which
-   prevents the grain's multiply-blend from darkening the strip and
-   creating a visible boundary against the iOS Liquid Glass status bar.
-   Collapses to 0 height where safe-area-inset-top is 0 (desktop, etc.).
-   pointer-events:none keeps the iOS tap-to-scroll on the status bar. */
-.ios-statusbar-fill {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-top, 0px);
-  z-index: 101;
-  background: var(--paper);
-  pointer-events: none;
 }
 .nav-brand-group {
   display: flex;

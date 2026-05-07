@@ -104,13 +104,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Nav />
           {children}
           <Footer />
-          {/* Solid cream blocks painted into the iOS safe-area zones so
-              the strips behind the system status bar and the floating
-              Safari URL bar read as flat chrome instead of leaking page
-              content / grain texture. Both collapse to 0 height where
-              safe-area insets are 0 (desktop, browsers without notch),
-              so they're invisible everywhere except iOS. */}
-          <div className="ios-statusbar-fill" aria-hidden />
+          {/* Solid cream block painted into the iOS safe-area-inset-bottom
+              zone (the strip behind Safari's floating URL bar) so it
+              reads as flat chrome instead of leaking page content /
+              grain texture. There's no equivalent for the top strip —
+              the fixed .nav already covers env(safe-area-inset-top)
+              with its solid var(--paper) background, which is what iOS
+              26 Liquid Glass samples to tint the system status bar.
+              Collapses to 0 height on desktop / non-notch browsers. */}
           <div className="ios-toolbar-fill-bottom" aria-hidden />
           <Animations />
           <Script
