@@ -26,11 +26,21 @@ export function ContactModal({ open, mode, onClose }: ContactModalProps) {
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    // data-contact-open drives the same CSS rule (joined via :is() with
+    // data-menu-open) that hides .ios-status-shield and
+    // .ios-toolbar-fill-bottom while a modal is open. Without this,
+    // the shields (z=102, solid cream var(--paper)) sit above this
+    // modal's overlay (z=100, dark rgba) and break the edge-to-edge
+    // dark backdrop with a 6px cream stripe at the very top of the
+    // viewport — visible on desktop and a sampling problem on iOS.
+    // See globals.css and .claude/skills/ios-liquid-glass.md. */
+    document.documentElement.setAttribute("data-contact-open", "");
     closeBtnRef.current?.focus();
 
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      document.documentElement.removeAttribute("data-contact-open");
     };
   }, [open, onClose]);
 

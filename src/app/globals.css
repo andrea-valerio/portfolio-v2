@@ -102,19 +102,32 @@ html {
   pointer-events: none;
 }
 
-/* When the mobile menu is open, the shields adopt the .nav-mobile-overlay
-   color so iOS Liquid Glass samples a continuous dark surface across the
-   full viewport — eliminates the cream strips at top + bottom that would
-   otherwise visually break the dark backdrop. Matched to the overlay's
-   exact rgba + blur for seamless continuity. data-menu-open is set on
-   <html> by Nav.tsx's menuOpen useEffect; nudgeIosLiquidGlass() in the
-   same effect kicks Safari to re-sample so the iOS UI tint flips
-   immediately rather than on next user scroll. */
-[data-menu-open] .ios-status-shield,
-[data-menu-open] .ios-toolbar-fill-bottom {
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+/* When ANY modal is open (mobile nav menu, contact lightbox, CV preview),
+   the shields are removed from the render tree entirely. Two reasons:
+
+   1. Visual continuity (desktop + iOS): the shields sit at z=102, which
+      is ABOVE every modal overlay (.nav-mobile-overlay z=90, ContactModal
+      z=100). With shields visible, the modal's edge-to-edge dark backdrop
+      is broken by cream strips at the top safe area (and on desktop,
+      a 6px cream stripe at the very top of the viewport — visible even
+      where there's no safe-area inset). display:none deletes them so the
+      modal overlay reaches the actual viewport edges.
+
+   2. iOS Liquid Glass sampling: with the shield gone, the topmost fixed
+      element at the viewport edge becomes the modal overlay itself
+      (dark rgba). Whether iOS re-samples mid-session is undocumented and
+      programmatic triggers (scroll, display-toggle twitch) have all
+      proven unreliable — but if/when iOS does re-sample (next user
+      scroll, etc.), the new sample target is the dark overlay rather
+      than the cream shield, so the status bar tint can finally flip dark.
+
+   Two separate attributes (data-menu-open from Nav.tsx, data-contact-open
+   from ContactModal.tsx) joined via :is() so each modal manages its own
+   state without a shared refcount — supports stacking (e.g. menu open +
+   "Get in touch" tapped opens contact modal on top). */
+:is([data-menu-open], [data-contact-open]) .ios-status-shield,
+:is([data-menu-open], [data-contact-open]) .ios-toolbar-fill-bottom {
+  display: none;
 }
 
 #projects,
