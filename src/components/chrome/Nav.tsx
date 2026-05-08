@@ -45,23 +45,39 @@ function getNavCtaViewportServerSnapshot() {
   return true;
 }
 
-/** Force iOS 26 Safari's Liquid Glass to re-sample the page tint.
- *  Liquid Glass caches the sampled status-bar / URL-bar color and only
- *  re-evaluates on scroll/composite events — CSS variable changes
- *  (theme toggle) and shield-color changes (modal-open recolor) won't
- *  propagate to the iOS system chrome without this nudge. A 1px scroll
- *  twitch with `behavior: "instant"` reverted on the next animation
- *  frame is below the perception threshold but a measurable ping to
- *  Safari's compositor. Harmless on non-iOS browsers (1px scroll
- *  invisible on desktop). See .claude/skills/ios-liquid-glass.md. */
+/** Force iOS 26 Safari's Liquid Glass to re-sample the page tint by
+ *  briefly removing the top shield from the render tree. iOS samples
+ *  fixed elements at the viewport edges to color the system chrome
+ *  and caches the result; setting `display: none` on a sampled fixed
+ *  element removes it from the sample tree, and restoring it on the
+ *  next animation frame forces a fresh composite + re-sample.
+ *
+ *  Programmatic scrolling (window.scrollTo with any behavior) does
+ *  NOT trigger re-sample on iOS 26.x — confirmed across multiple
+ *  developer reports (Pavel Larionov, Ben Frain, Jahir Fiquitiva).
+ *  This display-toggle is the only documented pattern that works
+ *  without user interaction.
+ *
+ *  Only the top shield is twitched (not the bottom one): a single
+ *  composite event re-samples ALL Liquid Glass surfaces, and hiding
+ *  the bottom shield would briefly expose mixed page content for
+ *  iOS to sample, producing an awkward intermediate tint. The top
+ *  shield's underlying layer (the `.nav` at z=50, also solid
+ *  `var(--paper)`) matches its color, so the 1-frame gap shows no
+ *  flicker. Harmless on non-iOS browsers — 1 frame of a 4px-tall
+ *  off-screen element is invisible at any viewport size.
+ *
+ *  See .claude/skills/ios-liquid-glass.md for the full mental model. */
 function nudgeIosLiquidGlass() {
   if (typeof window === "undefined") return;
+  const shield = document.querySelector<HTMLElement>(".ios-status-shield");
+  if (!shield) return;
+  const prev = shield.style.display;
+  shield.style.display = "none";
+  // Force synchronous reflow so Safari paints a frame without the shield.
+  void shield.offsetHeight;
   requestAnimationFrame(() => {
-    const y = window.scrollY;
-    window.scrollTo({ top: y + 1, behavior: "instant" as ScrollBehavior });
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: y, behavior: "instant" as ScrollBehavior });
-    });
+    shield.style.display = prev;
   });
 }
 
