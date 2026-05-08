@@ -45,10 +45,31 @@ function getNavCtaViewportServerSnapshot() {
   return true;
 }
 
+/** Force iOS 26 Safari's Liquid Glass to re-sample the page tint.
+ *  Liquid Glass caches the sampled status-bar / URL-bar color and only
+ *  re-evaluates on scroll/composite events — CSS variable changes
+ *  (theme toggle) and shield-color changes (modal-open recolor) won't
+ *  propagate to the iOS system chrome without this nudge. A 1px scroll
+ *  twitch with `behavior: "instant"` reverted on the next animation
+ *  frame is below the perception threshold but a measurable ping to
+ *  Safari's compositor. Harmless on non-iOS browsers (1px scroll
+ *  invisible on desktop). See .claude/skills/ios-liquid-glass.md. */
+function nudgeIosLiquidGlass() {
+  if (typeof window === "undefined") return;
+  requestAnimationFrame(() => {
+    const y = window.scrollY;
+    window.scrollTo({ top: y + 1, behavior: "instant" as ScrollBehavior });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: y, behavior: "instant" as ScrollBehavior });
+    });
+  });
+}
+
 function applyMode(mode: "light" | "dark") {
   if (typeof document === "undefined") return;
   if (mode === "dark") document.documentElement.setAttribute("data-mode", "dark");
   else document.documentElement.removeAttribute("data-mode");
+  nudgeIosLiquidGlass();
 }
 
 function readFollowsSystem(): boolean {
@@ -209,12 +230,24 @@ export function Nav({ active = null }: NavProps) {
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    // data-menu-open drives a CSS rule that recolors .ios-status-shield
+    // and .ios-toolbar-fill-bottom to match the .nav-mobile-overlay,
+    // so the dark backdrop visually extends through the safe-area zones
+    // (otherwise the cream shields break the overlay's continuity).
+    document.documentElement.setAttribute("data-menu-open", "");
     closeMenuBtnRef.current?.focus();
+    // Nudge iOS Liquid Glass to re-sample the now-dark shields so the
+    // status bar / URL bar tint flips immediately rather than on next
+    // user scroll.
+    nudgeIosLiquidGlass();
 
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      document.documentElement.removeAttribute("data-menu-open");
       menuButtonRef.current?.focus();
+      // Re-sample after closing so the iOS chrome flips back to cream.
+      nudgeIosLiquidGlass();
     };
   }, [menuOpen, isMobileNav]);
 

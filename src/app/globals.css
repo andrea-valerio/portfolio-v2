@@ -102,6 +102,21 @@ html {
   pointer-events: none;
 }
 
+/* When the mobile menu is open, the shields adopt the .nav-mobile-overlay
+   color so iOS Liquid Glass samples a continuous dark surface across the
+   full viewport — eliminates the cream strips at top + bottom that would
+   otherwise visually break the dark backdrop. Matched to the overlay's
+   exact rgba + blur for seamless continuity. data-menu-open is set on
+   <html> by Nav.tsx's menuOpen useEffect; nudgeIosLiquidGlass() in the
+   same effect kicks Safari to re-sample so the iOS UI tint flips
+   immediately rather than on next user scroll. */
+[data-menu-open] .ios-status-shield,
+[data-menu-open] .ios-toolbar-fill-bottom {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
 #projects,
 #publications {
   scroll-margin-top: 88px;
