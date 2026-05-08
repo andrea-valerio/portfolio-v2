@@ -217,13 +217,14 @@ export function Nav({ active = null }: NavProps) {
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
-    // data-menu-open drives a CSS rule that hides .ios-status-shield
-    // and .ios-toolbar-fill-bottom (display:none) while the modal is
-    // open, so the .nav-mobile-overlay (z=90, dark rgba, inset:0) can
-    // extend edge-to-edge without the shields' cream strips breaking
-    // its continuity at top + bottom safe-area zones. ContactModal
-    // sets a separate data-contact-open attribute that hits the same
-    // CSS rule (joined via :is()), so each modal owns its own state.
+    // data-menu-open is kept as a state-tracking primitive even though
+    // no CSS rule currently consumes it. The previous v3 attempt used
+    // :is([data-menu-open], [data-contact-open]) to hide the shields
+    // during modal-open, but that's been simplified — the top shield is
+    // now always visible (cream/theme), and there is no bottom shield.
+    // Keeping this attribute set/unset here mirrors data-contact-open in
+    // ContactModal.tsx and gives us a cheap CSS hook if we ever need
+    // modal-state-driven styling again.
     document.documentElement.setAttribute("data-menu-open", "");
     closeMenuBtnRef.current?.focus();
 

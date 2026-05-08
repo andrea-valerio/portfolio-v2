@@ -104,16 +104,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Nav />
           {children}
           <Footer />
-          {/* Top + bottom shields for the iOS 26 Liquid Glass status bar
-              and floating URL bar. Both are solid var(--paper), z=102/101
-              (above the grain texture at z=100), and pointer-events:none.
-              They give iOS Liquid Glass a clean cream surface to sample
-              when scrolling — the navbar alone isn't enough because iOS
-              26 samples a composite that includes the document's top
-              edge during scroll. Collapse to a few px on desktop /
-              non-notch browsers where safe-area insets are 0. */}
+          {/* Top shield for the iOS 26 Liquid Glass status bar — solid
+              var(--paper) at z=102 (above the grain texture at z=100),
+              pointer-events:none so the iOS "tap status bar to scroll
+              to top" gesture still works. Always visible, never hidden
+              by modals — the cream/theme strip at the top is a deliberate
+              design constant. Collapses to 4px floor on desktop /
+              non-notch browsers where safe-area-inset-top is 0.
+
+              No symmetric bottom shield by design: the iOS floating URL
+              bar samples the area above its own position (the bottom of
+              the page's scrollable content), not the safe-area zone, so
+              a bottom shield wouldn't control its tint anyway. Leaving
+              the bottom uncovered also lets modal overlays naturally
+              tint the URL bar dark when they're open (their fixed
+              inset:0 layer becomes the bottom-edge sample target). See
+              .claude/skills/ios-liquid-glass.md for the full rationale. */}
           <div className="ios-status-shield" aria-hidden />
-          <div className="ios-toolbar-fill-bottom" aria-hidden />
           <Animations />
           <Script
             src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"

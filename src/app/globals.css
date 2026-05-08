@@ -56,33 +56,11 @@ html {
   min-height: 100%;
 }
 
-/* Solid cream block painted into the iOS safe-area-inset-bottom zone
-   (the strip behind the home indicator / under the floating Safari URL
-   bar). Two purposes:
-
-   1. Gives iOS Safari 26's Liquid Glass URL bar a deliberate, fully
-      opaque cream sample for its tint (it samples fixed elements near
-      the bottom edge), so the bar reads as clean cream-tinted glass
-      instead of falling back to its default darker fade-out.
-   2. Sits ABOVE the grain texture (z=101 > z=100), so the multiply-blend
-      grain noise can't darken this strip — which removes the visible
-      darker band you saw just above the URL bar.
-
-   Collapses to 0 height when safe-area-inset-bottom is 0. */
-.ios-toolbar-fill-bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-bottom, 0px);
-  z-index: 101;
-  background: var(--paper);
-  pointer-events: none;
-}
-
 /* Top-edge shield for iOS 26 Liquid Glass status bar.
-   Mirrors .ios-toolbar-fill-bottom for the top safe-area zone, but
-   stronger:
+   Always visible — unconditional cream/theme cover at the top safe-area
+   zone. Stays put across all states (no-modal, mobile menu open, contact
+   modal open) so the iOS status bar always tints to var(--paper).
+
    - z-index 102 sits ABOVE .grain::before (z=100), so the multiply-blend
      grain can't darken this strip and feed a darker composite to iOS
      Liquid Glass's status bar sampler.
@@ -90,7 +68,17 @@ html {
      width) even where safe-area-inset-top is 0 (landscape, non-notch
      devices), so iOS still has a clean cream surface to sample.
    - pointer-events: none preserves the iOS "tap status bar to scroll
-     to top" gesture — taps fall through to whatever's beneath. */
+     to top" gesture — taps fall through to whatever's beneath.
+
+   Note: there is no symmetric .ios-toolbar-fill-bottom shield. The iOS
+   floating URL bar samples the bottom of the page's scrollable content
+   (the area ABOVE its own position), not the safe-area-inset-bottom
+   zone — so a bottom shield wouldn't actually control its tint. We
+   intentionally leave that zone uncovered, which lets modal overlays
+   (.nav-mobile-overlay, ContactModal — both fixed inset:0) become the
+   sample target at the bottom edge when they're open, naturally tinting
+   the URL bar to match (after iOS's next composite). See
+   .claude/skills/ios-liquid-glass.md for the full rationale. */
 .ios-status-shield {
   position: fixed;
   top: 0;
@@ -100,34 +88,6 @@ html {
   z-index: 102;
   background: var(--paper);
   pointer-events: none;
-}
-
-/* When ANY modal is open (mobile nav menu, contact lightbox, CV preview),
-   the shields are removed from the render tree entirely. Two reasons:
-
-   1. Visual continuity (desktop + iOS): the shields sit at z=102, which
-      is ABOVE every modal overlay (.nav-mobile-overlay z=90, ContactModal
-      z=100). With shields visible, the modal's edge-to-edge dark backdrop
-      is broken by cream strips at the top safe area (and on desktop,
-      a 6px cream stripe at the very top of the viewport — visible even
-      where there's no safe-area inset). display:none deletes them so the
-      modal overlay reaches the actual viewport edges.
-
-   2. iOS Liquid Glass sampling: with the shield gone, the topmost fixed
-      element at the viewport edge becomes the modal overlay itself
-      (dark rgba). Whether iOS re-samples mid-session is undocumented and
-      programmatic triggers (scroll, display-toggle twitch) have all
-      proven unreliable — but if/when iOS does re-sample (next user
-      scroll, etc.), the new sample target is the dark overlay rather
-      than the cream shield, so the status bar tint can finally flip dark.
-
-   Two separate attributes (data-menu-open from Nav.tsx, data-contact-open
-   from ContactModal.tsx) joined via :is() so each modal manages its own
-   state without a shared refcount — supports stacking (e.g. menu open +
-   "Get in touch" tapped opens contact modal on top). */
-:is([data-menu-open], [data-contact-open]) .ios-status-shield,
-:is([data-menu-open], [data-contact-open]) .ios-toolbar-fill-bottom {
-  display: none;
 }
 
 #projects,

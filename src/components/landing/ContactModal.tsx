@@ -26,14 +26,14 @@ export function ContactModal({ open, mode, onClose }: ContactModalProps) {
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
-    // data-contact-open drives the same CSS rule (joined via :is() with
-    // data-menu-open) that hides .ios-status-shield and
-    // .ios-toolbar-fill-bottom while a modal is open. Without this,
-    // the shields (z=102, solid cream var(--paper)) sit above this
-    // modal's overlay (z=100, dark rgba) and break the edge-to-edge
-    // dark backdrop with a 6px cream stripe at the very top of the
-    // viewport — visible on desktop and a sampling problem on iOS.
-    // See globals.css and .claude/skills/ios-liquid-glass.md. */
+    // data-contact-open is kept as a state-tracking primitive even though
+    // no CSS rule currently consumes it. Mirrors data-menu-open in
+    // Nav.tsx — both attributes are cheap CSS hooks for any future
+    // modal-state-driven styling we might want. The previous design
+    // used :is([data-menu-open], [data-contact-open]) to hide the shields
+    // during modal-open; that's been simplified to "top shield always
+    // visible cream/theme, no bottom shield." See globals.css and
+    // .claude/skills/ios-liquid-glass.md for the full rationale.
     document.documentElement.setAttribute("data-contact-open", "");
     closeBtnRef.current?.focus();
 
