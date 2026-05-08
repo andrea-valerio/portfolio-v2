@@ -31,7 +31,7 @@ You cannot disable Liquid Glass from web. The design strategy is asymmetric:
 | Element | File | Role |
 |---|---|---|
 | `.nav` | `src/app/globals.css` (≈ L601) | Fixed `top:0 z=50`. Background built via a **four-layer cascade** (see "Browser appearance matrix" below) so iOS = solid, Android Chrome + mobile = solid, desktop Chrome/Firefox = transparent, desktop Safari macOS = transparent + blur. Padding-top extends bg through `env(safe-area-inset-top)`. |
-| `.ios-status-shield` | `globals.css` (≈ L72) + `src/app/layout.tsx` body | **Always-visible** fixed `top:0 z=102` solid `var(--paper)` strip. Above `.grain::before` (z=100). `height: max(4px, env(safe-area-inset-top, 0px) + 6px)`. `pointer-events: none`. Never hidden by modals — the cream/theme strip at the top is a deliberate design constant. |
+| `.ios-status-shield` | `globals.css` (≈ L72) + `src/app/layout.tsx` body | **Always-visible on iOS/iPadOS** fixed `top:0 z=102` solid `var(--paper)` strip. Default `height: 0` (collapses on desktop / Android — nothing visible there); `@supports (-webkit-touch-callout: none) { height: max(4px, env(safe-area-inset-top, 0px) + 6px) }` activates the real height on iOS WebKit only. Above `.grain::before` (z=100). `pointer-events: none`. Never hidden by modals on iOS — the cream/theme strip at the top is a deliberate design constant. |
 | (no bottom shield) | — | Intentionally absent. The iOS floating URL bar samples the bottom of the page's scroll content, NOT the safe-area-bottom zone, so a bottom shield wouldn't control its tint anyway. Leaving the bottom edge uncovered also lets modal overlays (fixed inset:0) naturally tint the URL bar dark when they're open. |
 | `.grain::before` | `globals.css` (≈ L347) | Body texture at z=100, `mix-blend-mode: multiply`. Mask fades out at **both** safe-area zones via a 5-stop `linear-gradient` (the bottom fade is still useful as a clean visual fade, even though there's no longer a bottom shield to coordinate with). |
 | `.nav-mobile-overlay` | `globals.css` (≈ L844) | Mobile menu overlay, `position: fixed; inset: 0; z=90`, dark rgba + backdrop-filter. Becomes the bottom-edge sample target for iOS when open. |
@@ -71,7 +71,7 @@ The `.nav` background has to differ across surfaces — solid on mobile (Liquid 
 ## Do's
 
 - ✅ Keep `.nav` Layer 1 as solid `var(--paper)`. Per-surface visual differences come from Layers 2–4 — never inline a different default.
-- ✅ Keep `.ios-status-shield` always-visible. `pointer-events: none` so the iOS "tap status bar to scroll to top" gesture still works. `height: max(4px, env(safe-area-inset-top, 0px) + 6px)` so it stays sample-eligible even on landscape / non-notch devices.
+- ✅ Keep `.ios-status-shield` always-visible on iOS/iPadOS. `pointer-events: none` so the iOS "tap status bar to scroll to top" gesture still works. The iOS-only height is gated by `@supports (-webkit-touch-callout: none)` so the shield collapses to `height: 0` on desktop and Android — no visible cream stripe where there's no Liquid Glass to feed.
 - ✅ Keep the shield ABOVE `.grain::before` (z=102 > z=100) so the multiply-blend grain can't darken the sample surface.
 - ✅ Keep `viewportFit: "cover"` in the viewport export.
 - ✅ When adding any new full-viewport overlay (`position: fixed; inset: 0`), mask its blend modes away from both safe-area zones — copy the 5-stop pattern from `.grain::before`.
@@ -125,7 +125,7 @@ iOS 26 Liquid Glass caches its tint sample and only re-evaluates on user-initiat
 5. **Contact modal open** (via "Get in touch" CTA, both desktop and mobile): same expectations as the mobile menu — top stays cream/theme, bottom eventually tints dark.
 6. **Rotate landscape**: `env(safe-area-inset-top)` becomes 0; the `max(4px, ...)` floor keeps the shield sample-eligible.
 7. **Tap the iOS status bar to scroll-to-top**. Should still work — the shield has `pointer-events: none` so the tap passes through.
-8. **Open desktop Safari / Chrome / Firefox**: frosted nav (Safari macOS) or transparent nav (Chrome/Firefox) per the four-layer cascade. The 6px shield stripe at the very top is intentional and unconditional. There is NO matching stripe at the bottom (deliberate — no bottom shield).
+8. **Open desktop Safari / Chrome / Firefox**: frosted nav (Safari macOS) or transparent nav (Chrome/Firefox) per the four-layer cascade. **No cream stripe at the very top** — the shield is `@supports (-webkit-touch-callout: none)`-gated, so it collapses to `height: 0` on desktop where there's no Liquid Glass to protect. There is also no matching stripe at the bottom (deliberate — no bottom shield).
 
 ## What previously failed (don't repeat)
 

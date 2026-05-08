@@ -107,10 +107,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* Top shield for the iOS 26 Liquid Glass status bar — solid
               var(--paper) at z=102 (above the grain texture at z=100),
               pointer-events:none so the iOS "tap status bar to scroll
-              to top" gesture still works. Always visible, never hidden
-              by modals — the cream/theme strip at the top is a deliberate
-              design constant. Collapses to 4px floor on desktop /
-              non-notch browsers where safe-area-inset-top is 0.
+              to top" gesture still works. Always visible on iOS/iPadOS,
+              never hidden by modals — the cream/theme strip at the top
+              is a deliberate design constant there. Collapses to
+              height: 0 on desktop and Android (gated via
+              @supports (-webkit-touch-callout: none) in globals.css)
+              where there's no Liquid Glass to feed and a visible cream
+              stripe would just be visual cruft.
 
               No symmetric bottom shield by design: the iOS floating URL
               bar samples the area above its own position (the bottom of
