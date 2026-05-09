@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import { SmoothHashLink } from "@/components/chrome/SmoothHashLink";
 import { Sticker } from "@/components/primitives/Sticker";
 import type { ProjectCaseStudy } from "@/lib/projects";
 
@@ -12,8 +12,9 @@ export function ProjectHero({ data }: { data: ProjectCaseStudy }) {
   ];
   return (
     <section data-section="project-hero" style={{ padding: "120px 48px 80px", maxWidth: 1440, margin: "0 auto", position: "relative" }}>
-      <Link
-        href="/"
+      <SmoothHashLink
+        sectionId="projects"
+        href="/#projects"
         data-anim="fade-up"
         data-delay="0"
         style={{
@@ -32,7 +33,7 @@ export function ProjectHero({ data }: { data: ProjectCaseStudy }) {
           <path d="M12 7H2M2 7L6 3M2 7L6 11" />
         </svg>
         <span className="hero-intro-mark">Back to projects</span>
-      </Link>
+      </SmoothHashLink>
 
       <div data-anim="chip-row" style={{ display: "flex", gap: 10, marginBottom: 24, flexWrap: "wrap" }}>
         <Sticker variant="solid" data-anim-item>

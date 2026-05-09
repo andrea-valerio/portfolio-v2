@@ -3,11 +3,18 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+/** Section hashes we scroll to then strip from the URL (clean address bar on load / inbound nav). */
+const STRIP_AFTER_SCROLL = new Set(["projects", "publications"]);
+
 function scrollHashIntoView() {
   const id = window.location.hash.slice(1);
   if (!id) return;
   window.setTimeout(() => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (STRIP_AFTER_SCROLL.has(id)) {
+      const clean = window.location.pathname + window.location.search;
+      window.history.replaceState(null, "", clean);
+    }
   }, 0);
 }
 
