@@ -37,13 +37,15 @@ const mono = JetBrains_Mono({
   variable: "--font-mono",
 });
 
+const siteDescription =
+  "Product designer with an HCI background — UX/UI, research, and AI-assisted workflows. Selected case studies; currently designing for Loomly, Issuu & Tractive at Bending Spoons*.";
+
 export const metadata: Metadata = {
   title: {
-    default: "Andrea Valerio — UX Designer & HCI Researcher",
-    template: "%s — Andrea Valerio",
+    default: "Andrea Valerio – UX & HCI",
+    template: "%s – Andrea Valerio",
   },
-  description:
-    "Product designer and HCI researcher working at the seam of UX/UI design, UX research, and HCI research. Currently designing for Loomly & Issuu at Bending Spoons.",
+  description: siteDescription,
   keywords: [
     "Andrea Valerio",
     "Product Designer",
@@ -53,6 +55,7 @@ export const metadata: Metadata = {
     "Bending Spoons",
     "Loomly",
     "Issuu",
+    "Tractive",
     "Meetup",
     "DLR",
     "UNOX",
@@ -62,14 +65,14 @@ export const metadata: Metadata = {
   creator: "Andrea Valerio",
   openGraph: {
     type: "website",
-    title: "Andrea Valerio — UX Designer & HCI Researcher",
-    description: "Product design + HCI research. Bridging minds and technologies.",
+    title: "Andrea Valerio – UX & HCI",
+    description: siteDescription,
     siteName: "Andrea Valerio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Andrea Valerio — UX Designer & HCI Researcher",
-    description: "Product design + HCI research. Bridging minds and technologies.",
+    title: "Andrea Valerio – UX & HCI",
+    description: siteDescription,
   },
   icons: {
     icon: [

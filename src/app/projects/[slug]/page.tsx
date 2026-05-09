@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     title: data.title,
     description: data.subtitle,
     openGraph: {
-      title: `${data.title} — Andrea Valerio`,
+      title: `${data.title} – Andrea Valerio`,
       description: data.subtitle,
       type: "article",
     },
