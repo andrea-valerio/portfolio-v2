@@ -74,7 +74,7 @@ export function ProjectHero({ data }: { data: ProjectCaseStudy }) {
       <div
         className="project-hero-meta"
         data-anim="fade-up"
-        data-delay="1.4"
+        data-delay="0.5"
         style={{
           borderTop: "2px solid var(--ink)",
           borderBottom: "2px solid var(--ink)",
@@ -94,8 +94,8 @@ export function ProjectHero({ data }: { data: ProjectCaseStudy }) {
       </div>
 
       <div style={{ marginTop: 48, position: "relative" }}>
-        {/* clip-reveal only on the frame so tape can sit outside like the homepage hero */}
-        <div data-anim="clip-reveal" style={{ position: "relative", width: "100%" }}>
+        {/* clip-reveal on mount (see Animations.tsx clip-reveal-mount); scroll-based clip-reveal stays for other pages */}
+        <div data-anim="clip-reveal-mount" style={{ position: "relative", width: "100%" }}>
           <div
             style={{
               position: "relative",

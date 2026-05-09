@@ -216,7 +216,22 @@ function bindPageAnimations(gsap: GsapLike) {
     });
   });
 
-  // CLIP REVEAL
+  // CLIP REVEAL — on mount (e.g. project case-study hero image). No ScrollTrigger.
+  document.querySelectorAll<HTMLElement>('[data-anim="clip-reveal-mount"]').forEach((el) => {
+    const delay = parseFloat(el.dataset.delay || "0");
+    gsap.fromTo(
+      el,
+      { clipPath: "inset(0 100% 0 0)" },
+      {
+        clipPath: "inset(0 0% 0 0)",
+        duration: 1.2,
+        delay,
+        ease: "expo.out",
+      },
+    );
+  });
+
+  // CLIP REVEAL — scroll-triggered (reuse anywhere that should reveal when scrolled into view)
   document.querySelectorAll<HTMLElement>('[data-anim="clip-reveal"]').forEach((el) => {
     gsap.fromTo(
       el,
