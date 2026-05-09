@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Archivo_Black, Source_Serif_4, Caveat, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 
 import "./globals.css";
 import { Nav } from "@/components/chrome/Nav";
