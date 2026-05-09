@@ -107,6 +107,11 @@ html {
   z-index: 102;
   background: var(--paper);
   pointer-events: none;
+  /* Same compositor-layer treatment as .nav so the shield doesn't
+     reflow during Chrome iOS's URL-bar collapse — keeps the cream
+     strip stable above the navbar. */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 #projects,
@@ -625,7 +630,14 @@ button {
    browsers). This keeps iOS 26 Liquid Glass sampling cream so the
    in-page CTA can't bleed through the status bar, and gives a
    consistent cream-white bar on desktop instead of the previous
-   frosted/transparent treatment. */
+   frosted/transparent treatment.
+
+   transform/will-change: forces a dedicated compositor layer so the
+   nav is decoupled from layout-viewport reflows during Chrome iOS's
+   URL-bar collapse animation (which would otherwise momentarily
+   re-evaluate env(safe-area-inset-top) and slide the contents up to
+   the 18px padding floor). Standard mitigation for Chrome iOS
+   fixed-position shake. */
 .nav {
   position: fixed;
   top: 0;
@@ -643,6 +655,8 @@ button {
   min-width: 0;
   background: var(--paper);
   border-bottom: 1px solid var(--line);
+  transform: translateZ(0);
+  will-change: transform;
 }
 .nav-brand-group {
   display: flex;
