@@ -249,17 +249,12 @@ button {
   }
 }
 
-/* Intro + CTAs: buttons above intro on phones only (<640px) */
+/* Intro + CTAs: column stack (DOM order: intro, then buttons on all breakpoints) */
 .hero-intro-cta-stack {
   display: flex;
   flex-direction: column;
   gap: 40px;
   margin-top: 32px;
-}
-@media (max-width: 639px) {
-  .hero-intro-cta-stack .hero-cta-slot {
-    order: -1;
-  }
 }
 
 /* Same display weight as `.display` but preserves authored capitalization (e.g. project meta). */
