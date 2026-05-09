@@ -875,9 +875,22 @@ button {
   min-width: 0;
 }
 .nav--mobile .nav-brand-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: none;
+}
+/* Wordmark: same height as .mode-toggle (30px); width from intrinsic ratio */
+.nav .nav-brand-logo {
+  height: 30px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+.nav--mobile .nav-brand-logo {
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+.nav--mobile .brand {
+  min-width: 0;
 }
 .nav .brand {
   display: flex;
@@ -928,15 +941,11 @@ button {
   color: var(--paper);
   border-color: var(--ink);
   box-shadow: none;
+  white-space: nowrap;
 }
 /* .btn sets display — keep [hidden] and narrow-viewport rule winning */
 .nav .nav-cta[hidden] {
   display: none !important;
-}
-@media (max-width: 399px) {
-  .nav .nav-cta {
-    display: none !important;
-  }
 }
 .nav .nav-cta:hover {
   background: color-mix(in oklab, var(--ink) 88%, #fff);
@@ -947,10 +956,6 @@ button {
 .nav .nav-cta:active {
   box-shadow: none;
   transform: translate(1px, 1px);
-}
-
-.nav .nav-cta-label-short {
-  display: none;
 }
 
 /* Panel is portaled to body — keep selectors in sync for mobile menu */
@@ -1495,14 +1500,5 @@ footer .footer-contact-sticker-outline:focus-visible {
   .project-section-num-wrap {
     position: static;
     top: auto;
-  }
-}
-
-@media (max-width: 420px) {
-  .nav .nav-cta-label-long {
-    display: none;
-  }
-  .nav .nav-cta-label-short {
-    display: inline;
   }
 }

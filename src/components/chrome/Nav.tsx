@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useContactModal } from "@/components/landing/ContactModalProvider";
 import { SmoothHashLink } from "@/components/chrome/SmoothHashLink";
+import wordmarkDark from "@/assets/mylogo/wordmark_dark.svg";
+import wordmarkLight from "@/assets/mylogo/wordmark_light.svg";
 
 type NavProps = { active?: "projects" | "pubs" | null };
 
@@ -145,7 +147,7 @@ export function Nav({ active = null }: NavProps) {
   }, []);
 
   /** Desktop: hide Projects/Pubs first if tight; then hide Get in touch if it still does not fit.
-   *  Mobile: hide Get in touch when it does not fit (menu stays), or when viewport is under 400px wide. */
+   *  Mobile: Get in touch stays visible (left of the menu); logo frees enough horizontal space. */
   useLayoutEffect(() => {
     const nav = navRef.current;
     const links = sectionLinksRef.current;
@@ -184,7 +186,7 @@ export function Nav({ active = null }: NavProps) {
         }
       }
 
-      const nextShowCta = viewportWideEnoughForCta && !overflowFn();
+      const nextShowCta = isMobileNav ? true : viewportWideEnoughForCta && !overflowFn();
 
       setShowSectionLinks(nextShowLinks);
       setShowCta(nextShowCta);
@@ -266,7 +268,15 @@ export function Nav({ active = null }: NavProps) {
   return (
     <nav ref={navRef} className={`nav${isMobileNav ? " nav--mobile" : ""}`}>
       <div ref={brandGroupRef} className="nav-brand-group">
-        <Link href="/" className="brand">
+        <Link href="/" className="brand" aria-label="Andrea Valerio — home">
+          <img
+            className="nav-brand-logo"
+            src={isDark ? wordmarkLight.src : wordmarkDark.src}
+            width={wordmarkDark.width}
+            height={wordmarkDark.height}
+            alt=""
+            decoding="async"
+          />
           <span className="nav-brand-text">Andrea Valerio</span>
         </Link>
         {!isMobileNav && <ModeToggle isDark={isDark} onToggle={toggleMode} />}
@@ -294,10 +304,7 @@ export function Nav({ active = null }: NavProps) {
           onClick={openContact}
           aria-label="Get in touch"
         >
-          <span className="nav-cta-label nav-cta-label-long">Get in touch</span>
-          <span className="nav-cta-label nav-cta-label-short" aria-hidden="true">
-            Contact
-          </span>
+          <span className="nav-cta-label">Get in touch</span>
         </button>
         {isMobileNav && (
           <button

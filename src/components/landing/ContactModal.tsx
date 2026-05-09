@@ -5,7 +5,7 @@ import { useEffect, useRef, type CSSProperties } from "react";
 const EMAIL = "andrea@icio.it";
 const LINKEDIN_URL = "https://www.linkedin.com/in/andreavalerio1";
 const LINKEDIN_HANDLE = "/in/andreavalerio1";
-const CV_PATH = "/CV_Summer2026.pdf";
+const CV_PATH = "/CV/CV_Summer2026.pdf";
 
 export type ContactModalMode = "contact" | "cv";
 
