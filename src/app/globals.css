@@ -263,6 +263,22 @@ button {
   margin-top: 32px;
 }
 
+/*
+ * Desktop two-column hero: left column matches portrait row height and the scroll
+ * hint sits on the bottom edge. On narrow layouts, min-height + margin-top:auto
+ * kept the column tall after collapsing “read more”, leaving a huge gap above
+ * SCROLL — scope stretch + auto margin to min-width 901px only.
+ */
+@media (min-width: 901px) {
+  .hero-lead-col {
+    min-height: 100%;
+  }
+
+  .hero-scroll-hint {
+    margin-top: auto;
+  }
+}
+
 /* Same display weight as `.display` but preserves authored capitalization (e.g. project meta). */
 .display--sentence {
   text-transform: none;

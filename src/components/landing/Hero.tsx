@@ -32,12 +32,12 @@ export function Hero() {
       >
         {/* LEFT */}
         <div
+          className="hero-lead-col"
           style={{
             position: "relative",
             zIndex: 5,
             display: "flex",
             flexDirection: "column",
-            minHeight: "100%",
           }}
         >
           <h1
@@ -111,7 +111,6 @@ export function Hero() {
             data-anim="fade-up"
             data-delay="1.6"
             style={{
-              marginTop: "auto",
               paddingTop: 32,
               display: "flex",
               justifyContent: "flex-end",
