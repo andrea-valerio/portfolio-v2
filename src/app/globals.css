@@ -58,22 +58,34 @@ html {
 
 /* Top-edge shield for iOS 26 Liquid Glass status bar.
 
-   Always visible on iOS/iPadOS — unconditional cream/theme cover at the
-   top safe-area zone. Stays put across all states (no-modal, mobile
-   menu open, contact modal open) so the iOS status bar always tints
-   to var(--paper). Collapses to height: 0 on every non-iOS surface
-   (desktop Safari, Chrome, Firefox, Android Chrome) where there's no
-   Liquid Glass to feed and a visible cream strip would just be cruft.
+   Visible on iOS/iPadOS — solid cream/theme cover at the top safe-area
+   zone, behind the iOS Liquid Glass status bar. Stays put across all
+   states (no-modal, mobile menu open, contact modal open) so the iOS
+   status bar always tints to var(--paper). Background follows --paper
+   so the strip flips to #161310 in dark mode (the system status bar
+   tint will lag until the next user scroll — accepted iOS Liquid Glass
+   cache limitation; see skill file).
+
+   Height is driven directly by env(safe-area-inset-top, 0px), which
+   naturally produces:
+   - 0 on desktop (no Liquid Glass to protect, no visible cream stripe)
+   - 0 on Android Chrome (likewise)
+   - ~44–50px on iOS notched portrait (the actual inset, full coverage)
+   - 0 on iOS landscape / non-notch (we lose sample-eligibility for
+     Liquid Glass there, but those are edge cases and the iOS status
+     bar is also less prominent in those modes)
+
+   Direct env() gating was chosen over @supports (-webkit-touch-callout:
+   none) because that @supports detector has a known regression on iOS
+   26.1+ (Apple Developer Forums thread 808606) — using it caused the
+   shield to collapse to height: 0 on iOS too in commit eb4062a, which
+   broke the theme-driven cream/dark strip the user explicitly relies
+   on. env() is universally supported and produces the right value
+   per surface without a brittle feature query.
 
    - z-index 102 sits ABOVE .grain::before (z=100), so the multiply-blend
      grain can't darken this strip and feed a darker composite to iOS
      Liquid Glass's status bar sampler.
-   - On iOS, floor of 4px keeps the element sample-eligible (≥3px tall,
-     full width) even where safe-area-inset-top is 0 (landscape,
-     non-notch devices), so iOS still has a clean cream surface to
-     sample. Wrapped in @supports (-webkit-touch-callout: none) so it
-     applies on iOS/iPadOS WebKit only — same iOS WebKit detector used
-     in Layer 3 of the .nav cascade.
    - pointer-events: none preserves the iOS "tap status bar to scroll
      to top" gesture — taps fall through to whatever's beneath.
 
@@ -91,16 +103,10 @@ html {
   top: 0;
   left: 0;
   right: 0;
-  height: 0;
+  height: env(safe-area-inset-top, 0px);
   z-index: 102;
   background: var(--paper);
   pointer-events: none;
-}
-
-@supports (-webkit-touch-callout: none) {
-  .ios-status-shield {
-    height: max(4px, calc(env(safe-area-inset-top, 0px) + 6px));
-  }
 }
 
 #projects,
@@ -295,12 +301,14 @@ button {
   transition: opacity 0.18s ease;
 }
 
-.hero-intro-hci-link:hover {
-  opacity: 0.88;
-  text-decoration: underline;
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
+@media (hover: hover) {
+  .hero-intro-hci-link:hover {
+    opacity: 0.88;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
 }
 
 .hero-intro-hci-link:focus-visible {
@@ -332,8 +340,11 @@ button {
     color 0.18s ease;
 }
 
-.hero-intro-readmore:hover {
-  text-decoration-color: var(--accent);
+/* Only real hover pointers get the accent underline — avoids sticky “hover” on touch */
+@media (hover: hover) {
+  .hero-intro-readmore:hover {
+    text-decoration-color: var(--accent);
+  }
 }
 
 .hero-intro-readmore:focus-visible {
