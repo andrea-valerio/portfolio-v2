@@ -344,7 +344,9 @@ export function Nav({ active = null }: NavProps) {
             >
               <div className="nav-mobile-panel-header">
                 <h2 id="nav-mobile-menu-title" className="nav-mobile-panel-title">
-                  Portfolio
+                  <Link href="/" className="nav-mobile-panel-title-link" onClick={closeMenu}>
+                    Portfolio
+                  </Link>
                 </h2>
                 <button
                   ref={closeMenuBtnRef}
