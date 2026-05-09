@@ -61,10 +61,33 @@ html {
    Visible on iOS/iPadOS — solid cream/theme cover at the top safe-area
    zone, behind the iOS Liquid Glass status bar. Stays put across all
    states (no-modal, mobile menu open, contact modal open) so the iOS
-   status bar always tints to var(--paper). Background follows --paper
-   so the strip flips to #161310 in dark mode (the system status bar
-   tint will lag until the next user scroll — accepted iOS Liquid Glass
-   cache limitation; see skill file).
+   status bar always tints to the active theme's paper color.
+
+   Theme-driven color: TWO explicit rules (light default + dark override
+   below), NOT a `var(--paper)` cascade. The variable approach was
+   working until commit 51f50ce promoted the shield to its own
+   compositor layer with `transform: translateZ(0); will-change:
+   transform` (and f62a2f4 reused that compositor hint as the carrier
+   for the --vv-offset visual-viewport drift compensation). Once the
+   shield owns a compositor layer, iOS WebKit caches its painted
+   background and stops re-rasterizing on `data-mode` flips — the
+   strip stays stuck at the previous theme's color until a full
+   reload. Removing the transform AND will-change (this commit) drops
+   the layer back into the page's main paint tree so the cascade
+   re-paints normally; the literal-hex rules below belt-and-brace
+   that by giving iOS a non-variable target it can't miss. See the
+   ios-liquid-glass skill file's "Don'ts" for why neither piece is
+   negotiable.
+
+   Drift trade-off: removing the transform also removes the per-shield
+   counter-translate for iOS 26's visual-viewport drift bug (Bugzilla
+   297779). Acceptable here because `html, body { background: var(--paper) }`
+   already paints the same color through the safe-area zone, so any
+   transient gap during a URL-bar transition is invisible (cream-on-
+   cream / dark-on-dark). The .nav still keeps its own --vv-offset
+   transform — the nav's content (logo + buttons) is a complex shape
+   where drift IS visually noticeable, and the nav's color update
+   doesn't matter mid-session in the same way.
 
    Height is driven directly by env(safe-area-inset-top, 0px), which
    naturally produces:
@@ -97,7 +120,16 @@ html {
    (.nav-mobile-overlay, ContactModal — both fixed inset:0) become the
    sample target at the bottom edge when they're open, naturally tinting
    the URL bar to match (after iOS's next composite). See
-   .claude/skills/ios-liquid-glass.md for the full rationale. */
+   .claude/skills/ios-liquid-glass.md for the full rationale.
+
+   Caveat we can't fix from web: even with the strip flipping correctly
+   on data-mode, iOS 26's Liquid Glass system tint itself still caches
+   and only re-evaluates on user-initiated scroll or full reload. So
+   right after a theme toggle, the visible cream/dark STRIP updates
+   immediately (this is what the user sees) but the iOS system status
+   bar TINT may briefly remain the previous theme's tint until the
+   next scroll. Documented platform limitation; skill file's
+   "State-driven appearance" section covers it. */
 .ios-status-shield {
   position: fixed;
   top: 0;
@@ -105,19 +137,39 @@ html {
   right: 0;
   height: env(safe-area-inset-top, 0px);
   z-index: 102;
-  background: var(--paper);
+  /* Light-mode default. Literal hex (matches :root --paper) so iOS
+     WebKit has a non-variable target it can paint reliably even if
+     a future change accidentally re-promotes the shield to its own
+     compositor layer. */
+  background: #f4ede0;
   pointer-events: none;
-  /* Counter-translate to neutralize iOS 26's visual-viewport drift
-     during URL-bar transitions (WebKit Bugzilla 297779). --vv-offset
-     is set by ViewportOffsetSync in JS to -visualViewport.offsetTop;
-     it's 0px on non-buggy surfaces so the transform is a no-op there. */
-  transform: translate3d(0, var(--vv-offset, 0px), 0);
-  will-change: transform;
+  /* IMPORTANT: do NOT add `transform`, `will-change: transform`,
+     `backdrop-filter`, `filter`, or any other property that promotes
+     this element to its own compositor layer. iOS WebKit caches the
+     layer's painted background and the theme-driven color flip stops
+     working. See the comment block above and the failure-history
+     entries for commits 51f50ce / f62a2f4 in the skill file. */
 }
 
+[data-mode="dark"] .ios-status-shield {
+  background: #161310;
+}
+
+/* Hash navigation lands the section flush below the desktop fixed nav
+   (~88px tall). On mobile (<640px) the nav is non-sticky and scrolls
+   away with the page, so 88px of forced gap above the section becomes
+   a wasted band of body bg — drop the offset to just the iOS safe-area
+   inset so the section appears flush below the iOS status bar zone
+   and naturally below the .ios-status-shield strip. */
 #projects,
 #publications {
   scroll-margin-top: 88px;
+}
+@media (max-width: 639px) {
+  #projects,
+  #publications {
+    scroll-margin-top: env(safe-area-inset-top, 0px);
+  }
 }
 
 body {
@@ -227,6 +279,21 @@ button {
    #publications keep their existing IDs. */
 @media (max-width: 639px) {
   /* Landing page */
+  /* Hero clearance: desktop uses padding-top: 88 (inline) to leave room
+     for the fixed nav, with .caution-strip absolutely positioned at the
+     bottom of that 88px buffer (also inline `top: 88`). On mobile the
+     nav is non-sticky (.nav.nav--mobile rule) and lives in document
+     flow, so that 88px buffer becomes wasted cream space between the
+     nav's border-bottom and the orange/black strip. Override both
+     values together — they MUST stay in lockstep so the strip remains
+     pinned to the bottom of the (now-smaller) clearance zone instead
+     of floating mid-content. */
+  [data-section="hero"] {
+    padding-top: 16px !important;
+  }
+  [data-section="hero"] .caution-strip {
+    top: 16px !important;
+  }
   [data-section="role-strip"] {
     padding-top: 32px !important;        /* 48 * 2/3 */
     padding-bottom: 16px !important;     /* 24 * 2/3 */
@@ -627,16 +694,30 @@ button {
   box-shadow: 8px 8px 0 var(--ink);
 }
 
-/* NAV — solid var(--paper) on every surface (desktop + mobile, all
-   browsers). This keeps iOS 26 Liquid Glass sampling cream so the
-   in-page CTA can't bleed through the status bar, and gives a
-   consistent cream-white bar on desktop instead of the previous
-   frosted/transparent treatment.
+/* NAV — solid var(--paper). Asymmetric stickiness:
 
-   --vv-offset is set by ViewportOffsetSync to -visualViewport.offsetTop
-   to counter iOS 26's visual-viewport drift during URL-bar transitions
-   (WebKit Bugzilla 297779). 0px on non-buggy surfaces, so the transform
-   is a no-op on desktop / Android / iOS 26.1+ with Apple's fix. */
+   - Desktop / tablet (≥640px): position:fixed top:0, with the
+     --vv-offset transform/will-change to counter iOS 26's
+     visual-viewport drift on iPad Safari (WebKit Bugzilla 297779).
+   - Mobile (<640px, .nav--mobile rule below): position:relative,
+     no transform. The nav scrolls with the page on phones so the
+     iOS 26 Liquid Glass status bar never has to do its
+     sample-and-cache dance against a fixed nav (which on iOS
+     WebKit was getting promoted to its own compositor layer and
+     caching its painted background, breaking dynamic theme
+     updates of the visible cream/dark strip behind the system
+     status bar). On phone-class viewports we accept the trade-off
+     of losing the sticky toggle / hamburger / CTA in exchange for
+     a status-bar zone that simply paints whatever the document's
+     top edge naturally is — body bg + .ios-status-shield, both in
+     the main paint tree, both updating instantly on data-mode
+     flips. The shield (z=102, fixed) still serves as the iOS
+     Liquid Glass sample target after the nav has scrolled away.
+
+   --vv-offset is set by ViewportOffsetSync to -visualViewport.offsetTop;
+   it's 0px on non-buggy surfaces so the transform is a no-op on
+   desktop / Android / iOS 26.1+ with Apple's fix. See
+   .claude/skills/ios-liquid-glass.md for the full rationale. */
 .nav {
   position: fixed;
   top: 0;
@@ -656,6 +737,27 @@ button {
   border-bottom: 1px solid var(--line);
   transform: translate3d(0, var(--vv-offset, 0px), 0);
   will-change: transform;
+}
+
+/* Mobile: nav is part of the document flow, not pinned to the top.
+   Scoped on .nav--mobile (set by Nav.tsx via the same
+   `(max-width: 639px)` matchMedia query that drives the hamburger
+   layout) so the breakpoint stays in one place — change it in
+   Nav.tsx's MOBILE_NAV_MQ and this rule follows. `top/left/right/
+   z-index` are reset because they're meaningless once position:
+   fixed is gone; transform/will-change are reset so the nav doesn't
+   linger on its own compositor layer on iOS WebKit (compositor
+   promotion is what breaks `data-mode`-driven re-paints — see the
+   shield's block comment near line 60 and the skill file for the
+   full reasoning). */
+.nav.nav--mobile {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  z-index: auto;
+  transform: none;
+  will-change: auto;
 }
 .nav-brand-group {
   display: flex;

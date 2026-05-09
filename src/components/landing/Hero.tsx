@@ -7,6 +7,7 @@ import { PROFILE_PHOTO } from "@/lib/project-images";
 export function Hero() {
   return (
     <section
+      data-section="hero"
       style={{
         position: "relative",
         zIndex: 1,

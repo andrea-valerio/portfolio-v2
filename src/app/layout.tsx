@@ -107,15 +107,37 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <Footer />
           {/* Top shield for the iOS 26 Liquid Glass status bar — solid
-              var(--paper) at z=102 (above the grain texture at z=100),
+              cream (#f4ede0) by default, flipped to solid dark (#161310)
+              by `[data-mode="dark"] .ios-status-shield` in globals.css.
+              Sits at z=102 (above the grain texture at z=100), with
               pointer-events:none so the iOS "tap status bar to scroll
-              to top" gesture still works. Visible on iOS/iPadOS,
-              never hidden by modals — the cream/theme strip at the top
-              is a deliberate design constant there. Sized via
+              to top" gesture still works. Visible on iOS/iPadOS, never
+              hidden by modals — the cream/theme strip at the top is a
+              deliberate design constant there. Sized via
               env(safe-area-inset-top, 0px) directly, which naturally
               produces 0 on desktop and Android (where the inset is 0,
               no stripe) and the actual inset on iOS notched portrait
               (where Liquid Glass needs the cream surface to sample).
+
+              The shield uses literal hex colors instead of var(--paper)
+              and deliberately has NO transform / will-change — both
+              choices are about keeping it off its own compositor layer
+              so iOS WebKit re-paints it on every theme toggle. A prior
+              attempt to promote it to a compositor layer for URL-bar
+              stability (commits 51f50ce + f62a2f4) caused the strip to
+              get stuck at the previous theme's color until next reload;
+              see the skill file for the full failure history.
+
+              On phone-class viewports (<640px) the .nav itself is
+              non-sticky (position:relative via the .nav.nav--mobile
+              rule in globals.css) so this shield is the ONLY element
+              pinned to the top safe-area zone — it becomes the
+              unambiguous Liquid Glass sample target and the only
+              painted surface that controls the cream/dark strip the
+              user sees behind the iOS status bar. Removing the nav
+              from the sticky pile-up was the deliberate simplification
+              that finally made the dynamic theme update actually work
+              end-to-end on iPhone Safari.
 
               No symmetric bottom shield by design: the iOS floating URL
               bar samples the area above its own position (the bottom of
