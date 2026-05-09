@@ -3,19 +3,17 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 
 const EMAIL = "andrea@icio.it";
-const LINKEDIN_URL = "https://www.linkedin.com/in/andreavalerio1";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/andreavalerio1";
 const LINKEDIN_HANDLE = "/in/andreavalerio1";
-const CV_PATH = "/CV/CV_Summer2026.pdf";
-
-export type ContactModalMode = "contact" | "cv";
+export const GITHUB_URL = "https://github.com/andrea-valerio";
+export const CV_PATH = "/CV/CV_Summer2026.pdf";
 
 type ContactModalProps = {
   open: boolean;
-  mode: ContactModalMode;
   onClose: () => void;
 };
 
-export function ContactModal({ open, mode, onClose }: ContactModalProps) {
+export function ContactModal({ open, onClose }: ContactModalProps) {
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -46,8 +44,7 @@ export function ContactModal({ open, mode, onClose }: ContactModalProps) {
 
   if (!open) return null;
 
-  const isCv = mode === "cv";
-  const titleId = isCv ? "cv-modal-title" : "contact-modal-title";
+  const titleId = "contact-modal-title";
 
   return (
     <div
@@ -73,10 +70,7 @@ export function ContactModal({ open, mode, onClose }: ContactModalProps) {
         style={{
           position: "relative",
           width: "100%",
-          maxWidth: isCv ? 900 : 480,
-          maxHeight: isCv ? "min(92vh, 880px)" : undefined,
-          display: isCv ? "flex" : undefined,
-          flexDirection: isCv ? "column" : undefined,
+          maxWidth: 480,
           minHeight: 0,
           background: "var(--paper)",
           border: "2px solid var(--ink)",
@@ -110,80 +104,7 @@ export function ContactModal({ open, mode, onClose }: ContactModalProps) {
           </svg>
         </button>
 
-        {isCv ? (
-          <>
-            <div
-              className="mono"
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.2em",
-                color: "var(--muted)",
-                marginBottom: 8,
-              }}
-            >
-              PREVIEW
-            </div>
-            <h2
-              id="cv-modal-title"
-              className="display-wide"
-              style={{
-                fontSize: 36,
-                lineHeight: 0.95,
-                margin: 0,
-                marginBottom: 16,
-              }}
-            >
-              <span style={{ color: "var(--accent)" }}>CV</span>
-            </h2>
-            <div
-              style={{
-                flex: 1,
-                minHeight: 0,
-                border: "2px solid var(--ink)",
-                boxShadow: "4px 4px 0 var(--ink)",
-                background: "color-mix(in srgb, var(--ink) 4%, transparent)",
-              }}
-            >
-              <iframe
-                src={CV_PATH}
-                title="CV PDF preview"
-                style={{
-                  display: "block",
-                  width: "100%",
-                  height: "min(70vh, 640px)",
-                  border: 0,
-                }}
-              />
-            </div>
-            <p
-              className="mono"
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.12em",
-                margin: "14px 0 0",
-                color: "var(--muted)",
-              }}
-            >
-              <a
-                href={CV_PATH}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "var(--ink)",
-                  textUnderlineOffset: 3,
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
-              >
-                OPEN PDF IN NEW TAB
-                <ExternalArrow size={13} />
-              </a>
-            </p>
-          </>
-        ) : (
-          <>
-            <div
+        <div
               className="mono"
               style={{
                 fontSize: 11,
@@ -266,8 +187,6 @@ export function ContactModal({ open, mode, onClose }: ContactModalProps) {
                 }
               />
             </div>
-          </>
-        )}
       </div>
     </div>
   );

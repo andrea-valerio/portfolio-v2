@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { createPortal } from "react-dom";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
+import { CV_PATH, GITHUB_URL, LINKEDIN_URL } from "@/components/landing/ContactModal";
 import { useContactModal } from "@/components/landing/ContactModalProvider";
 import { SmoothHashLink } from "@/components/chrome/SmoothHashLink";
 import wordmarkDark from "@/assets/mylogo/wordmark_dark.svg";
@@ -15,8 +16,6 @@ const STORAGE_KEY = "portfolio-mode";
 const MOBILE_NAV_MQ = "(max-width: 639px)";
 const MIN_VIEWPORT_FOR_NAV_CTA = "(min-width: 400px)";
 const EMAIL_MAILTO = "mailto:andrea@icio.it";
-const LINKEDIN_URL = "https://www.linkedin.com/in/andreavalerio1";
-const GITHUB_URL = "https://github.com/andrea-valerio";
 
 function subscribeMobileNav(cb: () => void) {
   const mq = window.matchMedia(MOBILE_NAV_MQ);
@@ -113,7 +112,7 @@ function ModeToggle({
 }
 
 export function Nav({ active = null }: NavProps) {
-  const { openContact, openCvPreview } = useContactModal();
+  const { openContact } = useContactModal();
   const navRef = useRef<HTMLElement>(null);
   const brandGroupRef = useRef<HTMLDivElement>(null);
   const navActionsRef = useRef<HTMLDivElement>(null);
@@ -417,16 +416,16 @@ export function Nav({ active = null }: NavProps) {
                     >
                       GitHub
                     </a>
-                    <button
-                      type="button"
+                    <a
+                      href={CV_PATH}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="sticker nav-mobile-connect-chip"
-                      onClick={() => {
-                        closeMenu();
-                        openCvPreview();
-                      }}
+                      aria-label="Open CV as PDF"
+                      onClick={closeMenu}
                     >
                       CV
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
