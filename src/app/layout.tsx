@@ -7,8 +7,10 @@ import { Nav } from "@/components/chrome/Nav";
 import { Footer } from "@/components/chrome/Footer";
 import { ScrollProgress } from "@/components/chrome/ScrollProgress";
 import { Animations } from "@/components/chrome/Animations";
+import { BackToTop } from "@/components/chrome/BackToTop";
 import { ContactModalProvider } from "@/components/landing/ContactModalProvider";
 import { HashScroll } from "@/components/chrome/HashScroll";
+import { RouteScrollToTop } from "@/components/chrome/RouteScrollToTop";
 import { ViewportOffsetSync } from "@/components/chrome/ViewportOffsetSync";
 
 const display = Archivo_Black({
@@ -103,8 +105,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ViewportOffsetSync />
           <ScrollProgress />
           <HashScroll />
+          <RouteScrollToTop />
           <Nav />
           {children}
+          {/* Mobile-only back-to-top sticker. Sits in the layout flow
+              between the page's last content section and the footer,
+              centered horizontally with a 16px gap to the footer top
+              (see .back-to-top in globals.css). Mobile-only because
+              desktop still has the sticky <Nav /> above for back-to-top
+              navigation; on phones the nav is non-sticky (deliberate,
+              to avoid the iOS Liquid Glass cache problem) so users
+              would otherwise have no way back without a long swipe. */}
+          <BackToTop />
           <Footer />
           {/* Top shield for the iOS 26 Liquid Glass status bar — solid
               cream (#f4ede0) by default, flipped to solid dark (#161310)

@@ -308,9 +308,14 @@ button {
        so the gap above the footer does not feel cramped on phones. */
     padding-bottom: 120px !important;
   }
-  /* Project detail pages */
+  /* Project detail pages — same rationale as [data-section="hero"]
+     above: desktop inline padding-top (88px in ProjectHero) clears the
+     fixed nav; on mobile the nav is in document flow, so a large top
+     inset reads as wasted cream between the nav border-bottom and the
+     first line (“Back to projects”). Match the home hero’s 16px top
+     inset instead of scaling 120px by 2/3. */
   [data-section="project-hero"] {
-    padding-top: 80px !important;        /* 120 * 2/3 */
+    padding-top: 16px !important;
     padding-bottom: 53px !important;     /*  80 * 2/3 */
   }
   [data-section="project-body"] {
@@ -597,6 +602,103 @@ button {
 }
 [data-project-year].sticker.solid:hover {
   box-shadow: 3px 3px 0 var(--accent);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   Mobile back-to-top sticker — floating wrapper
+   ───────────────────────────────────────────────────────────────────
+   Viewport-anchored: the wrapper is fixed-positioned 16px above the
+   visible bottom (16px above the iOS home indicator on phones via
+   env(safe-area-inset-bottom)), full-width with the sticker centered
+   inside via flex. The button itself is a plain .sticker.solid (no
+   .back-to-top class on it), so the ink bg, paper text, 2px ink
+   border, and default :hover lift + ink shadow all come through the
+   .sticker / .sticker.solid cascade for free.
+
+   pointer-events: none on the wrapper means scrolls and taps pass
+   straight through the empty horizontal space on either side of the
+   centered sticker — only the .sticker child re-enables pointer
+   events, and only while .is-visible (so the invisible button never
+   intercepts taps before the user has scrolled it into view).
+
+   z=80: above .nav (50) and ScrollProgress (60), below modals (100)
+   and the iOS shield (102), so opening a modal naturally covers the
+   sticker without explicit coordination — visibility:hidden on the
+   modal-open selectors below additionally drops it from focus order.
+
+   The .is-visible class is toggled by BackToTop.tsx's rAF-throttled
+   scroll listener past `window.innerHeight * 0.5`. The same listener
+   also mutates `style.bottom` directly to park the sticker 16px above
+   the footer top once the footer enters the viewport, overriding the
+   default `bottom` calc here. Mobile-only via the @media gate at the
+   bottom — same (max-width: 639px) breakpoint as MOBILE_NAV_MQ in
+   Nav.tsx so the floating sticker only appears where the nav is
+   non-sticky and would otherwise leave the user with no way back.
+
+   Slide animation: hidden state is translated down by
+   (button height + safe-area-inset + 16px bottom + 8px buffer) so the
+   top edge sits ~8px below the viewport on every device — fully
+   off-screen, no peeking sliver during the slide. Visible state is
+   translateY(0). Opacity is animated alongside transform so the slide
+   has a soft fade-in/out edge instead of popping into existence the
+   moment the button crosses the viewport bottom. */
+.back-to-top {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  left: 0;
+  right: 0;
+  z-index: 80;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(calc(100% + env(safe-area-inset-bottom, 0px) + 24px));
+  transition:
+    opacity 0.25s ease-out,
+    transform 0.3s cubic-bezier(0.34, 1.1, 0.64, 1);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Strip the accent (orange) shadow that .sticker.solid carries by
+   default. The base .sticker:hover rule still applies — lift + 5px5px
+   ink shadow appears on hover — so the button has a complete hover
+   state, just no resting shadow. Scoped to `.back-to-top` so every
+   other .sticker.solid instance in the app (project chips, role strip,
+   etc.) keeps its resting 3px3px orange shadow untouched.
+   pointer-events:none here keeps the invisible button from
+   intercepting taps that should pass through to the page. */
+.back-to-top .sticker {
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.back-to-top.is-visible .sticker {
+  pointer-events: auto;
+}
+
+/* While a modal is open, drop the sticker out of the focus order even
+   though z-index already covers it visually. */
+:is([data-menu-open], [data-contact-open]) .back-to-top {
+  visibility: hidden;
+}
+
+/* Reduced motion: instant show/hide instead of the slide+fade. The
+   click handler also switches to `behavior: 'auto'` (instant scroll)
+   under the same media query — see BackToTop.tsx. */
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .back-to-top {
+    display: none;
+  }
 }
 
 /* Publication card: hover-lift only when there is a link to follow */

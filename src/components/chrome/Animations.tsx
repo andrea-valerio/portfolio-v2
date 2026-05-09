@@ -280,6 +280,16 @@ export function Animations() {
       ctx = gsap.context(() => {
         bindPageAnimations(gsap);
       });
+      // ScrollTrigger refresh (implicit on new instances) can leave a
+      // non-zero scrollY after client navigations — nudge back to top
+      // after layout so project pages land flush after the route reset
+      // in RouteScrollToTop (double rAF: once after this frame, once
+      // after ScrollTrigger's internal layout pass).
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo(0, 0);
+        });
+      });
       return true;
     };
 

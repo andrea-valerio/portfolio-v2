@@ -11,7 +11,10 @@ export function ProjectHero({ data }: { data: ProjectCaseStudy }) {
     { k: "TEAM", v: data.team },
   ];
   return (
-    <section data-section="project-hero" style={{ padding: "120px 48px 80px", maxWidth: 1440, margin: "0 auto", position: "relative" }}>
+    <section
+      data-section="project-hero"
+      style={{ padding: "88px 48px 80px", maxWidth: 1440, margin: "0 auto", position: "relative" }}
+    >
       <SmoothHashLink
         sectionId="projects"
         href="/#projects"
