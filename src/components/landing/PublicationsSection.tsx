@@ -32,6 +32,7 @@ export function PublicationsSection() {
           alignItems: "flex-end",
           flexWrap: "wrap",
           gap: 24,
+          marginBottom: 56,
         }}
       >
         <div>
@@ -255,7 +256,7 @@ export function PublicationsSection() {
       )}
 
       {view === "academic" && (
-        <div style={{ borderTop: "2px solid var(--ink)" }}>
+        <div>
           {PUBLICATIONS.map((p, i) => {
             const hasDoi = p.doi && p.doi !== "—";
             const doiHref = p.link ?? (hasDoi ? `https://doi.org/${p.doi}` : undefined);
