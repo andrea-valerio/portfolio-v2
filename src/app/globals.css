@@ -50,10 +50,26 @@ body {
 }
 
 /* iOS Safari: keep the page background painted behind the status bar and home
-   indicator so viewport-fit=cover doesn't expose a different color underneath. */
+   indicator so viewport-fit=cover doesn't expose a different color underneath.
+
+   html overflow:hidden + body overflow:auto makes <body> the scroll container
+   instead of the document. This is the structural workaround for the iOS 26
+   WebKit regression (Bugzilla 297779) where position: fixed / position: sticky
+   elements drift vertically during URL-bar transitions: by removing scroll
+   from <html>, fixed elements anchor to a stable html rectangle instead of
+   the drifting visual viewport, and the navbar stops sliding as the user
+   scrolls past the caution strip. Trade-off: the iOS URL bar stays expanded
+   permanently while scrolling. ScrollProgress.tsx and the GSAP ScrollTrigger
+   defaults read from document.body to match. */
 html {
   background: var(--paper);
-  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 /* Top-edge shield for iOS 26 Liquid Glass status bar.
@@ -107,20 +123,11 @@ html {
   z-index: 102;
   background: var(--paper);
   pointer-events: none;
-  /* Same compositor-layer treatment as .nav so the shield doesn't
-     reflow during Chrome iOS's URL-bar collapse — keeps the cream
-     strip stable above the navbar. */
-  transform: translateZ(0);
-  will-change: transform;
 }
 
 #projects,
 #publications {
   scroll-margin-top: 88px;
-}
-
-body {
-  overflow-x: hidden;
 }
 
 ::selection {
@@ -632,12 +639,10 @@ button {
    consistent cream-white bar on desktop instead of the previous
    frosted/transparent treatment.
 
-   transform/will-change: forces a dedicated compositor layer so the
-   nav is decoupled from layout-viewport reflows during Chrome iOS's
-   URL-bar collapse animation (which would otherwise momentarily
-   re-evaluate env(safe-area-inset-top) and slide the contents up to
-   the 18px padding floor). Standard mitigation for Chrome iOS
-   fixed-position shake. */
+   The structural html/body overflow refactor near the top of this file
+   is what keeps this fixed nav stable during iOS 26's URL-bar
+   transitions (WebKit Bugzilla 297779) — no per-element compositor
+   hint is needed here. */
 .nav {
   position: fixed;
   top: 0;
@@ -655,8 +660,6 @@ button {
   min-width: 0;
   background: var(--paper);
   border-bottom: 1px solid var(--line);
-  transform: translateZ(0);
-  will-change: transform;
 }
 .nav-brand-group {
   display: flex;
