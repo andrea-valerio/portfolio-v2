@@ -11,7 +11,6 @@ export function Hero() {
       style={{
         position: "relative",
         zIndex: 1,
-        minHeight: "100vh",
         paddingTop: 88,
       }}
     >
