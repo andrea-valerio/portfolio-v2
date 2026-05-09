@@ -168,9 +168,16 @@ export function ContactModal({ open, mode, onClose }: ContactModalProps) {
                 href={CV_PATH}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: "var(--ink)", textUnderlineOffset: 3 }}
+                style={{
+                  color: "var(--ink)",
+                  textUnderlineOffset: 3,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
               >
-                OPEN PDF IN NEW TAB ↗
+                OPEN PDF IN NEW TAB
+                <ExternalArrow size={13} />
               </a>
             </p>
           </>
@@ -243,11 +250,18 @@ export function ContactModal({ open, mode, onClose }: ContactModalProps) {
                 ariaLabel="Open CV as PDF"
                 external
                 icon={
-                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="var(--paper)" strokeWidth="1.8">
-                    <path d="M4 3h8l3 3v9H4z" />
-                    <path d="M12 3v4h4" />
-                    <circle cx="8.5" cy="11" r="2.2" />
-                    <path d="M10.2 12.7 13 15.5" strokeLinecap="round" />
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                    stroke="var(--paper)"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M4 2h7l3 3v11H4z" />
+                    <path d="M11 2v3h3" />
                   </svg>
                 }
               />
@@ -266,7 +280,11 @@ type ContactRowProps = {
   sublabel?: string;
   /** Accessible name when sublabel is hidden (e.g. email address). */
   ariaLabel?: string;
-  glyph?: string;
+  /** Trailing indicator. Defaults to an external-link arrow SVG.
+   *  We render an SVG (not a Unicode "↗") because U+2197 has emoji
+   *  presentation on iOS — Safari/Chrome on iPhone render it as a
+   *  blue rounded-square emoji instead of a text glyph. */
+  glyph?: React.ReactNode;
   icon: React.ReactNode;
   external?: boolean;
   download?: boolean;
@@ -277,7 +295,7 @@ function ContactRow({
   label,
   sublabel,
   ariaLabel,
-  glyph = "↗",
+  glyph,
   icon,
   external,
   download,
@@ -368,11 +386,35 @@ function ContactRow({
       </span>
       <span
         aria-hidden="true"
-        className="display-wide"
-        style={{ fontSize: 18, color: "var(--ink)" }}
+        style={{
+          color: "var(--ink)",
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        {glyph}
+        {glyph ?? <ExternalArrow size={24} />}
       </span>
     </a>
+  );
+}
+
+function ExternalArrow({ size = 14 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 18 18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M6 12L12 6" />
+      <path d="M7 6h5v5" />
+    </svg>
   );
 }
