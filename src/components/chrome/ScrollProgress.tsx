@@ -6,18 +6,14 @@ export function ScrollProgress() {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // Body is the scroll container (see html/body overflow wrapper in
-    // globals.css — iOS 26 fixed-position drift workaround). Read scroll
-    // from document.body, not window.
-    const scroller = document.body;
     const onScroll = () => {
-      const h = scroller.scrollHeight - scroller.clientHeight;
-      const p = h > 0 ? scroller.scrollTop / h : 0;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const p = h > 0 ? window.scrollY / h : 0;
       if (ref.current) ref.current.style.transform = `scaleX(${p})`;
     };
-    scroller.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => scroller.removeEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (

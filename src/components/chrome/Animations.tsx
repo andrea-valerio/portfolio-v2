@@ -70,13 +70,6 @@ function splitWords(el: Element) {
 function registerPluginOnce(gsap: GsapLike, ScrollTrigger: unknown) {
   if (window.__portfolioGsapRegistered) return;
   gsap.registerPlugin(ScrollTrigger);
-  // Body is the scroll container (see html/body overflow wrapper in
-  // globals.css — iOS 26 fixed-position drift workaround). Redirect
-  // every ScrollTrigger to read body's scroll position instead of
-  // window's, otherwise scroll-driven animations never fire.
-  (ScrollTrigger as { defaults: (vars: Record<string, unknown>) => void }).defaults({
-    scroller: document.body,
-  });
   window.__portfolioGsapRegistered = true;
 }
 

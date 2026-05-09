@@ -9,6 +9,7 @@ import { ScrollProgress } from "@/components/chrome/ScrollProgress";
 import { Animations } from "@/components/chrome/Animations";
 import { ContactModalProvider } from "@/components/landing/ContactModalProvider";
 import { HashScroll } from "@/components/chrome/HashScroll";
+import { ViewportOffsetSync } from "@/components/chrome/ViewportOffsetSync";
 
 const display = Archivo_Black({
   subsets: ["latin"],
@@ -99,6 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="grain">
         <ContactModalProvider>
+          <ViewportOffsetSync />
           <ScrollProgress />
           <HashScroll />
           <Nav />
