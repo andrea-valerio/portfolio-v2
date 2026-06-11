@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { Lightbox, type LightboxImage } from "./Lightbox";
 import { Carousel } from "./Carousel";
 import { SingleImageBlock } from "./SingleImageBlock";
+import { Placeholder } from "@/components/primitives/Placeholder";
 import type { ProjectCaseStudy, ProjectImageGroup } from "@/lib/projects";
 
 function Prose({ paragraphs }: { paragraphs: string[] }) {
@@ -31,6 +32,25 @@ function GroupRenderer({
   return (
     <>
       {groups.map((group, i) => {
+        // No images wired up yet → show a labeled placeholder in the gallery's
+        // slot. Drop real items into the group (see src/lib/project-images.ts)
+        // and it renders as the live carousel / image automatically.
+        if (group.items.length === 0) {
+          return (
+            <Placeholder
+              key={i}
+              label={`${group.label ?? "Gallery"} — images coming soon`}
+              style={{
+                width: "100%",
+                height:
+                  group.layout === "portrait"
+                    ? "clamp(360px, 60vw, 540px)"
+                    : "clamp(240px, 36vw, 540px)",
+                margin: "32px 0",
+              }}
+            />
+          );
+        }
         if (group.kind === "carousel") {
           return <Carousel key={i} group={group} onOpen={onOpen} />;
         }
@@ -120,6 +140,22 @@ export function ProjectClient({ data }: { data: ProjectCaseStudy }) {
                 {section.title}
                 <span style={{ color: "var(--accent)" }}>.</span>
               </h2>
+              {section.subtitle && (
+                <div
+                  className="hand"
+                  style={{
+                    fontSize: "clamp(22px, 3.2vw, 32px)",
+                    color: "var(--ink)",
+                    opacity: 0.82,
+                    lineHeight: 1.15,
+                    marginTop: -6,
+                    transform: "rotate(-1deg)",
+                    transformOrigin: "left center",
+                  }}
+                >
+                  {section.subtitle}
+                </div>
+              )}
             </div>
             <div className="project-section-gutter" aria-hidden />
             <div className="project-section-body">

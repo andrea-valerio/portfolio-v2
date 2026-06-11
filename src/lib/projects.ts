@@ -14,7 +14,8 @@ export type ProjectSlug =
   | "meetup"
   | "groove"
   | "teleoperators-workload"
-  | "oven-configurator";
+  | "oven-configurator"
+  | "issuu";
 
 export type ProjectImageItem = {
   id: string;
@@ -34,6 +35,8 @@ export type ProjectSection = {
   n: string;
   eyebrow: string;
   title: string;
+  /** Optional handwritten secondary line shown under the H2 (rendered in the `hand` font). */
+  subtitle?: string;
   intro: string[];
   body: string[];
   groups: ProjectImageGroup[];
@@ -85,6 +88,17 @@ export const PROJECTS_SUMMARY: ProjectSummary[] = [
   },
   {
     n: "02",
+    slug: "issuu",
+    tag: "PRODUCT DESIGN",
+    title: "Issuu",
+    desc:
+      "Growth experiments, discoverability redesign, and a data-driven publishing flow overhaul — validated with A/B tests at scale.",
+    year: "2026",
+    span: "med",
+    hero: PROJECT_HEROES.issuu,
+  },
+  {
+    n: "03",
     slug: "meetup",
     tag: "PRODUCT DESIGN",
     title: "Meetup",
@@ -93,17 +107,6 @@ export const PROJECTS_SUMMARY: ProjectSummary[] = [
     year: "2025",
     span: "med",
     hero: PROJECT_HEROES.meetup,
-  },
-  {
-    n: "03",
-    slug: "groove",
-    tag: "UX / UI DESIGN",
-    title: "Groove",
-    desc:
-      "Club-ticketing MVP: geolocation discovery, tailored picks, and a quick path from map to checkout for nightlife.",
-    year: "2024",
-    span: "med",
-    hero: PROJECT_HEROES.groove,
   },
   {
     n: "04",
@@ -118,15 +121,30 @@ export const PROJECTS_SUMMARY: ProjectSummary[] = [
   },
   {
     n: "05",
-    slug: "oven-configurator",
-    tag: "UX RESEARCH & DESIGN",
-    title: "Oven Configurator",
+    slug: "groove",
+    tag: "UX / UI DESIGN",
+    title: "Groove",
     desc:
-      "UNOX’s oven configurator, redesigned for marketers — a clearer, faster path through a complex professional product line.",
-    year: "2022",
+      "Club-ticketing MVP: geolocation discovery, tailored picks, and a quick path from map to checkout for nightlife.",
+    year: "2024",
     span: "med",
-    hero: PROJECT_HEROES["oven-configurator"],
+    hero: PROJECT_HEROES.groove,
   },
+  // ── Oven Configurator: temporarily removed from the listing and replaced by
+  //    Issuu (above). The page, route, and case-study data are all preserved
+  //    (see ALL_SLUGS + PROJECTS_DATA["oven-configurator"]); restore it in the
+  //    listing by un-commenting this entry.
+  // {
+  //   n: "05",
+  //   slug: "oven-configurator",
+  //   tag: "UX RESEARCH & DESIGN",
+  //   title: "Oven Configurator",
+  //   desc:
+  //     "UNOX’s oven configurator, redesigned for marketers — a clearer, faster path through a complex professional product line.",
+  //   year: "2022",
+  //   span: "med",
+  //   hero: PROJECT_HEROES["oven-configurator"],
+  // },
 ];
 
 export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
@@ -143,9 +161,9 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
     team: "Solo product designer",
     tags: ["AI PRODUCT DESIGN"],
     hero: PROJECT_HEROES["loomly-ai"],
-    nextSlug: "meetup",
+    nextSlug: "issuu",
     nextN: "02",
-    nextTitle: "02 MEETUP",
+    nextTitle: "02 ISSUU",
     sections: [
       {
         n: "01",
@@ -223,7 +241,7 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
 
   meetup: {
     slug: "meetup",
-    n: "02",
+    n: "03",
     title: "Meetup",
     titleLines: ["MEETUP."],
     subtitle:
@@ -235,9 +253,9 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
     team: "Product team",
     tags: ["PRODUCT DESIGN"],
     hero: PROJECT_HEROES.meetup,
-    nextSlug: "groove",
-    nextN: "03",
-    nextTitle: "03 GROOVE",
+    nextSlug: "teleoperators-workload",
+    nextN: "04",
+    nextTitle: "04 WORKLOAD STUDY",
     sections: [
       {
         n: "01",
@@ -317,7 +335,7 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
 
   groove: {
     slug: "groove",
-    n: "03",
+    n: "05",
     title: "Groove",
     titleLines: ["GROOVE."],
     subtitle:
@@ -329,9 +347,9 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
     team: "Solo designer",
     tags: ["UX / UI DESIGN"],
     hero: PROJECT_HEROES.groove,
-    nextSlug: "teleoperators-workload",
-    nextN: "04",
-    nextTitle: "04 WORKLOAD STUDY",
+    nextSlug: "loomly-ai",
+    nextN: "01",
+    nextTitle: "01 LOOMLY AI",
     sections: [
       {
         n: "01",
@@ -422,9 +440,9 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
     team: "Mental modelling group",
     tags: ["HCI RESEARCH"],
     hero: PROJECT_HEROES["teleoperators-workload"],
-    nextSlug: "oven-configurator",
+    nextSlug: "groove",
     nextN: "05",
-    nextTitle: "05 OVEN CONFIGURATOR",
+    nextTitle: "05 GROOVE",
     sections: [
       {
         n: "01",
@@ -591,6 +609,87 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
       },
     ],
   },
+
+  issuu: {
+    slug: "issuu",
+    n: "02",
+    title: "Issuu (Product Design)",
+    titleLines: ["ISSUU."],
+    subtitle:
+      "Growth experiments, discoverability redesign, and a data-driven publishing flow overhaul — validated with A/B tests at scale.",
+    when: "Mar – May 2026",
+    type: "Product Design",
+    where: "Bending Spoons",
+    role: "Product Designer",
+    team: "Solo product designer",
+    tags: ["PRODUCT DESIGN"],
+    hero: PROJECT_HEROES.issuu,
+    nextSlug: "meetup",
+    nextN: "03",
+    nextTitle: "03 MEETUP",
+    sections: [
+      {
+        n: "01",
+        eyebrow: "the project",
+        title: "CONTEXT",
+        subtitle: "a platform that lives on its content",
+        intro: [
+          "Issuu is a <mark>digital publishing platform</mark> that lets creators upload PDFs and turn them into <mark>interactive flipbooks</mark>, embedded publications, and shareable content. With a large base of publishers — from indie magazines to brand marketers — the platform sits at the intersection of <mark>content discovery and creator tools</mark>.",
+          "I joined as the <mark>solo product designer</mark> on the <mark>Growth team</mark>, focusing on initiatives to drive <mark>acquisition, activation, and long-term retention</mark> across the marketing website and the core product.",
+        ],
+        groups: [
+          // Issuu product screenshot — published flipbook or homepage establishing shot
+          { label: "Overview", layout: "landscape", kind: "carousel", items: [] },
+        ],
+        body: [],
+      },
+      {
+        n: "02",
+        eyebrow: "acquisition",
+        title: "HOMEPAGE AND DISCOVERABILITY",
+        subtitle: "finding the right lever",
+        intro: [
+          "The first front was the marketing homepage, tested through a <mark>2×2 A/B experiment</mark>: social proof presence vs. absence, and signup prominence vs. demo/upload flow prominence. The hypothesis was that making the core action more visible would improve <mark>top-of-funnel conversion</mark> — and the data confirmed it. Signup-first treatments drove <mark>higher ARPU and better LTV</mark>; social proof, on the other hand, showed <mark>no statistically significant difference</mark>, so the leaner variant — no social proof — was kept, avoiding the operational overhead of sourcing publisher content.",
+          "In parallel, I redesigned the categories and publication-type pages to improve <mark>organic discoverability</mark>. Content clustering was derived from <mark>cluster analysis</mark>, organizing reads by type (magazines, brochures, catalogs, etc.) and topic. I also designed an <mark>Airslate-style template</mark> to be dynamically populated at scale, creating <mark>thousands of SEO long-tail pages</mark> targeting specific search intents — a longer-term bet whose results are still being assessed.",
+        ],
+        groups: [
+          // A/B test matrix (2×2 homepage treatment variants) | Categories page redesign | Airslate template page structure
+          { label: "Acquisition", layout: "landscape", kind: "carousel", items: [] },
+        ],
+        body: [],
+      },
+      {
+        n: "03",
+        eyebrow: "activation",
+        title: "PUBLISHING FLOW",
+        subtitle: "less is the activation",
+        intro: [
+          "The most critical initiative — and the one I elevated from a brief redesign task to a <mark>strategic product experiment</mark>. Publishing is the platform's <mark>core activation moment</mark>: no uploads means no content, no content means no readers.",
+          "A <mark>behavioral analysis</mark> of the existing flow revealed a sharp mismatch: most metadata options (tags, categories, descriptions, privacy settings) were visible and reachable, yet <mark>barely touched</mark> — and when used at all, they were added on average <mark>7 days after publishing</mark>. This was the insight that reframed the effort.",
+          "I proposed a <mark>3-treatment experiment</mark>: a <mark>lean modal flow</mark> surfacing only the two options that matter most — <mark>title and description</mark> — keeping everything else accessible via the full-page editor on demand; a soft redesign of the full editor that respects the existing IA; and a deeper redesign with a revised layout and information architecture. Across all variants, a new <mark>Accessibility feature</mark> was introduced, requiring careful definition of complex interaction states and edge cases.",
+        ],
+        groups: [
+          // Behavioral data chart (feature usage drop-off) | 3-treatment comparison (modal lean / soft redesign / deep redesign) | Accessibility feature interaction specs
+          { label: "Activation", layout: "landscape", kind: "carousel", items: [] },
+        ],
+        body: [],
+      },
+      {
+        n: "04",
+        eyebrow: "outcome",
+        title: "IMPACT",
+        subtitle: "data-driven, end to end",
+        intro: [
+          "Across these initiatives, the work consistently followed a <mark>data-in, data-out approach</mark>: behavioral analysis informed the design decisions, and <mark>A/B testing validated them at scale</mark>. The homepage experiment produced a clear winner with <mark>measurable monetization gains</mark>. The publishing flow experiment is running, designed to surface not just a better UI but a <mark>leaner activation path</mark>. The SEO play is a <mark>long-term investment</mark>, with discoverability impact expected to compound over time.",
+        ],
+        groups: [
+          // Results overview or before/after metric card
+          { label: "Outcome", layout: "landscape", kind: "carousel", items: [] },
+        ],
+        body: [],
+      },
+    ],
+  },
 };
 
 export const ALL_SLUGS: ProjectSlug[] = [
@@ -599,4 +698,5 @@ export const ALL_SLUGS: ProjectSlug[] = [
   "groove",
   "teleoperators-workload",
   "oven-configurator",
+  "issuu",
 ];

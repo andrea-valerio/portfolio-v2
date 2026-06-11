@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Issuu — hero image placeholder">
+  <defs>
+    <pattern id="issuuHatch" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line x1="0" y1="0" x2="0" y2="26" stroke="#1a1a1a" stroke-opacity="0.07" stroke-width="2"/>
+    </pattern>
+  </defs>
+
+  <!-- Matches the .placeholder treatment in globals.css: paper-2 fill + diagonal hatch -->
+  <rect width="1600" height="900" fill="#ebe2d0"/>
+  <rect width="1600" height="900" fill="url(#issuuHatch)"/>
+
+  <!-- Simple "image" glyph (frame + sun + mountains) -->
+  <g stroke="#1a1a1a" stroke-opacity="0.42" stroke-width="6" fill="none" stroke-linejoin="round">
+    <rect x="690" y="300" width="220" height="160" rx="12"/>
+    <circle cx="744" cy="350" r="18" fill="#1a1a1a" fill-opacity="0.12" stroke="none"/>
+    <path d="M698 454 L772 388 L824 430 L872 396 L902 422" />
+  </g>
+
+  <text x="800" y="566" text-anchor="middle" font-family="'Archivo Black', Impact, sans-serif" font-weight="900" font-size="92" letter-spacing="-3" fill="#1a1a1a">ISSUU<tspan fill="#ff5722">.</tspan></text>
+  <text x="800" y="622" text-anchor="middle" font-family="ui-monospace, 'JetBrains Mono', monospace" font-size="28" letter-spacing="7" fill="#1a1a1a" fill-opacity="0.55">HERO IMAGE · COMING SOON</text>
+</svg>

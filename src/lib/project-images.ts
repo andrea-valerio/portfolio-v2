@@ -7,6 +7,8 @@ import loomlyHero from "@/assets/projects/loomly.png";
 import meetupHero from "@/assets/projects/meetup.png";
 import ovenconfHero from "@/assets/projects/ovenconf.png";
 import thesisHero from "@/assets/projects/thesis.png";
+// Temporary placeholder cover — swap for a real screenshot when available.
+import issuuHero from "@/assets/projects/issuu.svg";
 
 import grooveJourneys from "@/assets/projects/groove/journeys.png";
 import grooveCrazy8 from "@/assets/projects/groove/crazy8.png";
@@ -63,6 +65,7 @@ export const PROJECT_HEROES = {
   groove: grooveHero,
   "teleoperators-workload": thesisHero,
   "oven-configurator": ovenconfHero,
+  issuu: issuuHero,
 } as const;
 
 export const LOOMLY = {
