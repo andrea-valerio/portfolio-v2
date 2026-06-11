@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { PROJECTS_SUMMARY } from "@/lib/projects";
+import { PROJECTS_SUMMARY, PROJECTS_DATA } from "@/lib/projects";
 import { Sticker } from "@/components/primitives/Sticker";
+import { ProjectCardTitle } from "@/components/landing/ProjectCardTitle";
 
 const SPAN_TO_COLS = { big: 8, med: 4, small: 4 } as const;
 
@@ -127,7 +128,7 @@ export function ProjectsSection() {
                 </div>
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 6, minWidth: 0 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span
                     data-card-num
@@ -140,23 +141,7 @@ export function ProjectsSection() {
                     {p.tag}
                   </span>
                 </div>
-                <h3
-                  className="display"
-                  style={{
-                    fontSize: isBig ? "clamp(18px, 4vw, 44px)" : "clamp(18px, 2.8vw, 28px)",
-                    lineHeight: 0.95,
-                    overflowWrap: "normal",
-                    wordBreak: "normal",
-                    hyphens: "none",
-                  }}
-                >
-                  {p.title.split(/\s+/).map((word, wi, arr) => (
-                    <span key={wi} style={{ whiteSpace: "nowrap" }}>
-                      {word}
-                      {wi < arr.length - 1 ? " " : ""}
-                    </span>
-                  ))}
-                </h3>
+                <ProjectCardTitle titleLines={PROJECTS_DATA[p.slug].titleLines} isBig={isBig} />
                 {SHOW_PROJECT_CARD_DESCRIPTION && p.span !== "small" && (
                   <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85, maxWidth: 520 }}>{p.desc}</p>
                 )}

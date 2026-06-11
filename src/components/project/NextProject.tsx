@@ -5,29 +5,7 @@ import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 import type { ProjectCaseStudy } from "@/lib/projects";
 import { PROJECTS_DATA } from "@/lib/projects";
-
-function fitNextProjectTitle(titleEl: HTMLElement, wrapWidth: number, maxPx: number, minPx: number) {
-  titleEl.style.removeProperty("overflow");
-  titleEl.style.removeProperty("text-overflow");
-
-  titleEl.style.fontSize = `${maxPx}px`;
-  if (titleEl.scrollWidth <= wrapWidth) return;
-
-  let lo = minPx;
-  let hi = maxPx;
-  for (let i = 0; i < 24; i++) {
-    const mid = (lo + hi) / 2;
-    titleEl.style.fontSize = `${mid}px`;
-    if (titleEl.scrollWidth <= wrapWidth) lo = mid;
-    else hi = mid;
-  }
-  titleEl.style.fontSize = `${lo}px`;
-
-  if (titleEl.scrollWidth > titleEl.clientWidth) {
-    titleEl.style.overflow = "hidden";
-    titleEl.style.textOverflow = "ellipsis";
-  }
-}
+import { fitTitleToWidth } from "@/lib/fit-title";
 
 export function NextProject({ data }: { data: ProjectCaseStudy }) {
   const next = PROJECTS_DATA[data.nextSlug];
@@ -41,7 +19,7 @@ export function NextProject({ data }: { data: ProjectCaseStudy }) {
     const fit = () => {
       const w = wrap.clientWidth;
       if (w < 1) return;
-      fitNextProjectTitle(title, w, 72, 16);
+      fitTitleToWidth(title, w, 72, 16);
     };
     fit();
     const ro = new ResizeObserver(fit);
