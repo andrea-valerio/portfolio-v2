@@ -7,8 +7,15 @@ import loomlyHero from "@/assets/projects/loomly.png";
 import meetupHero from "@/assets/projects/meetup.png";
 import ovenconfHero from "@/assets/projects/ovenconf.png";
 import thesisHero from "@/assets/projects/thesis.png";
-// Temporary placeholder cover — swap for a real screenshot when available.
-import issuuHero from "@/assets/projects/issuu.svg";
+import issuuHero from "@/assets/projects/issuu.png";
+
+import issuuHomeRevamp12 from "@/assets/projects/issuu/home_revamp_1-2.png";
+import issuuHomeRevamp34 from "@/assets/projects/issuu/home_revamp_3-4.png";
+import issuuCategories from "@/assets/projects/issuu/categories.png";
+import issuuAirslate from "@/assets/projects/issuu/airslat_exp.png";
+import issuuPubflowSimple from "@/assets/projects/issuu/pubflow_simple.png";
+import issuuPubflowDock from "@/assets/projects/issuu/pubflow_dock.png";
+import issuuPubflowLean from "@/assets/projects/issuu/pubflow_lean.png";
 
 import grooveJourneys from "@/assets/projects/groove/journeys.png";
 import grooveCrazy8 from "@/assets/projects/groove/crazy8.png";
@@ -111,6 +118,16 @@ export const OVEN = {
   placement: ovenPlacement,
   accessory: ovenAccessory,
   review: ovenReview,
+} as const;
+
+export const ISSUU = {
+  homeRevamp12: issuuHomeRevamp12,
+  homeRevamp34: issuuHomeRevamp34,
+  categories: issuuCategories,
+  airslate: issuuAirslate,
+  pubflowSimple: issuuPubflowSimple,
+  pubflowDock: issuuPubflowDock,
+  pubflowLean: issuuPubflowLean,
 } as const;
 
 export const THESIS = {

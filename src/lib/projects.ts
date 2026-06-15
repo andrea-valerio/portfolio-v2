@@ -2,6 +2,7 @@ import type { StaticImageData } from "next/image";
 
 import {
   PROJECT_HEROES,
+  ISSUU,
   LOOMLY,
   MEETUP,
   GROOVE,
@@ -632,29 +633,33 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
         n: "01",
         eyebrow: "the project",
         title: "CONTEXT",
-        subtitle: "a platform that lives on its content",
         intro: [
-          "Issuu is a <mark>digital publishing platform</mark> that lets creators upload PDFs and turn them into <mark>interactive flipbooks</mark>, embedded publications, and shareable content. With a large base of publishers — from indie magazines to brand marketers — the platform sits at the intersection of <mark>content discovery and creator tools</mark>.",
-          "I joined as the <mark>solo product designer</mark> on the <mark>Growth team</mark>, focusing on initiatives to drive <mark>acquisition, activation, and long-term retention</mark> across the marketing website and the core product.",
+          "Issuu is a <mark>digital publishing platform</mark> that lets creators upload PDFs and turn them into <mark>interactive flipbooks</mark>, embedded publications, and shareable content. With a large base of publishers, from indie magazines to brand marketers, the platform sits at the intersection of <mark>content discovery and creator tools</mark>.",
+          "I joined as the <mark>solo product designer</mark>, focusing on Growth, thus on initiatives to drive <mark>acquisition, activation, and long-term retention</mark> across the marketing website and the core product.",
         ],
-        groups: [
-          // Issuu product screenshot — published flipbook or homepage establishing shot
-          { label: "Overview", layout: "landscape", kind: "carousel", items: [] },
-        ],
+        groups: [],
         body: [],
       },
       {
         n: "02",
         eyebrow: "acquisition",
         title: "HOMEPAGE AND DISCOVERABILITY",
-        subtitle: "finding the right lever",
         intro: [
-          "The first front was the marketing homepage, tested through a <mark>2×2 A/B experiment</mark>: social proof presence vs. absence, and signup prominence vs. demo/upload flow prominence. The hypothesis was that making the core action more visible would improve <mark>top-of-funnel conversion</mark> — and the data confirmed it. Signup-first treatments drove <mark>higher ARPU and better LTV</mark>; social proof, on the other hand, showed <mark>no statistically significant difference</mark>, so the leaner variant — no social proof — was kept, avoiding the operational overhead of sourcing publisher content.",
-          "In parallel, I redesigned the categories and publication-type pages to improve <mark>organic discoverability</mark>. Content clustering was derived from <mark>cluster analysis</mark>, organizing reads by type (magazines, brochures, catalogs, etc.) and topic. I also designed an <mark>Airslate-style template</mark> to be dynamically populated at scale, creating <mark>thousands of SEO long-tail pages</mark> targeting specific search intents — a longer-term bet whose results are still being assessed.",
+          "The first front was the marketing homepage, tested through a <mark>2×2 A/B experiment</mark>: social proof presence vs. absence, and signup prominence vs. demo/upload flow prominence. The hypothesis was that making the core action more visible would improve <mark>top-of-funnel conversion</mark>, and the data confirmed it. Signup-first treatments drove <mark>higher ARPU and better LTV</mark>; social proof, on the other hand, showed <mark>no statistically significant difference</mark>, so the leaner variant, no social proof, was kept, avoiding the operational overhead of sourcing publisher content.",
+          "In parallel, I redesigned the categories and publication-type pages to improve <mark>organic discoverability</mark>. Content clustering was derived from <mark>cluster analysis</mark>, organising reads by type (magazines, brochures, catalogs, etc.) and topic. I also designed an <mark>Airslate-style template</mark> to be dynamically populated at scale, creating <mark>thousands of SEO long-tail pages</mark> targeting specific search intents, a longer-term bet whose results are still being assessed.",
         ],
         groups: [
-          // A/B test matrix (2×2 homepage treatment variants) | Categories page redesign | Airslate template page structure
-          { label: "Acquisition", layout: "landscape", kind: "carousel", items: [] },
+          {
+            label: "Acquisition",
+            layout: "landscape",
+            kind: "carousel",
+            items: [
+              { id: "issuu-home-revamp-12", src: ISSUU.homeRevamp12, alt: "A/B homepage variants 1 and 2 — signup-first vs. social-proof treatment", caption: "Homepage A/B experiment: treatments 1–2. Signup-first layout vs. social-proof variant." },
+              { id: "issuu-home-revamp-34", src: ISSUU.homeRevamp34, alt: "A/B homepage variants 3 and 4 — demo-flow and upload-flow treatments", caption: "Homepage A/B experiment: treatments 3–4. Demo-prominent and upload-flow variants." },
+              { id: "issuu-categories", src: ISSUU.categories, alt: "Redesigned categories and publication-type discovery pages", caption: "Categories and publication-type pages redesigned for organic discoverability, with content clustering derived from cluster analysis." },
+              { id: "issuu-airslate", src: ISSUU.airslate, alt: "Airslate-style dynamic SEO template for long-tail publication pages", caption: "Scalable SEO template for thousands of long-tail discovery pages, dynamically populated by publication type and topic." },
+            ],
+          },
         ],
         body: [],
       },
@@ -662,15 +667,22 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
         n: "03",
         eyebrow: "activation",
         title: "PUBLISHING FLOW",
-        subtitle: "less is the activation",
         intro: [
-          "The most critical initiative — and the one I elevated from a brief redesign task to a <mark>strategic product experiment</mark>. Publishing is the platform's <mark>core activation moment</mark>: no uploads means no content, no content means no readers.",
-          "A <mark>behavioral analysis</mark> of the existing flow revealed a sharp mismatch: most metadata options (tags, categories, descriptions, privacy settings) were visible and reachable, yet <mark>barely touched</mark> — and when used at all, they were added on average <mark>7 days after publishing</mark>. This was the insight that reframed the effort.",
-          "I proposed a <mark>3-treatment experiment</mark>: a <mark>lean modal flow</mark> surfacing only the two options that matter most — <mark>title and description</mark> — keeping everything else accessible via the full-page editor on demand; a soft redesign of the full editor that respects the existing IA; and a deeper redesign with a revised layout and information architecture. Across all variants, a new <mark>Accessibility feature</mark> was introduced, requiring careful definition of complex interaction states and edge cases.",
+          "The most critical initiative, and the one I elevated from a brief redesign task to a <mark>strategic product experiment</mark>. Publishing is the platform's <mark>core activation moment</mark>: no uploads means no content, no content means no readers.",
+          "A <mark>behavioral analysis</mark> of the existing flow revealed a sharp mismatch: most metadata options (tags, categories, descriptions, privacy settings) were visible and reachable, yet <mark>barely touched</mark>, and when used at all, they were added on average <mark>7 days after publishing</mark>. This was the insight that reframed the effort.",
+          "I proposed a <mark>3-treatment experiment</mark>: a <mark>lean modal flow</mark> surfacing only the two options that matter most, <mark>title and description</mark>, keeping everything else accessible via the full-page editor on demand; a soft redesign of the full editor that respects the existing IA; and a deeper redesign with a revised layout and information architecture. Across all variants, a new <mark>Accessibility feature</mark> was introduced, requiring careful definition of complex interaction states and edge cases.",
         ],
         groups: [
-          // Behavioral data chart (feature usage drop-off) | 3-treatment comparison (modal lean / soft redesign / deep redesign) | Accessibility feature interaction specs
-          { label: "Activation", layout: "landscape", kind: "carousel", items: [] },
+          {
+            label: "Activation",
+            layout: "landscape",
+            kind: "carousel",
+            items: [
+              { id: "issuu-pubflow-simple", src: ISSUU.pubflowSimple, alt: "Publishing flow — simplified modal variant surfacing only title and description", caption: "Lean modal flow: only the two fields that matter at publish time, with the full editor a tap away." },
+              { id: "issuu-pubflow-dock", src: ISSUU.pubflowDock, alt: "Publishing flow — docked panel redesign keeping the editor in context", caption: "Docked-panel variant: soft redesign that preserves the existing information architecture while reducing visual noise." },
+              { id: "issuu-pubflow-lean", src: ISSUU.pubflowLean, alt: "Publishing flow — lean full-page redesign with revised layout and IA", caption: "Lean full-page redesign: revised layout and information architecture with the new Accessibility feature integrated." },
+            ],
+          },
         ],
         body: [],
       },
@@ -678,14 +690,10 @@ export const PROJECTS_DATA: Record<ProjectSlug, ProjectCaseStudy> = {
         n: "04",
         eyebrow: "outcome",
         title: "IMPACT",
-        subtitle: "data-driven, end to end",
         intro: [
           "Across these initiatives, the work consistently followed a <mark>data-in, data-out approach</mark>: behavioral analysis informed the design decisions, and <mark>A/B testing validated them at scale</mark>. The homepage experiment produced a clear winner with <mark>measurable monetization gains</mark>. The publishing flow experiment is running, designed to surface not just a better UI but a <mark>leaner activation path</mark>. The SEO play is a <mark>long-term investment</mark>, with discoverability impact expected to compound over time.",
         ],
-        groups: [
-          // Results overview or before/after metric card
-          { label: "Outcome", layout: "landscape", kind: "carousel", items: [] },
-        ],
+        groups: [],
         body: [],
       },
     ],
