@@ -22,12 +22,12 @@ export function RoleStrip() {
                 width: 10,
                 height: 10,
                 borderRadius: "50%",
-                background: "var(--accent)",
-                boxShadow: "0 0 0 4px rgba(217,119,87,0.18)",
+                // Active: background: "var(--accent)", boxShadow: "0 0 0 4px rgba(217,119,87,0.18)"
+                background: "color-mix(in oklab, var(--muted) 80%, var(--accent) 20%)",
               }}
             />
             <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em" }}>
-              ━━ CURRENTLY
+              ━━ MOST RECENTLY
             </span>
           </div>
           <div className="display" style={{ fontSize: 30, lineHeight: 1.05 }}>
