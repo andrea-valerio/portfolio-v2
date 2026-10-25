@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { ALL_SLUGS } from "@/lib/projects";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://andreavalerio.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://andreavalerio.digital";
 
 export const dynamic = "force-static";
 
