@@ -6,7 +6,7 @@ const EMAIL = "andrea@icio.it";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/andreavalerio1";
 const LINKEDIN_HANDLE = "/in/andreavalerio1";
 export const GITHUB_URL = "https://github.com/andrea-valerio";
-export const CV_PATH = "/CV/CV_Summer2026.pdf";
+export const CV_PATH = "/CV/CV_Andrea_Valerio.pdf";
 
 type ContactModalProps = {
   open: boolean;
