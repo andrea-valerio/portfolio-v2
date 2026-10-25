@@ -14,9 +14,7 @@ export const PAST_ROLES: PastRole[] = [
     role: "Product Designer",
     org: "Bending Spoons",
     orgUrl: "https://www.bendingspoons.com",
-    period: "2025",
-    forClient: "Meetup",
-    forClientUrl: "https://www.meetup.com",
+    period: "2025—2026",
   },
   {
     role: "Data Research Assistant",

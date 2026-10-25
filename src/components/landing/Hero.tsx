@@ -163,7 +163,14 @@ export function Hero() {
           <div
             data-anim="sticker"
             data-delay="1.5"
-            style={{ position: "absolute", top: 24, right: -28, transform: "rotate(8deg)", zIndex: 4 }}
+            style={{ position: "absolute", top: 24, right: -22, transform: "rotate(4deg)", zIndex: 4 }}
+          >
+            <Sticker variant="solid">HCI RESEARCHER</Sticker>
+          </div>
+          <div
+            data-anim="sticker"
+            data-delay="1.7"
+            style={{ position: "absolute", top: 72, right: -22, transform: "rotate(4deg)", zIndex: 4 }}
           >
             <Sticker variant="solid">PRODUCT DESIGNER</Sticker>
           </div>

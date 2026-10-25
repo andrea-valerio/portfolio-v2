@@ -22,29 +22,21 @@ export function RoleStrip() {
                 width: 10,
                 height: 10,
                 borderRadius: "50%",
-                // Active: background: "var(--accent)", boxShadow: "0 0 0 4px rgba(217,119,87,0.18)"
-                background: "color-mix(in oklab, var(--muted) 80%, var(--accent) 20%)",
+                background: "var(--accent)",
+                boxShadow: "0 0 0 4px rgba(217,119,87,0.18)",
               }}
             />
             <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em" }}>
-              ━━ MOST RECENTLY
+              ━━ CURRENTLY
             </span>
           </div>
           <div className="display" style={{ fontSize: 30, lineHeight: 1.05 }}>
-            Product Designer
+            PhD Researcher
           </div>
           <div className="serif" style={{ fontSize: 17, fontStyle: "italic", opacity: 0.75, marginTop: 2 }}>
-            for{" "}
-            <a href="https://www.loomly.com" className="role-strip-employer-link">
-              Loomly
-            </a>
-            {", "}
-            <a href="https://issuu.com" className="role-strip-employer-link">
-              Issuu
-            </a>
-            {" & "}
-            <a href="https://tractive.com" className="role-strip-employer-link">
-              Tractive
+            at the{" "}
+            <a href="https://www.var.ovgu.de" className="role-strip-employer-link">
+              Chair of Virtual &amp; Augmented Reality
             </a>
           </div>
           <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 8 }}>
@@ -52,11 +44,11 @@ export function RoleStrip() {
               @
             </span>
             <a
-              href="https://www.bendingspoons.com"
+              href="https://www.ovgu.de"
               className="display"
               style={{ fontSize: 22, borderBottom: "2px solid var(--accent)" }}
             >
-              Bending Spoons
+              University of Magdeburg
             </a>
           </div>
         </div>

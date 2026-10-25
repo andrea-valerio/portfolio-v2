@@ -16,14 +16,15 @@ export const PUBLICATIONS: Publication[] = [
     venue: "AutoUI",
     y: "2026",
     t: "The Role of Task Frequency and Complexity in Remote Assistance for Highly Automated Vehicles: Assessing Mental Load based on Eyetracking and Physiology",
-    authors: "Walocha, F., Valerio, A., Nguyen, P., Ihme, K.",
+    authors: "Walocha, F., Valerio, A., Nguyen, H. P., Ihme, K.",
     cite:
-      "Walocha, F., Valerio, A., Nguyen, P., Ihme, K. (2026). In Proceedings of the 18th International Conference on Automotive User Interfaces and Interactive Vehicular Applications. [accepted]",
+      "Walocha, F., Valerio, A., Nguyen, H. P., Ihme, K. (2026). In Proceedings of the 18th International Conference on Automotive User Interfaces and Interactive Vehicular Applications (pp. 48–56).",
     tldr:
       "How does the frequency and complexity of remote-assistance tasks change a human operator's mental load? Eye-tracking and physiology give a clearer signal than self-report alone.",
     topic: "Mental workload predictions",
-    type: "Accepted",
-    doi: "—",
+    type: "Conference Paper",
+    doi: "10.1145/3828157.3828788",
+    link: "https://doi.org/10.1145/3828157.3828788",
   },
   {
     venue: "Der Eisenbahningenieur",
