@@ -84,8 +84,7 @@ export function Hero() {
                 <HeroIntroExpandable>
                   Hi! I&rsquo;m an <strong className="hero-intro-strong">HCI researcher</strong> focused on human
                   factors, medical XR and <span className="hero-intro-mark">eye tracking</span>: how attention and cognitive
-                  load shape the way people work with complex systems, and how technology can support them without getting
-                  in their way. I&rsquo;m currently a PhD student at the University of Magdeburg, bringing this into the
+                  load shape the way people work with complex systems, and how to design around them. I&rsquo;m currently a PhD student at the University of Magdeburg, bringing this into the
                   operating room. I&rsquo;m also a <strong className="hero-intro-strong">Product Designer</strong>, working
                   from UX/UI to <span className="hero-intro-mark">product and growth thinking</span>.
                 </HeroIntroExpandable>
