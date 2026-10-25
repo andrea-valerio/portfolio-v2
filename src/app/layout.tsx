@@ -38,7 +38,7 @@ const mono = JetBrains_Mono({
 });
 
 const siteDescription =
-  "Product designer with an HCI background — UX/UI, research, and AI-assisted workflows. Selected case studies; currently designing for Loomly, Issuu & Tractive at Bending Spoons*.";
+  "HCI researcher and product designer. PhD student at the University of Magdeburg working on human factors, medical XR and eye tracking — plus selected UX/UI and product case studies.";
 
 export const metadata: Metadata = {
   title: {
@@ -48,6 +48,11 @@ export const metadata: Metadata = {
   description: siteDescription,
   keywords: [
     "Andrea Valerio",
+    "HCI Researcher",
+    "Human Factors",
+    "Medical XR",
+    "Eye Tracking",
+    "University of Magdeburg",
     "Product Designer",
     "UX Designer",
     "UX Research",

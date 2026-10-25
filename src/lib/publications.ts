@@ -49,7 +49,7 @@ export const PUBLICATIONS: Publication[] = [
     tldr:
       "Can we predict a remote operator's mental workload just from where they're looking? Using areas-of-interest data from automated-vehicle scenarios — yes, with surprising fidelity.",
     topic: "Eye-tracking mental workload correlates",
-    type: "Conference Paper",
+    type: "Conference Poster",
     doi: "10.1145/3743049.3748583",
     link: "https://doi.org/10.1145/3743049.3748583",
   },

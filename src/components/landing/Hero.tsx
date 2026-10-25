@@ -82,21 +82,12 @@ export function Hero() {
               />
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <HeroIntroExpandable>
-                  Hi! I&apos;m a <strong className="hero-intro-strong">Product Designer</strong> with a background in{" "}
-                  <a
-                    href="https://corsi.unitn.it/en/human-computer-interaction"
-                    className="hero-intro-hci-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={"Master's degree in Human–Computer Interaction — University of Trento"}
-                  >
-                    Human–Computer Interaction
-                  </a>
-                  . I treat design as a problem-solving discipline rooted in{" "}
-                  <span className="hero-intro-mark">human behavior</span> — bridging UX/UI, product thinking, and HCI research
-                  to build interfaces that fit how people actually think.{" "}
-                  <span className="hero-intro-mark">AI is a core part of my workflow</span> — it widens what I can own,
-                  sharpens efficiency, and grounds decisions in better evidence.
+                  Hi! I&rsquo;m an <strong className="hero-intro-strong">HCI researcher</strong> focused on human
+                  factors, medical XR and <span className="hero-intro-mark">eye tracking</span>: how attention and cognitive
+                  load shape the way people work with complex systems, and how technology can support them without getting
+                  in their way. I&rsquo;m currently a PhD student at the University of Magdeburg, bringing this into the
+                  operating room. I&rsquo;m also a <strong className="hero-intro-strong">Product Designer</strong>, working
+                  from UX/UI to <span className="hero-intro-mark">product and growth thinking</span>.
                 </HeroIntroExpandable>
               </div>
             </div>
