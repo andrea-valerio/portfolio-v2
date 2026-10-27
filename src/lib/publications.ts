@@ -38,6 +38,7 @@ export const PUBLICATIONS: Publication[] = [
     topic: "VR study",
     type: "Magazine",
     doi: "—",
+    link: "https://elib.dlr.de/224291/1/Petersen%20et%20al.%202026.pdf",
   },
   {
     venue: "MuC",
